@@ -36,8 +36,6 @@ SDLFLAGS += -lSDL2
 SDLFLAGS += -lSDL2_gfx
 SDLFLAGS += -lSDL2_image
 
-FFLAG = 
-
 
 # SDLFLAGS += -lSDL2_ttf
 
@@ -45,10 +43,16 @@ obj/%.o : src/%.cpp src/%.hpp makefile
 	$(CC) $(CFLAGS) $(CINCDIR) -c src/$*.cpp $(CLIBDIR) $(SDLFLAGS) $(CVERSION) -o obj/$*.o
 
 main: main.cpp main.hpp $(TARGETS) $(SRCS) makefile
-	$(CC) $(CFLAGS) $(COBJ) $(CAOBJ) $(CINCDIR) $(CLIBDIR) $(SDLFLAGS) $(CVERSION) $(FFLAG) main.cpp -o main
+	$(CC) $(CFLAGS) $(COBJ) $(CAOBJ) $(CINCDIR) $(CLIBDIR) $(SDLFLAGS) $(CVERSION) main.cpp -o main
 
 leaks:
 	leaks --atExit -- ./main
+
+library:
+	cd ../AudioStreamTest && make
+	cd ../lib && make
+	cd ../MMLParser && make
+	cd ../fileReader && make
 
 clean:
 	rm -f $(OBJS)
