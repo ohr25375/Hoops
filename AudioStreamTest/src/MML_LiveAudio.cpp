@@ -28,13 +28,9 @@ namespace MML_LiveAudio_Internal {
                 if (readNext()) break;
             }
             int16_t sample = MML_Internal::generateSample(channelAttributes);
-            try {
-                out[sampleSize] = sample;
-                sampleSize++;
-                if (sampleSize >= out.size()) break;
-            } catch (...) {
-                std::cout << "sample skipped\n";
-            }
+            out[sampleSize] = sample;
+            sampleSize++;
+            if (sampleSize >= out.size()) break;
         }
         return std::vector<int16_t>(out.begin(), out.begin() + sampleSize);
     }

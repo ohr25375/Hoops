@@ -10,17 +10,13 @@
 AUDIO_HANDLER audioHandler;
 
 void callback(void* userdata, uint8_t* stream, int len) {
-    try {
-        short* snd  = reinterpret_cast<short*>(stream);
-        len        /= sizeof(*snd);
-    
-        auto samp = audioHandler.getSamples(len);
-    
-        for (int i = 0; i < len; i++) {
-            snd[i] = samp[i];
-        }
-    } catch (...) {
-        std::cout << "Error in callback\n";
+    short* snd  = reinterpret_cast<short*>(stream);
+    len        /= sizeof(*snd);
+
+    auto samp = audioHandler.getSamples(len);
+
+    for (int i = 0; i < len; i++) {
+        snd[i] = samp[i];
     }
 }
 
