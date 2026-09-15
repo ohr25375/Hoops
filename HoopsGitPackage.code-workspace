@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"code-runner.clearPreviousOutput": true,
+		"code-runner.executorMap": {
+			"cpp": "cd $dir && make && ./main",
+		}
+	}
+}

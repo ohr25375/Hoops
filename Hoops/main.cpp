@@ -37,5 +37,7 @@ int main(void) {
         return -1;
     }
     
+    SDL_Log("closing audio device: %d", sysVar.audioID);
+    SDL_CloseAudioDevice(sysVar.audioID);
     SDL_Quit();
 }
