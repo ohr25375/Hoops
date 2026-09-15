@@ -16,5 +16,5 @@ void SYSTEM_VARIABLES::playBlip() {
 }
 
 void SYSTEM_VARIABLES::playSelect() {
-    this->audioHandler->registerOneShot({"T180 O5 P160 l32 V15 f+ V11 f+ V7 f+ V3 f+"});
+    this->audioHandler->registerOneShot({"T180 O5 P160 l32 V8 f+ V11 f+ V7 f+ V3 f+"});
 }

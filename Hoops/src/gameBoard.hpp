@@ -4,7 +4,7 @@
 #include <array>
 #include "src/SDL2_Addon.hpp"
 #include "src/vector2.hpp"
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "hoops.hpp"
 
 struct FALLING_RING {

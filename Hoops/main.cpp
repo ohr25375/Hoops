@@ -5,7 +5,7 @@
 
 #include "src/SDL2_Font.hpp"
 #include "src/AudioHandler.hpp"
-#include <SDL2/SDL_mixer.h>
+#include <SDL_mixer.h>
 
 AUDIO_HANDLER audioHandler;
 

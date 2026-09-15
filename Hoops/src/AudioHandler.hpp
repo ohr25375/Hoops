@@ -2,7 +2,7 @@
 
 #include "src/MML_LiveAudio.hpp"
 #include <queue>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 class AUDIO_HANDLER {
 public:

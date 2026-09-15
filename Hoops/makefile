@@ -15,7 +15,7 @@ COBJ += ../AudioStreamTest/obj/*.o
 TARGETS = $(patsubst src/%.cpp, obj/%.o, $(wildcard src/*.cpp) $(wildcard src/**/*.cpp))
 CAOBJ = $(wildcard obj/*.o) $(wildcard obj/**/*.o)
 # includes
-CINCDIR = -I/opt/homebrew/include/
+CINCDIR = -I/opt/homebrew/include/SDL2/
 CINCDIR += -I../lib
 CINCDIR += -I../MMLParser/
 CINCDIR += -I../AudioStreamTest/
@@ -29,7 +29,7 @@ OBJ_DIR = obj
 # obj
 OBJS = $(wildcard obj/**/*.o)
 # library includes
-CLIBDIR = -L/opt/homebrew/lib
+CLIBDIR = -L/opt/homebrew/lib/
 # sdl flags
 SDLFLAGS = -D_THREAD_SAFE
 SDLFLAGS += -lSDL2

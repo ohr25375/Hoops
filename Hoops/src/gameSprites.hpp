@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <cstdint>
 #include <array>
 #include "src/vector2.hpp"

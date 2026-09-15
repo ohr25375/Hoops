@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <cmath>
 #include <sstream>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 const double DEG2RAD = M_PI / 180;
 const double RAD2DEG = 180 / M_PI;
 

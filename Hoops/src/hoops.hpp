@@ -2,7 +2,7 @@
 
 #include <cstdint>
 #include <array>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "src/vector2.hpp"
 #include "src/SDL2_Addon.hpp"
 

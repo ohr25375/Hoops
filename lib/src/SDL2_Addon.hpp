@@ -1,7 +1,7 @@
 #pragma once
 #ifndef SDL2_addon_hpp
 #define SDL2_addon_hpp
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <vector>
 
