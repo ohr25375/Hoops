@@ -17,17 +17,26 @@ namespace MML_LiveAudio_Internal {
         }
         return out;
     }
-    std::vector<int16_t> ChannelRenderer::readAll() {
-        std::vector<int16_t> out;
+    std::vector<int16_t> ChannelRenderer::readAll(bool& clear) {
+        std::vector<int16_t> out(500000);
         auto& inst = channelAttributes.instrumentAttributes;
+        int sampleSize = 0;
         while (true) {
+            if (clear) break;
             if (inst.currentSample >= inst.expectedSampleCount) {
                 channelAttributes.instrumentAttributes.currentSample = 0;
                 if (readNext()) break;
             }
-            out.push_back(MML_Internal::generateSample(channelAttributes));
+            int16_t sample = MML_Internal::generateSample(channelAttributes);
+            try {
+                out[sampleSize] = sample;
+                sampleSize++;
+                if (sampleSize >= out.size()) break;
+            } catch (...) {
+                std::cout << "sample skipped\n";
+            }
         }
-        return out;
+        return std::vector<int16_t>(out.begin(), out.begin() + sampleSize);
     }
     int16_t ChannelRenderer::getSingleSample() {
         auto& inst = channelAttributes.instrumentAttributes;
@@ -199,7 +208,7 @@ namespace MML_LiveAudio_Internal {
 
 namespace MML_LiveAudio {
     void LiveAudioHandler::clearMML() {
-        channelRenderers = {};
+        channelRenderers = std::vector<MML_LiveAudio_Internal::ChannelRenderer>(0);
     }
 
     void LiveAudioHandler::loadNewMML(const std::vector<std::string>& mml) {
@@ -217,25 +226,35 @@ namespace MML_LiveAudio {
         int channelCount = channelRenderers.size();
         std::vector<int16_t> out(sampleCount);
         for (int s = 0; s < sampleCount; s++) {
+            if (this->queueClear) {
+                out[s] = 0;
+                continue;
+            }
             float val = 0;
             for (int c = 0; c < channelCount; c++) {
                 val += channelRenderers[c].getSingleSample() / (float)channelCount;
             }
             out[s] = (int16_t)val * masterVolume;
         }
+        this->queueClear = false;
         return out;
     }
     std::vector<int16_t> LiveAudioHandler::readAll() {
         int channelCount = channelRenderers.size();
         std::vector<std::vector<int16_t>> samples(channelCount);
         size_t sampleSize = 0;
+        std::vector<int16_t> out(sampleSize);
+        if (this->queueClear) {
+            this->queueClear = false;
+            return out;
+        }
         for (auto c = 0; c < channelCount; c++) {
-            samples[c] = channelRenderers[c].readAll();
+            samples[c] = channelRenderers[c].readAll(this->queueClear);
             if (sampleSize < samples[c].size()) {
                 sampleSize = samples[c].size();
             }
         }
-        std::vector<int16_t> out(sampleSize);
+        out.resize(sampleSize);
         for (auto s = 0; s < sampleSize; s++) {
             float val = 0;
             for (int c = 0; c < channelCount; c++) {

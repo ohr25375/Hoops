@@ -10,7 +10,7 @@ namespace MML_LiveAudio_Internal {
     public:
         void insertMML(const std::string& mml);
         std::vector<int16_t> getSamples(const int sampleCount);
-        std::vector<int16_t> readAll();
+        std::vector<int16_t> readAll(bool& clear);
         int16_t getSingleSample();
         MML_Internal::ChannelAttributes getCurrentInfo();
         void clearChannelAttributes();
@@ -30,6 +30,7 @@ namespace MML_LiveAudio {
         std::vector<int16_t> getSamples(const int sampleCount);
         std::vector<MML_Internal::ChannelAttributes> getCurrentInfos();
         std::vector<int16_t> readAll();
+        bool queueClear = false;
     private:
         std::vector<MML_LiveAudio_Internal::ChannelRenderer> channelRenderers;
     };

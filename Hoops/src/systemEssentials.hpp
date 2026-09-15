@@ -7,7 +7,6 @@ struct SYSTEM_VARIABLES {
     SDL2_2DSuite::Essentials essentials;
     AUDIO_HANDLER* audioHandler;
     SDL_AudioCallback callback;
-    int audioID;
     int SAMPLE_RATE = 48000;
     void playPlace();
     void playBlip();

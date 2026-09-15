@@ -11,8 +11,8 @@ bool systemInit(SYSTEM_VARIABLES& systemVariables) {
     spec.samples  = 512;
     spec.callback = systemVariables.callback;
     spec.userdata = NULL;
-    systemVariables.audioID      = SDL_OpenAudioDevice(nullptr, 0, &spec, &aspec, SDL_AUDIO_ALLOW_ANY_CHANGE);
-    SDL_PauseAudioDevice(systemVariables.audioID, 0);
+    systemVariables.audioHandler->setAudioID(SDL_OpenAudioDevice(nullptr, 0, &spec, &aspec, SDL_AUDIO_ALLOW_ANY_CHANGE));
+    systemVariables.audioHandler->pauseAudioDevice(false);
 
     systemVariables.essentials.init();
 
