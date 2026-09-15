@@ -10,7 +10,7 @@
 namespace MML_Internal {
     struct ChannelAttributes;
 
-    int32_t getNumber(std::string::const_iterator& it, uint32_t maxValue, uint32_t& value, bool required = true, uint32_t defaultValue = 0);
+    int32_t getNumber(std::string::const_iterator& it, std::string::const_iterator& end, uint32_t maxValue, uint32_t& value, bool required = true, uint32_t defaultValue = 0);
     int16_t generateSample(ChannelAttributes& channelAttributes);
     int16_t generateSine(ChannelAttributes& channelAttributes);
     int16_t generateSquare(ChannelAttributes& channelAttributes);
@@ -140,11 +140,11 @@ namespace MML {
         void scaleVolume(std::vector<std::vector<int32_t>> &track) const;
         std::vector<std::vector<int32_t>> compactInstruments(std::vector<std::vector<std::vector<int32_t>>> &insts) const;
         std::vector<std::vector<int32_t>> renderInstrument(uint32_t inst) const;
-        void SampleNotes(char c, MML::MML_Attributes &attributes, std::string::const_iterator &it, int32_t &error, std::vector<std::vector<int32_t>> &stream) const;
+        void SampleNotes(char c, MML::MML_Attributes &attributes, std::string::const_iterator &it, std::string::const_iterator& end, int32_t &error, std::vector<std::vector<int32_t>> &stream) const;
         void DoRepeatEndSymbol(const std::string::const_iterator &begin, std::string::const_iterator &it, REPEATS &repeats, std::string::const_iterator &end, int32_t &error) const;
         
-        std::vector<std::vector<int32_t>> readNote(char c, MML_Attributes &attributes, std::string::const_iterator &it, int32_t &error) const;
-        std::vector<std::vector<int32_t>> readRest(const MML_Attributes& attributes, std::string::const_iterator &it, int32_t &error) const;
+        std::vector<std::vector<int32_t>> readNote(char c, MML_Attributes &attributes, std::string::const_iterator &it, std::string::const_iterator& end, int32_t &error) const;
+        std::vector<std::vector<int32_t>> readRest(const MML_Attributes& attributes, std::string::const_iterator &it, std::string::const_iterator& end, int32_t &error) const;
         void createSoundData(double frequency, MML::MML_Attributes &attributes, double dur, std::vector<int32_t> &soundData, int32_t stereoPan = 0) const;
     };
     

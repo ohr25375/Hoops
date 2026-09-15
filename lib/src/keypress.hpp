@@ -1,7 +1,7 @@
 #pragma once
 #ifndef keypress_hpp
 #define keypress_hpp
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <map>
 

@@ -150,7 +150,7 @@ const std::vector<SPRITE> gameSprites {
 
 void generateFromSprite(const SPRITE& sprite, SPRITE_DATA& out) {
     int yMax = sprite.size();
-    int xMax = sizeof(sprite[0].color) * __CHAR_BIT__;
+    int xMax = sizeof(sprite[0].color) * 8;
     for (auto sy = 0; sy < yMax; sy++) {
         auto sr = sprite[sy];
         for (auto sx = 0; sx < xMax; sx++) {

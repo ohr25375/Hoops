@@ -1,6 +1,7 @@
 #include "systemInit.hpp"
 
 bool systemInit(SYSTEM_VARIABLES& systemVariables) {
+    SDL_setenv("SDL_AUDIODRIVER", "directsound", 1);
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) return false;
 
     SDL_AudioSpec spec, aspec;
@@ -11,7 +12,9 @@ bool systemInit(SYSTEM_VARIABLES& systemVariables) {
     spec.samples  = 512;
     spec.callback = systemVariables.callback;
     spec.userdata = NULL;
-    systemVariables.audioHandler->setAudioID(SDL_OpenAudioDevice(nullptr, 0, &spec, &aspec, SDL_AUDIO_ALLOW_ANY_CHANGE));
+    auto id = SDL_OpenAudioDevice(nullptr, 0, &spec, &aspec, SDL_AUDIO_ALLOW_ANY_CHANGE);
+    systemVariables.audioHandler->setAudioID(id);
+    SDL_Log("Audio opened on id : %d", id);
     systemVariables.audioHandler->pauseAudioDevice(false);
 
     systemVariables.essentials.init();

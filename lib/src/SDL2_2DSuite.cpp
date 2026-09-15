@@ -53,7 +53,7 @@ namespace SDL2_2DSuite_Internal {
             frameTimes.pop();
         }
         previous = currentTime;
-        if ((uint)delay == 0) {
+        if ((uint32_t)delay == 0) {
             SDL_Log("Frame Skipped: Performance may be an issue.");
         }
         SDL_Delay(delay);

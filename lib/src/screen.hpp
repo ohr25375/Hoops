@@ -1,7 +1,7 @@
 #pragma once
 #ifndef screen_hpp
 #define screen_hpp
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <string>
 #include <vector>

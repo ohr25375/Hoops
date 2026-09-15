@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{65752458-62fe-4b63-a676-fb007a123771}</ProjectGuid>
+    <RootNamespace>Hoops</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>D:\SDL2\Source\SDL2_image-2.8.10\include;D:\SDL2\Source\SDL2_mixer-2.8.2\include;D:\SDL2\Source\SDL2-2.32.10\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\SDL2\Source\SDL2_image-2.8.10\lib\x64;D:\SDL2\Source\SDL2_mixer-2.8.2\lib\x64;D:\SDL2\Source\SDL2-2.32.10\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>D:\SDL2\Source\SDL2_image-2.8.10\include;D:\SDL2\Source\SDL2_mixer-2.8.2\include;D:\SDL2\Source\SDL2-2.32.10\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\SDL2\Source\SDL2_image-2.8.10\lib\x64;D:\SDL2\Source\SDL2_mixer-2.8.2\lib\x64;D:\SDL2\Source\SDL2-2.32.10\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>D:\SDL2\Source\SDL2_image-2.8.10\include;D:\SDL2\Source\SDL2_mixer-2.8.2\include;D:\SDL2\Source\SDL2-2.32.10\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\SDL2\Source\SDL2_image-2.8.10\lib\x64;D:\SDL2\Source\SDL2_mixer-2.8.2\lib\x64;D:\SDL2\Source\SDL2-2.32.10\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>D:\SDL2\Source\SDL2_image-2.8.10\include;D:\SDL2\Source\SDL2_mixer-2.8.2\include;D:\SDL2\Source\SDL2-2.32.10\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\SDL2\Source\SDL2_image-2.8.10\lib\x64;D:\SDL2\Source\SDL2_mixer-2.8.2\lib\x64;D:\SDL2\Source\SDL2-2.32.10\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\SDL2\Source\SDL-release-2.32.10\include;D:\SDL2\Source\SDL_mixer-release-2.8.2\include;D:\SDL2\Source\SDL_image-release-2.8.12\include;D:\SDL2\Hoops\fileReader;D:\SDL2\Hoops\lib;D:\SDL2\Hoops\MMLParser;D:\SDL2\Hoops\AudioStreamTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\SDL2\Source\SDL-release-2.32.10\include;D:\SDL2\Source\SDL_mixer-release-2.8.2\include;D:\SDL2\Source\SDL_image-release-2.8.12\include;D:\SDL2\Hoops\fileReader;D:\SDL2\Hoops\lib;D:\SDL2\Hoops\MMLParser;D:\SDL2\Hoops\AudioStreamTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\SDL2\Source\SDL-release-2.32.10\include;D:\SDL2\Source\SDL_mixer-release-2.8.2\include;D:\SDL2\Source\SDL_image-release-2.8.12\include;D:\SDL2\Hoops\fileReader;D:\SDL2\Hoops\lib;D:\SDL2\Hoops\MMLParser;D:\SDL2\Hoops\AudioStreamTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\SDL2\Source\SDL-release-2.32.10\include;D:\SDL2\Source\SDL_mixer-release-2.8.2\include;D:\SDL2\Source\SDL_image-release-2.8.12\include;D:\SDL2\Hoops\fileReader;D:\SDL2\Hoops\lib;D:\SDL2\Hoops\MMLParser;D:\SDL2\Hoops\AudioStreamTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_mixer.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AudioStreamTest\src\MML_LiveAudio.cpp" />
+    <ClCompile Include="fileReader\src\hexManipulator.cpp" />
+    <ClCompile Include="Hoops\main.cpp" />
+    <ClCompile Include="Hoops\src\AudioHandler.cpp" />
+    <ClCompile Include="Hoops\src\bgmAssets.cpp" />
+    <ClCompile Include="Hoops\src\gameBoard.cpp" />
+    <ClCompile Include="Hoops\src\gameEssentials.cpp" />
+    <ClCompile Include="Hoops\src\gameRender.cpp" />
+    <ClCompile Include="Hoops\src\gameSprites.cpp" />
+    <ClCompile Include="Hoops\src\gameStateInGame.cpp" />
+    <ClCompile Include="Hoops\src\gameState_TitleMenu.cpp" />
+    <ClCompile Include="Hoops\src\hoops.cpp" />
+    <ClCompile Include="Hoops\src\inGameState_Chain.cpp" />
+    <ClCompile Include="Hoops\src\inGameState_DropControlPiece.cpp" />
+    <ClCompile Include="Hoops\src\inGameState_FallingPieces.cpp" />
+    <ClCompile Include="Hoops\src\inGameState_GameOver.cpp" />
+    <ClCompile Include="Hoops\src\inGameVariables.cpp" />
+    <ClCompile Include="Hoops\src\systemEssentials.cpp" />
+    <ClCompile Include="Hoops\src\systemInGame.cpp" />
+    <ClCompile Include="Hoops\src\systemInGameInit.cpp" />
+    <ClCompile Include="Hoops\src\systemInit.cpp" />
+    <ClCompile Include="Hoops\src\systemPreInit.cpp" />
+    <ClCompile Include="lib\src\dataManipulation\binaryParser.cpp" />
+    <ClCompile Include="lib\src\fileManager.cpp" />
+    <ClCompile Include="lib\src\keypress.cpp" />
+    <ClCompile Include="lib\src\screen.cpp" />
+    <ClCompile Include="lib\src\SDL2_2DSuite.cpp" />
+    <ClCompile Include="lib\src\SDL2_Addon.cpp" />
+    <ClCompile Include="lib\src\SDL2_Font.cpp" />
+    <ClCompile Include="MMLParser\src\MML.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AudioStreamTest\src\MML_LiveAudio.hpp" />
+    <ClInclude Include="fileReader\src\hexManipulator.hpp" />
+    <ClInclude Include="Hoops\main.hpp" />
+    <ClInclude Include="Hoops\src\AudioHandler.hpp" />
+    <ClInclude Include="Hoops\src\bgmAssets.hpp" />
+    <ClInclude Include="Hoops\src\gameBoard.hpp" />
+    <ClInclude Include="Hoops\src\gameEssentials.hpp" />
+    <ClInclude Include="Hoops\src\gameRender.hpp" />
+    <ClInclude Include="Hoops\src\gameSprites.hpp" />
+    <ClInclude Include="Hoops\src\gameStateInGame.hpp" />
+    <ClInclude Include="Hoops\src\gameState_TitleMenu.hpp" />
+    <ClInclude Include="Hoops\src\hoops.hpp" />
+    <ClInclude Include="Hoops\src\inGameState_Chain.hpp" />
+    <ClInclude Include="Hoops\src\inGameState_DropControlPiece.hpp" />
+    <ClInclude Include="Hoops\src\inGameState_FallingPieces.hpp" />
+    <ClInclude Include="Hoops\src\inGameState_GameOver.hpp" />
+    <ClInclude Include="Hoops\src\inGameVariables.hpp" />
+    <ClInclude Include="Hoops\src\systemEssentials.hpp" />
+    <ClInclude Include="Hoops\src\systemInGame.hpp" />
+    <ClInclude Include="Hoops\src\systemInGameInit.hpp" />
+    <ClInclude Include="Hoops\src\systemInit.hpp" />
+    <ClInclude Include="Hoops\src\systemPreInit.hpp" />
+    <ClInclude Include="lib\src\dataManipulation\binaryParser.hpp" />
+    <ClInclude Include="lib\src\dataManipulation\dataTypes.hpp" />
+    <ClInclude Include="lib\src\dataManipulation\hexConverter.hpp" />
+    <ClInclude Include="lib\src\fileManager.hpp" />
+    <ClInclude Include="lib\src\keypress.hpp" />
+    <ClInclude Include="lib\src\screen.hpp" />
+    <ClInclude Include="lib\src\SDL2_2DSuite.hpp" />
+    <ClInclude Include="lib\src\SDL2_Addon.hpp" />
+    <ClInclude Include="lib\src\SDL2_Font.hpp" />
+    <ClInclude Include="lib\src\vector2.hpp" />
+    <ClInclude Include="MMLParser\src\MML.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Source\SDL2_image-2.8.10\lib\x64\SDL2_image.dll" />
+    <None Include=".gitignore" />
+    <None Include="HoopsGitPackage.code-workspace" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="8bitFont.bmp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

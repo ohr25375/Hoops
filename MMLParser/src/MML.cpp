@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <format>
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <stack>
 #include <map>
@@ -9,12 +10,13 @@
 #include <src/hexManipulator.hpp>
 
 #include <random>
+#define M_PI 3.14159265358979323846
 
 std::random_device rd;
 std::mt19937 mt = std::mt19937(rd());
 
 namespace MML_Internal {
-    int32_t getNumber(std::string::const_iterator &it, uint32_t maxValue, uint32_t& value, bool required, uint32_t defaultValue) {
+    int32_t getNumber(std::string::const_iterator &it, std::string::const_iterator& end, uint32_t maxValue, uint32_t& value, bool required, uint32_t defaultValue) {
         value = 0;
         if (std::isalpha(*it) && required) {
             return 1;
@@ -33,6 +35,9 @@ namespace MML_Internal {
                 return offset;
             }
             offset++;
+            if (it + 1 + offset == end) {
+                return offset;
+            }
         }
 
         it += offset;
@@ -169,11 +174,11 @@ namespace MML {
                 it++;
                 switch (c) {
                     case MML_TEMPO_SYMBOL: {
-                        error = MML_Internal::getNumber(it, MML_TEMPO_MAXVALUE, attributes.tempo);
+                        error = MML_Internal::getNumber(it, end, MML_TEMPO_MAXVALUE, attributes.tempo);
                         break;
                     }
                     case MML_OCTAVE_SYMBOL: {
-                        error = MML_Internal::getNumber(it, MML_OCTAVE_MAXVALUE, attributes.octave);
+                        error = MML_Internal::getNumber(it, end, MML_OCTAVE_MAXVALUE, attributes.octave);
                         break;
                     }
                     case MML_OCTAVE_ADD_SYMBOL: {
@@ -186,12 +191,12 @@ namespace MML {
                         break;
                     }
                     case MML_LENGTH_SYMBOL: {
-                        error = MML_Internal::getNumber(it, MML_LENGTH_MAXVALUE, attributes.length);
+                        error = MML_Internal::getNumber(it, end, MML_LENGTH_MAXVALUE, attributes.length);
                         break;
                     }
                     case MML_VOLUME_SYMBOL: {
                         uint32_t volume;
-                        error = MML_Internal::getNumber(it, maxVolume, volume);
+                        error = MML_Internal::getNumber(it, end, maxVolume, volume);
                         attributes.volume = volume / (float)maxVolume;
                         break;
                     }
@@ -205,7 +210,7 @@ namespace MML {
                     }
                     default: {
                         if (!MML_VALID_CHARACTERS.contains(c)) break;
-                        SampleNotes(c, attributes, it, error, stream);
+                        SampleNotes(c, attributes, it, end, error, stream);
                         break;
                     }
                 }
@@ -220,15 +225,15 @@ namespace MML {
         return stream;
     }
 
-    void MML_Renderer::SampleNotes(char c, MML::MML_Attributes &attributes, std::string::const_iterator &it, int32_t &error, std::vector<std::vector<int32_t>> &stream) const {
+    void MML_Renderer::SampleNotes(char c, MML::MML_Attributes &attributes, std::string::const_iterator &it, std::string::const_iterator& end, int32_t &error, std::vector<std::vector<int32_t>> &stream) const {
         bool isNote = (c >= 'a' && c <= 'g');
         bool isRest = c == MML_NOTE_REST_SYMBOL;
         if (isNote || isRest) {
             std::vector<std::vector<int32_t>> soundData;
             if (isNote) {
-                soundData = readNote(c, attributes, it, error);
+                soundData = readNote(c, attributes, it, end, error);
             } else {
-                soundData = readRest(attributes, it, error);
+                soundData = readRest(attributes, it, end, error);
             }
             if (isStereo) {
                 stream[0].insert(std::end(stream[0]), std::begin(soundData[0]), std::end(soundData[0]));
@@ -245,7 +250,7 @@ namespace MML {
             auto ite = it;
             uint32_t repeatCount;
             if (it != end) {
-                error = MML_Internal::getNumber(it, MML_REPEAT_MAXVALUE, repeatCount, false);
+                error = MML_Internal::getNumber(it, end, MML_REPEAT_MAXVALUE, repeatCount, false);
             } else {
                 repeatCount = 2;
             }
@@ -256,7 +261,7 @@ namespace MML {
             auto ite = it;
             uint32_t repeatCount;
             if (it != end) {
-                error = MML_Internal::getNumber(it, MML_REPEAT_MAXVALUE, repeatCount, false);
+                error = MML_Internal::getNumber(it, end, MML_REPEAT_MAXVALUE, repeatCount, false);
             } else {
                 repeatCount = 2;
             }
@@ -280,7 +285,7 @@ namespace MML {
         }
     }
 
-    std::vector<std::vector<int32_t>> MML_Renderer::readNote(char c, MML_Attributes& attributes, std::string::const_iterator &it, int32_t &error) const {
+    std::vector<std::vector<int32_t>> MML_Renderer::readNote(char c, MML_Attributes& attributes, std::string::const_iterator &it, std::string::const_iterator& end, int32_t &error) const {
         int32_t noteOffset = MML_NOTE_OFFSET[(c - 'a')];
         double wholeTempo = attributes.tempo / 4.0;
         bool loop = true;
@@ -305,7 +310,7 @@ namespace MML {
         }
         uint32_t length = attributes.length;
         if (std::isdigit(*it)) {
-            error = MML_Internal::getNumber(it, MML_LENGTH_MAXVALUE, length);
+            error = MML_Internal::getNumber(it, end, MML_LENGTH_MAXVALUE, length);
         }
         double dur = (sampleRate * 60) / (wholeTempo * (length == 0 ? 0.5 : length));
         while (*it == MML_NOTE_DOT_SYMBOL) {
@@ -325,11 +330,11 @@ namespace MML {
         return soundData;
     }
 
-    std::vector<std::vector<int32_t>> MML_Renderer::readRest(const MML_Attributes& attributes, std::string::const_iterator &it, int32_t &error) const {
+    std::vector<std::vector<int32_t>> MML_Renderer::readRest(const MML_Attributes& attributes, std::string::const_iterator &it, std::string::const_iterator& end, int32_t &error) const {
         double wholeTempo = attributes.tempo / 4.0;
         uint32_t length = attributes.length;
         if (std::isdigit(*it)) {
-            error = MML_Internal::getNumber(it, MML_LENGTH_MAXVALUE, length);
+            error = MML_Internal::getNumber(it, end, MML_LENGTH_MAXVALUE, length);
         }
         double dur = (sampleRate * 60) / (wholeTempo * (length == 0 ? 0.5 : length));
         while (*it == MML_NOTE_DOT_SYMBOL) {

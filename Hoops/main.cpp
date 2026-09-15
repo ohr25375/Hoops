@@ -5,7 +5,7 @@
 
 #include "src/SDL2_Font.hpp"
 #include "src/AudioHandler.hpp"
-#include <SDL2/SDL_mixer.h>
+#include <SDL_mixer.h>
 
 AUDIO_HANDLER audioHandler;
 
@@ -20,7 +20,7 @@ void callback(void* userdata, uint8_t* stream, int len) {
     }
 }
 
-int main(void) {
+int main(int argc, char* argv[]) {
     try {
         SYSTEM_VARIABLES sysVar;
         sysVar.audioHandler = &audioHandler;

@@ -1,5 +1,6 @@
 #include "MML_LiveAudio.hpp"
 
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <iostream>
 
@@ -52,6 +53,7 @@ namespace MML_LiveAudio_Internal {
         bool isReading = true;
         bool isEnd = false;
         auto& index    = channelAttributes.currentIndex;
+        auto end = channelAttributes.mml.end();
         while (isReading) {
             if (index == channelAttributes.mml.end()) {
                 isEnd = true;
@@ -61,13 +63,13 @@ namespace MML_LiveAudio_Internal {
             switch (c) {
                 case MML::MML_TEMPO_SYMBOL: {
                     uint32_t out;
-                    MML_Internal::getNumber(index, MML::MML_TEMPO_MAXVALUE, out);
+                    MML_Internal::getNumber(index, end, MML::MML_TEMPO_MAXVALUE, out);
                     channelAttributes.tempo = out;
                     break;
                 }
                 case MML::MML_OCTAVE_SYMBOL: {
                     uint32_t out;
-                    MML_Internal::getNumber(index, MML::MML_OCTAVE_MAXVALUE, out);
+                    MML_Internal::getNumber(index, end, MML::MML_OCTAVE_MAXVALUE, out);
                     channelAttributes.octave = out;
                     break;
                 }
@@ -82,13 +84,13 @@ namespace MML_LiveAudio_Internal {
                 }
                 case MML::MML_LENGTH_SYMBOL: {
                     uint32_t out;
-                    MML_Internal::getNumber(index, MML::MML_LENGTH_MAXVALUE, out);
+                    MML_Internal::getNumber(index, end, MML::MML_LENGTH_MAXVALUE, out);
                     channelAttributes.length = out;
                     break;
                 }
                 case MML::MML_VOLUME_SYMBOL: {
                     uint32_t volume;
-                    MML_Internal::getNumber(index, channelAttributes.volumeRange, volume);
+                    MML_Internal::getNumber(index, end, channelAttributes.volumeRange, volume);
                     channelAttributes.volume = volume;
                     break;
                 }
@@ -98,7 +100,7 @@ namespace MML_LiveAudio_Internal {
                 }
                 case MML::MML_INSTRUMENT_SYMBOL: {
                     uint32_t val;
-                    MML_Internal::getNumber(index, MML::MML_INSTRUMENT_MAXVALUE, val);
+                    MML_Internal::getNumber(index, end, MML::MML_INSTRUMENT_MAXVALUE, val);
                     switch (val) {
                         case 0: channelAttributes.instrumentGenerator = MML_Internal::generateSquare; break;
                         case 1: channelAttributes.instrumentGenerator = MML_Internal::generateTriangle; break;
@@ -108,19 +110,19 @@ namespace MML_LiveAudio_Internal {
                 }
                 case MML::MML_INSTRUMENTMOD_SYMBOL: {
                     uint32_t val;
-                    MML_Internal::getNumber(index, MML::MML_INSTRUMENTMOD_MAXVALUE, val);
+                    MML_Internal::getNumber(index, end, MML::MML_INSTRUMENTMOD_MAXVALUE, val);
                     channelAttributes.instMod = val;
                     break;
                 }
                 case MML::MML_FINEPITCH_SYMBOL: {
                     uint32_t val;
-                    MML_Internal::getNumber(index, MML::MML_FINEPITCH_MAXVALUE, val);
+                    MML_Internal::getNumber(index, end, MML::MML_FINEPITCH_MAXVALUE, val);
                     channelAttributes.fineTune = val;
                     break;
                 }
                 case MML::MML_REPEAT_END_SYMBOL: {
                     uint32_t count;
-                    MML_Internal::getNumber(index, MML::MML_REPEAT_MAXVALUE, count, false, 2);
+                    MML_Internal::getNumber(index, end, MML::MML_REPEAT_MAXVALUE, count, false, 2);
                     int32_t num   = count;
                     auto& repeats = channelAttributes.repeats;
                     auto ind      = index;
@@ -154,6 +156,7 @@ namespace MML_LiveAudio_Internal {
                     channelAttributes.instrumentAttributes.volume     = realVolume;
                     // get +- symbols
                     while (loop) {
+                        if (index == channelAttributes.mml.end()) break;
                         c = std::tolower(*index++);
                         switch (c) {
                             case MML::MML_NOTE_ADD_SYMBOL: {
@@ -175,18 +178,23 @@ namespace MML_LiveAudio_Internal {
                     }
                     // get length symbol
                     channelAttributes.noteLength = channelAttributes.length;
-                    if (std::isdigit(c)) {
-                        uint32_t out;
-                        MML_Internal::getNumber(index, MML::MML_LENGTH_MAXVALUE, out);
-                        channelAttributes.noteLength = out;
+                    if (index != channelAttributes.mml.end()) {
+                        if (std::isdigit(c)) {
+                            uint32_t out;
+                            MML_Internal::getNumber(index, end, MML::MML_LENGTH_MAXVALUE, out);
+                            channelAttributes.noteLength = out;
+                        }
                     }
                     float samplesInMinute      = (channelAttributes.sampleRate * 60);
                     float wholeTempo           = (channelAttributes.tempo / 4.0);
                     float realNoteLength       = (channelAttributes.noteLength == 0 ? 0.5 : channelAttributes.noteLength);
                     double expectedSampleCount = samplesInMinute / (wholeTempo * realNoteLength);
-                    while (*index == MML::MML_NOTE_DOT_SYMBOL) {
-                        index++;
-                        expectedSampleCount *= 1.5;
+                    if (index != channelAttributes.mml.end()) {
+                        while (*index == MML::MML_NOTE_DOT_SYMBOL) {
+                            index++;
+                            expectedSampleCount *= 1.5;
+                            if (index == channelAttributes.mml.end()) break;
+                        }
                     }
                     double frequency = MML::MML_A0 * pow(2, channelAttributes.octave) * pow(2, (noteOffset + channelAttributes.transpose + ((channelAttributes.fineTune - 0x80) / 100.0)) / 12.0f);
 
