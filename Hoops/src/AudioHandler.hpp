@@ -15,7 +15,13 @@ public:
     void setAudioID(const SDL_AudioDeviceID id);
     void pauseAudioDevice(bool state) const;
     void close();
+
+    void setBGMVolume(const float& value);
+    void setSFXVolume(const float& value);
+
 private:
+    float bgmVolume;
+    float sfxVolume;
     SDL_AudioDeviceID audioID;
     bool queueReset = false;
     std::queue<int16_t> oneShotQueue;

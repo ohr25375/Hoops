@@ -6,29 +6,24 @@ int convertPaletteValueToInternal(const uint8_t& value) {
 
 std::string getText(const char initial, const uint8_t& value) {
     std::stringstream text;
-    text << initial << (char)0x11 << std::setw(2) << std::setfill('0') << std::to_string(convertPaletteValueToInternal(value)) << (char)0x10 ;
+    text << initial << (char)0x11 << std::setw(2) << std::setfill('0') << std::to_string(convertPaletteValueToInternal(value)) << (char)0x10;
     return text.str();
 }
 
-void drawConfigColor(
-    FONT::BitmapFONT& bitmapFont, const VECTOR2<int>& position, const std::array<SDL_Color, 2>& colors,
-    const SDL_Color& color
-) {
-    bitmapFont.drawText((position + VECTOR2i(2, 0)) * 8, getText('R', color.r), colors[1], colors[0]);
-    bitmapFont.drawText((position + VECTOR2i(2, 1)) * 8, getText('G', color.g), colors[1], colors[0]);
-    bitmapFont.drawText((position + VECTOR2i(2, 2)) * 8, getText('B', color.b), colors[1], colors[0]);
+void drawConfigColor(FONT::BitmapFONT& bitmapFont, const VECTOR2<int>& position, const SDL_Color& textColor, const SDL_Color& color) {
+    char initials[] = { 'R', 'G', 'B' };
+    uint8_t rgb[]   = { color.r, color.g, color.b };
+    for (int i = 0; i < 3; i++) {
+        bitmapFont.drawText((position + VECTOR2i(2, i)) * 8, getText(initials[i], rgb[i]), textColor);
+    }
 }
 
 void doChangeColor(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, int& selectedItem) {
     auto& color = palette[-(selectedItem / 3) + 1];
-    auto rgb = std::array<uint8_t*, 3>{
-        &color.r,
-        &color.g,
-        &color.b,
-    };
-    auto index = selectedItem % 3;
-    auto value = convertPaletteValueToInternal(*rgb[index]);
-    value = isLeft ? decrementBound(value, 16) : incrementBound(value, 16);
+    auto rgb    = std::array<uint8_t*, 3>{ &color.r, &color.g, &color.b };
+    auto index  = selectedItem % 3;
+    auto value  = convertPaletteValueToInternal(*rgb[index]);
+    value       = isLeft ? decrementBound(value, 16) : incrementBound(value, 16);
     *rgb[index] = (value << 4) | value;
 }
 
@@ -57,7 +52,7 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuColor(SYSTEM_VARIABLES& systemVariabl
             systemVariables.playSelect();
         }
         if (keys[SDLK_ESCAPE].down || keys[SDLK_LEFT].down) {
-            selectedSubMenuItem = SUBMENU_ID::NONE;
+            selectedSubMenuItem    = SUBMENU_ID::NONE;
             selectedSubMenuSubItem = 0;
             systemVariables.playSelect();
         }
@@ -66,31 +61,29 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuColor(SYSTEM_VARIABLES& systemVariabl
 
 void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuColorRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     auto& bitmapFont = gameVariables.bitmapFont;
-    std::array<SDL_Color, 2> colors{
-        {gameVariables.palette[0], gameVariables.palette[1]}
-    };
-    auto a_position = VECTOR2i(11, 2);
-    auto b_position = VECTOR2i(11, 6);
-    bitmapFont.drawText(a_position * 8, "A", colors[1], colors[0]);
-    drawConfigColor(bitmapFont, a_position, colors,gameVariables.palette[1]);
-    bitmapFont.drawText(b_position * 8, "B", colors[1], colors[0]);
-    drawConfigColor(bitmapFont, b_position, colors, gameVariables.palette[0]);
+    auto& palette    = gameVariables.palette;
+    auto a_position  = VECTOR2i(11, 2);
+    auto b_position  = VECTOR2i(11, 6);
+    bitmapFont.drawText(a_position * 8, "A", palette[1]);
+    drawConfigColor(bitmapFont, a_position, palette[1], palette[1]);
+    bitmapFont.drawText(b_position * 8, "B", palette[1]);
+    drawConfigColor(bitmapFont, b_position, palette[1], palette[0]);
 
     if (selectedSubMenuItem != SUBMENU_ID::COLOR) return;
     if (renderTime & 0b1000) {
         if (isSubMenuItemSelected) {
             auto overlay = std::string(4, 0xdb);
             if (selectedSubMenuSubItem < 3) {
-                bitmapFont.drawText((a_position + VECTOR2i(3, selectedSubMenuSubItem)) * 8, overlay, colors[0]);
+                bitmapFont.drawText((a_position + VECTOR2i(3, selectedSubMenuSubItem)) * 8, overlay, palette[0]);
             } else {
-                bitmapFont.drawText((b_position + VECTOR2i(3, selectedSubMenuSubItem - 3)) * 8, overlay, colors[0]);
+                bitmapFont.drawText((b_position + VECTOR2i(3, selectedSubMenuSubItem - 3)) * 8, overlay, palette[0]);
             }
         } else {
             auto overlay = std::string(1, 0xdb);
             if (selectedSubMenuSubItem < 3) {
-                bitmapFont.drawText((a_position + VECTOR2i(2, selectedSubMenuSubItem)) * 8, overlay, colors[0]);
+                bitmapFont.drawText((a_position + VECTOR2i(2, selectedSubMenuSubItem)) * 8, overlay, palette[0]);
             } else {
-                bitmapFont.drawText((b_position + VECTOR2i(2, selectedSubMenuSubItem - 3)) * 8, overlay, colors[0]);
+                bitmapFont.drawText((b_position + VECTOR2i(2, selectedSubMenuSubItem - 3)) * 8, overlay, palette[0]);
             }
         }
     }

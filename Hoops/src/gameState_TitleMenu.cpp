@@ -32,9 +32,6 @@ void GAME_STATE_FUNCTIONS_TITLE::doState(SYSTEM_VARIABLES& systemVariables, GAME
             default: break;
         }
     }
-    if (keys[SDLK_ESCAPE].down) {
-        gameVariables.isRunning = false;
-    }
 }
 
 void GAME_STATE_FUNCTIONS_TITLE::doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
