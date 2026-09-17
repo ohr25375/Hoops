@@ -36,9 +36,13 @@ void AUDIO_HANDLER::clearMML() {
 }
 
 void AUDIO_HANDLER::registerOneShot(const std::vector<std::string>& mml) {
+    registerOneShot(mml, sfxVolume);
+}
+
+void AUDIO_HANDLER::registerOneShot(const std::vector<std::string>& mml, const float& volume) {
     SDL_LockAudioDevice(audioID);
     MML_LiveAudio::LiveAudioHandler tempLah;
-    tempLah.masterVolume = sfxVolume;
+    tempLah.masterVolume = volume * GLOBAL_VOLUME;
     tempLah.loadNewMML(mml);
     auto sample = tempLah.readAll();
     for (auto s : sample) {
@@ -72,9 +76,16 @@ void AUDIO_HANDLER::close() {
 
 void AUDIO_HANDLER::setBGMVolume(const float& value) {
     bgmVolume = value;
-    liveAudioHandler.masterVolume = bgmVolume;
+    liveAudioHandler.masterVolume = bgmVolume * GLOBAL_VOLUME;
 }
 
 void AUDIO_HANDLER::setSFXVolume(const float& value) {
     sfxVolume = value;
+}
+
+float AUDIO_HANDLER::getBGMVolume() const {
+    return bgmVolume;
+}
+float AUDIO_HANDLER::getSFXVolume() const {
+    return sfxVolume;
 }

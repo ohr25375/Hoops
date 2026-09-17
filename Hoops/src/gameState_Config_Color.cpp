@@ -10,7 +10,7 @@ std::string getText(const char initial, const uint8_t& value) {
     return text.str();
 }
 
-void drawConfigColor(FONT::BitmapFONT& bitmapFont, const VECTOR2<int>& position, const SDL_Color& textColor, const SDL_Color& color) {
+void drawConfigColor(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const SDL_Color& color) {
     char initials[] = { 'R', 'G', 'B' };
     uint8_t rgb[]   = { color.r, color.g, color.b };
     for (int i = 0; i < 3; i++) {
@@ -18,7 +18,7 @@ void drawConfigColor(FONT::BitmapFONT& bitmapFont, const VECTOR2<int>& position,
     }
 }
 
-void doChangeColor(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, int& selectedItem) {
+void doChangeColor(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, const int& selectedItem) {
     auto& color = palette[-(selectedItem / 3) + 1];
     auto rgb    = std::array<uint8_t*, 3>{ &color.r, &color.g, &color.b };
     auto index  = selectedItem % 3;
@@ -62,28 +62,30 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuColor(SYSTEM_VARIABLES& systemVariabl
 void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuColorRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     auto& bitmapFont = gameVariables.bitmapFont;
     auto& palette    = gameVariables.palette;
-    auto a_position  = VECTOR2i(11, 2);
-    auto b_position  = VECTOR2i(11, 6);
-    bitmapFont.drawText(a_position * 8, "A", palette[1]);
-    drawConfigColor(bitmapFont, a_position, palette[1], palette[1]);
-    bitmapFont.drawText(b_position * 8, "B", palette[1]);
-    drawConfigColor(bitmapFont, b_position, palette[1], palette[0]);
+    VECTOR2i positions[] = {
+        VECTOR2i(11, 2),
+        VECTOR2i(11, 6),
+    };
+    bitmapFont.drawText(positions[0] * 8, "A", palette[1]);
+    drawConfigColor(bitmapFont, positions[0], palette[1], palette[1]);
+    bitmapFont.drawText(positions[1] * 8, "B", palette[1]);
+    drawConfigColor(bitmapFont, positions[1], palette[1], palette[0]);
 
     if (selectedSubMenuItem != SUBMENU_ID::COLOR) return;
     if (renderTime & 0b1000) {
         if (isSubMenuItemSelected) {
             auto overlay = std::string(4, 0xdb);
             if (selectedSubMenuSubItem < 3) {
-                bitmapFont.drawText((a_position + VECTOR2i(3, selectedSubMenuSubItem)) * 8, overlay, palette[0]);
+                bitmapFont.drawText((positions[0] + VECTOR2i(3, selectedSubMenuSubItem)) * 8, overlay, palette[0]);
             } else {
-                bitmapFont.drawText((b_position + VECTOR2i(3, selectedSubMenuSubItem - 3)) * 8, overlay, palette[0]);
+                bitmapFont.drawText((positions[1] + VECTOR2i(3, selectedSubMenuSubItem - 3)) * 8, overlay, palette[0]);
             }
         } else {
             auto overlay = std::string(1, 0xdb);
             if (selectedSubMenuSubItem < 3) {
-                bitmapFont.drawText((a_position + VECTOR2i(2, selectedSubMenuSubItem)) * 8, overlay, palette[0]);
+                bitmapFont.drawText((positions[0] + VECTOR2i(2, selectedSubMenuSubItem)) * 8, overlay, palette[0]);
             } else {
-                bitmapFont.drawText((b_position + VECTOR2i(2, selectedSubMenuSubItem - 3)) * 8, overlay, palette[0]);
+                bitmapFont.drawText((positions[1] + VECTOR2i(2, selectedSubMenuSubItem - 3)) * 8, overlay, palette[0]);
             }
         }
     }

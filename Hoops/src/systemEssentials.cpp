@@ -12,7 +12,10 @@ void SYSTEM_VARIABLES::playPlace() {
 }
 
 void SYSTEM_VARIABLES::playBlip() {
-    this->audioHandler->registerOneShot({"T180 O5 P160 l32 V15 b"});
+    this->audioHandler->registerOneShot({"T180 O5 P160 l32 V15 b"}, this->audioHandler->getSFXVolume());
+}
+void SYSTEM_VARIABLES::playBlip(const float& volume) {
+    this->audioHandler->registerOneShot({"T180 O5 P160 l32 V15 b"}, volume);
 }
 
 void SYSTEM_VARIABLES::playSelect() {

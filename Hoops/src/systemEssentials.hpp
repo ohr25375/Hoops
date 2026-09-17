@@ -10,6 +10,7 @@ struct SYSTEM_VARIABLES {
     int SAMPLE_RATE = 48000;
     void playPlace();
     void playBlip();
+    void playBlip(const float& volume);
     void playSelect();
 };
 

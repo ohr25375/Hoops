@@ -6,6 +6,10 @@ void GAME_STATE_FUNCTIONS_CONFIG::doState(SYSTEM_VARIABLES& systemVariables, GAM
             this->doSubMenuNone(systemVariables, gameVariables);
             break;
         }
+        case SUBMENU_ID::SOUND: {
+            this->doSubMenuSound(systemVariables, gameVariables);
+            break;
+        }
         case SUBMENU_ID::COLOR: {
             this->doSubMenuColor(systemVariables, gameVariables);
             break;
@@ -31,6 +35,10 @@ void GAME_STATE_FUNCTIONS_CONFIG::doRender(SYSTEM_VARIABLES& systemVariables, GA
         bitmapFont.drawText(MENU_POSITIONS[i] * 8, MENU_TEXTS[i], foreground, background);
     }
     switch ((CONFIG_ID)selectedMenuItem) {
+        case CONFIG_ID::SOUND: {
+            doSubMenuSoundRender(systemVariables, gameVariables);
+            break;
+        }
         case CONFIG_ID::COLOR: {
             doSubMenuColorRender(systemVariables, gameVariables);
             break;
@@ -42,6 +50,6 @@ void GAME_STATE_FUNCTIONS_CONFIG::doRender(SYSTEM_VARIABLES& systemVariables, GA
 
 void GAME_STATE_FUNCTIONS_CONFIG::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     systemVariables.audioHandler->clearMML();
-    selectedMenuItem = (int)CONFIG_ID::COLOR;
+    selectedMenuItem = (int)CONFIG_ID::SOUND;
     selectedSubMenuItem = SUBMENU_ID::NONE;
 }

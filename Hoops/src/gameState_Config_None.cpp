@@ -20,12 +20,12 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuNone(SYSTEM_VARIABLES& systemVariable
                 systemVariables.playSelect();
                 break;
             }
-            case CONFIG_ID::COLOR: {
-                selectedSubMenuItem = SUBMENU_ID::COLOR;
+            case CONFIG_ID::MAX: break;
+            default: {
+                selectedSubMenuItem = (SUBMENU_ID)selectedMenuItem;
                 systemVariables.playSelect();
                 break;
             }
-            default: break;
         }
     }
     if (keys[SDLK_ESCAPE].down) {

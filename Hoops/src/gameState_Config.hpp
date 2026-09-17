@@ -9,12 +9,14 @@ public:
     virtual void doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
 private:
     enum struct CONFIG_ID {
+        SOUND,
         COLOR,
         BACK,
         MAX,
     };
     enum struct SUBMENU_ID {
         NONE = -1,
+        SOUND,
         COLOR,
         BACK,
         MAX,
@@ -28,9 +30,11 @@ private:
     SUBMENU_ID selectedSubMenuItem;
     const std::vector<VECTOR2i> MENU_POSITIONS = {
         VECTOR2i(2, 2),
+        VECTOR2i(2, 4),
         VECTOR2i(2, 15)
     };
     const std::vector<std::string> MENU_TEXTS = {
+        "SOUND",
         "COLOR",
         "BACK"
     };
@@ -38,4 +42,6 @@ private:
     void doSubMenuNone(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
     void doSubMenuColor(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
     void doSubMenuColorRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
+    void doSubMenuSound(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
+    void doSubMenuSoundRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
 };
