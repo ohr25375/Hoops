@@ -39,7 +39,7 @@ SDLFLAGS += -lSDL2_image
 
 # SDLFLAGS += -lSDL2_ttf
 
-obj/%.o : src/%.cpp src/%.hpp makefile
+obj/%.o : src/%.cpp makefile
 	$(CC) $(CFLAGS) $(CINCDIR) -c src/$*.cpp $(CLIBDIR) $(SDLFLAGS) $(CVERSION) -o obj/$*.o
 
 main: main.cpp main.hpp $(TARGETS) $(SRCS) makefile

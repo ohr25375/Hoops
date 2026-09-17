@@ -41,6 +41,7 @@ int main(void) {
         SDL_Quit();
     } catch (const char* msg) {
         std::cout << msg << '\n';
+        return -1;
     }
     return 0;
 }

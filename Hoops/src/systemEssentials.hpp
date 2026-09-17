@@ -14,3 +14,6 @@ struct SYSTEM_VARIABLES {
 };
 
 void toggleWindowSize(bool state, SDL_SCREEN::SCREEN& screen);
+int incrementBound(const int& value, const int& max);
+
+int decrementBound(const int& value, const int& max);

@@ -18,11 +18,6 @@ void initGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) 
     gameVariables.bitmapFont.setFont("8bitFont.bmp", VECTOR2i(8), FONT::INCLUDES::Codepage437);
     gameVariables.bitmapFont.init(systemVariables.essentials.screen.renderer);
 
-
-    gameVariables.palette = {
-        0x55aa55,
-        0x056605,
-    };
     gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
 
     SDL_Log("systemInGameInit: done");

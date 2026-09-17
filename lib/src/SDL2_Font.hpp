@@ -42,7 +42,7 @@ namespace FONT {
     public:
         int setFont(const std::string& path, const VECTOR2i& size, const INCLUDES charMap);
         int setFont(const std::string& path, const VECTOR2i& size, const std::vector<char> charSet);
-        virtual void drawText(VECTOR2d pos, std::string text, SDL_Color color, SDL_Color backgroundColor) override;
+        virtual void drawText(VECTOR2d pos, std::string text, SDL_Color color, SDL_Color backgroundColor = {.a= 0}) override;
         virtual int init(SDL_Renderer* renderer) override;
         virtual std::pair<int,int> getDimension(const std::string string) override;
 
