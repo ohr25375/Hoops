@@ -14,8 +14,8 @@ void GAME_STATE_FUNCTIONS_INGAME::renderBackground(SYSTEM_VARIABLES& systemVaria
     auto& renderer = systemVariables.essentials.screen.renderer;
     for (auto y = 0; y < this->inGameVariables.BOARD_HEIGHT; y++) {
         auto offset = VECTOR2i(1, y);
-        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::GAME_SPRITE_LEFT_WALL), (offset) * 8, gameVariables.palette, false);
-        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::GAME_SPRITE_LEFT_WALL), (offset + VECTOR2i(11,0)) * 8, gameVariables.palette, false);
+        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), (offset) * 8, gameVariables.palette, false);
+        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), (offset + VECTOR2i(11,0)) * 8, gameVariables.palette, false);
     }
     std::stringstream scoreStream;
     scoreStream << std::setw(5) << std::setfill(' ') << std::min(this->inGameVariables.score, 99999);

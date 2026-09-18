@@ -34,7 +34,7 @@ void drawBlankIslands(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL_C
     for (auto island : islands) {
         for (auto cell : island) {
             auto position = VECTOR2i(cell % pitch, cell / pitch) * 8;
-            drawGameSprite(renderer, getGameSprite(GAME_SPRITES::GAME_SPRITE_BLANK), offset + position, palette, false);
+            drawGameSprite(renderer, getGameSprite(GAME_SPRITES::BLANK), offset + position, palette, false);
         }
     }
 }

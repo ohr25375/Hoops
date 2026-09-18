@@ -106,7 +106,7 @@ void GAME_BOARD::render(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL
             auto spriteOffset = VECTOR2i(x, y) * 8 + offset;
             for (auto s = 0; s < 3; s++) {
                 if ((cell & (1 << s)) == 0) continue;
-                auto sprite = getGameSprite((GAME_SPRITES)(GAME_SPRITES::GAME_SPRITE_HOOP_001 + s));
+                auto sprite = getGameSprite((GAME_SPRITES)((int)GAME_SPRITES::HOOP_001 + s));
                 drawGameSprite(renderer, sprite, spriteOffset, palette, false);
             }
             if ((cell & 0b111) != 0b111) continue;
@@ -115,7 +115,7 @@ void GAME_BOARD::render(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL
                 if (neighbor.x < 0 || neighbor.x >= pitch || neighbor.y < 0 || neighbor.y >= height) continue;
                 const auto neighborCell = this->getCell(neighbor.x, neighbor.y);
                 if ((neighborCell & 0b111) != 0b111) continue;
-                auto sprite = getGameSprite((GAME_SPRITES)(GAME_SPRITES::GAME_SPRITE_CONNECTOR_RIGHT + i));
+                auto sprite = getGameSprite((GAME_SPRITES)((int)GAME_SPRITES::CONNECTOR_RIGHT + i));
                 drawGameSprite(renderer, sprite, spriteOffset, palette, false);
             }
         }
