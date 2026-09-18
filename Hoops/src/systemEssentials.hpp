@@ -8,13 +8,13 @@ struct SYSTEM_VARIABLES {
     AUDIO_HANDLER* audioHandler;
     SDL_AudioCallback callback;
     int SAMPLE_RATE = 48000;
+    int screenSizeMultiplier = 4;
     void playPlace();
     void playBlip();
     void playBlip(const float& volume);
     void playSelect();
+    void toggleWindowSize(bool state);
 };
-
-void toggleWindowSize(bool state, SDL_SCREEN::SCREEN& screen);
 int incrementBound(const int& value, const int& max);
 
 int decrementBound(const int& value, const int& max);

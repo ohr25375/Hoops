@@ -41,8 +41,6 @@ bool updateGameRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVar
         screen.insertDebugText("mouseLeftState = " + std::string((ess.controls.mouse.left.state ? "true" : "false")));
         screen.drawDebugText();
     }
-    
-    drawGameSprite(screen.renderer, getGameSprite(GAME_SPRITES::GAME_SPRITE_CURSOR), gameVariables.mousePosition, gameVariables.palette, ess.controls.mouse.left.state);
 
     SDL_SetRenderTarget(screen.renderer, NULL);
     return true;

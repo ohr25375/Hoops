@@ -1,8 +1,9 @@
 #include "systemEssentials.hpp"
 #include "bgmAssets.hpp"
 
-void toggleWindowSize(bool state, SDL_SCREEN::SCREEN& screen) {
-    VECTOR2i size = state ? screen.size * 4 : screen.size;
+void SYSTEM_VARIABLES::toggleWindowSize(bool state) {
+    auto& screen = essentials.screen;
+    VECTOR2i size = state ? screen.size * screenSizeMultiplier : screen.size;
     SDL_SetWindowSize(screen.window, size.x, size.y);
     SDL_SetWindowPosition(screen.window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }

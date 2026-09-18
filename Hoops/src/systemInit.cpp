@@ -20,7 +20,6 @@ bool systemInit(SYSTEM_VARIABLES& systemVariables) {
     SDL_SetWindowBordered(screen.window, SDL_FALSE);
     SDL_SetRenderDrawBlendMode(screen.renderer, SDL_BLENDMODE_BLEND);
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
-    SDL_SetRelativeMouseMode(SDL_TRUE);
 
     return true;
 }

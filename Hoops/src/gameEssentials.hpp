@@ -36,11 +36,6 @@ public:
     SDL2Addon::SDL2A_Rect screenArea;
 
     FONT::BitmapFONT bitmapFont{};
-
-    
-    VECTOR2i mousePosition{};
-    VECTOR2i mouseDelta{};
-    SDL2Addon::SDL2A_Rect mouseCaptureArea;
     
     SDL_Texture* renderTarget;
     const VECTOR2i renderTargetSize = VECTOR2i(160, 144);

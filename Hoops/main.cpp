@@ -21,27 +21,25 @@ void callback(void* userdata, uint8_t* stream, int len) {
 }
 
 int main(void) {
-    try {
-        SYSTEM_VARIABLES sysVar;
-        sysVar.audioHandler = &audioHandler;
-        sysVar.callback = callback;
-        if (!doPreInit(sysVar)) {
-            throw "Error at preInit";
-        }
-        SDL_Log("PreInit Successful");
-        if (!systemInit(sysVar)) {
-            throw "Error at init";
-        }
-        SDL_Log("Init Successful");
-        if (!doGame(sysVar)) {
-            throw "Error at doGame";
-        }
-        SDL_Log("Game closed successfully");
-        sysVar.audioHandler->close();
-        SDL_Quit();
-    } catch (const char* msg) {
-        std::cout << msg << '\n';
+    SYSTEM_VARIABLES sysVar;
+    sysVar.audioHandler = &audioHandler;
+    sysVar.callback = callback;
+    if (!doPreInit(sysVar)) {
+        SDL_LogError(SDL_LogCategory::SDL_LOG_CATEGORY_ERROR,"Error at preInit");
         return -1;
     }
+    SDL_Log("PreInit Successful");
+    if (!systemInit(sysVar)) {
+        SDL_LogError(SDL_LogCategory::SDL_LOG_CATEGORY_ERROR,"Error at Init");
+        return -1;
+    }
+    SDL_Log("Init Successful");
+    if (!doGame(sysVar)) {
+        SDL_LogError(SDL_LogCategory::SDL_LOG_CATEGORY_ERROR,"Error at doGame");
+        return -1;
+    }
+    SDL_Log("Game closed successfully");
+    sysVar.audioHandler->close();
+    SDL_Quit();
     return 0;
 }

@@ -42,7 +42,7 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuSound(SYSTEM_VARIABLES& systemVariabl
         systemVariables.playBlip();
     }
     if (isSubMenuItemSelected) {
-        if (keys[SDLK_ESCAPE].down || keys[SDLK_RETURN].down) {
+        if (keys[SDLK_ESCAPE].down || keys[SDLK_RETURN].down || keys[SDLK_z].down || keys[SDLK_x].down) {
             isSubMenuItemSelected = false;
             systemVariables.playSelect();
         }
@@ -55,11 +55,11 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuSound(SYSTEM_VARIABLES& systemVariabl
             systemVariables.playBlip(volumes[selectedSubMenuSubItem]);
         }
     } else {
-        if (keys[SDLK_RETURN].down || keys[SDLK_RIGHT].down) {
+        if (keys[SDLK_RETURN].down || keys[SDLK_RIGHT].down || keys[SDLK_z].down) {
             isSubMenuItemSelected = true;
             systemVariables.playSelect();
         }
-        if (keys[SDLK_ESCAPE].down || keys[SDLK_LEFT].down) {
+        if (keys[SDLK_ESCAPE].down || keys[SDLK_LEFT].down || keys[SDLK_x].down) {
             selectedSubMenuItem    = SUBMENU_ID::NONE;
             selectedSubMenuSubItem = 0;
             systemVariables.playSelect();
