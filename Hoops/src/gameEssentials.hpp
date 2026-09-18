@@ -7,6 +7,7 @@
 #include "src/vector2.hpp"
 #include "src/SDL2_Addon.hpp"
 #include "systemEssentials.hpp"
+#include "bgmAssets.hpp"
 
 enum GAME_STATE {
     GAME_STATE_FULLSCREEN,
@@ -32,6 +33,7 @@ public:
     bool isLargeWindow = true;
 
     GAME_STATE gameState = GAME_STATE::GAME_STATE_FULLSCREEN;
+    AUDIO_ASSET_ID gameBGM = AUDIO_ASSET_ID::AUDIO_ASSET_RINGS;
     
     SDL2Addon::SDL2A_Rect screenArea;
 

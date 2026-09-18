@@ -53,6 +53,6 @@ void GAME_STATE_FUNCTIONS_INGAME::doInit(SYSTEM_VARIABLES& systemVariables, GAME
     this->inGameVariables.blocks = 0;
     this->inGameVariables.createNewPiece();
     this->inGameVariables.createNewPiece();
-    systemVariables.audioHandler->loadNewMML(getMML(AUDIO_ASSET_RINGS));
+    systemVariables.audioHandler->loadNewMML(getMML(gameVariables.gameBGM));
     inGameVariables.setState(std::make_unique<INGAME_STATE_DropControlPiece>());
 }

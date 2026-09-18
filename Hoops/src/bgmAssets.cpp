@@ -1,8 +1,14 @@
 #include "bgmAssets.hpp"
 
-const std::vector<std::vector<std::string>> audioAssets {
-    std::vector<std::string> {},
-    std::vector<std::string> {
+struct AUDIO_ASSET {
+    std::string name;
+    std::vector<std::string> mml;
+    AUDIO_ASSET(const std::string& name, const std::vector<std::string>& mml) : name(name), mml(mml) {}
+};
+
+const std::vector<AUDIO_ASSET> audioAssets {
+    AUDIO_ASSET("NONE", std::vector<std::string>(1, "")),
+    AUDIO_ASSET("RINGS", std::vector<std::string>{
         // rings
         "T140 O4 L8 V15 I0 P120"
         "f+b>c+"
@@ -59,8 +65,8 @@ const std::vector<std::vector<std::string>> audioAssets {
         "[f+>f+<]4[b>b<]2[f+>f+<]2"
         "[e>e<]4[b>b<]4"
         "[f+>f+<]4brf+4b"
-    },
-    std::vector<std::string> {
+    }),
+    AUDIO_ASSET("ALLOY", std::vector<std::string>{
         // alloy
         "T180 O2 l24 P130 V15"
         "[<fr>frfr [fr]9 frgra-r b-r>crd-r crr6<a-rr6"
@@ -113,13 +119,19 @@ const std::vector<std::vector<std::string>> audioAssets {
         "l4b-2g8.r16ga-2rl12>d-rd-<"
         "l4b-2g8.r16ga-fcl12cre"
         "l2fcgr"
-    },
-    std::vector<std::string> {
+    }),
+    AUDIO_ASSET("ERROR", std::vector<std::string>(1, "")),
+    AUDIO_ASSET("PLACE", std::vector<std::string> {
         // place
         "T180 O2 l64 P160 V11 b- V8 g O7 V6 c < V4 g d"
-    },
+    }),
 };
 
 std::vector<std::string> getMML(const AUDIO_ASSET_ID& assetID) {
-    return audioAssets[assetID];
+    auto id = (int)assetID;
+    return audioAssets[id].mml;
+}
+
+std::string getAudioAssetName(const AUDIO_ASSET_ID& assetID) {
+    return audioAssets[(int)assetID].name;
 }
