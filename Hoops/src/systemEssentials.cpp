@@ -23,10 +23,18 @@ void SYSTEM_VARIABLES::playSelect() {
     this->audioHandler->registerOneShot({"T180 O5 P160 l32 V8 f+ V7 f+ V5 f+ V3 f+"});
 }
 
-int incrementBound(const int& value, const int& max) {
-    return (value + 1) % max;
+int incrementBound(const int& value, const int& max, const int& min) {
+    auto res = (value + 1) % max;
+    if (res < min) {
+        res = min;
+    }
+    return res;
 }
 
-int decrementBound(const int& value, const int& max) {
-    return (value + max - 1) % max;
+int decrementBound(const int& value, const int& max, const int& min) {
+    auto res = (value + max - 1) % max;
+    if (res < min) {
+        res = max - 1;
+    }
+    return res;
 }

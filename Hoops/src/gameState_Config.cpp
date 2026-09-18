@@ -14,6 +14,10 @@ void GAME_STATE_FUNCTIONS_CONFIG::doState(SYSTEM_VARIABLES& systemVariables, GAM
             this->doSubMenuColor(systemVariables, gameVariables);
             break;
         }
+        case SUBMENU_ID::SCREEN: {
+            this->doSubMenuScreen(systemVariables, gameVariables);
+            break;
+        }
         default: break;
     }
 }
@@ -41,6 +45,10 @@ void GAME_STATE_FUNCTIONS_CONFIG::doRender(SYSTEM_VARIABLES& systemVariables, GA
         }
         case CONFIG_ID::COLOR: {
             doSubMenuColorRender(systemVariables, gameVariables);
+            break;
+        }
+        case CONFIG_ID::SCREEN: {
+            doSubMenuScreenRender(systemVariables, gameVariables);
             break;
         }
         default: break;

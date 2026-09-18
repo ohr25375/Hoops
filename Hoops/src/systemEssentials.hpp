@@ -15,6 +15,6 @@ struct SYSTEM_VARIABLES {
     void playSelect();
     void toggleWindowSize(bool state);
 };
-int incrementBound(const int& value, const int& max);
+int incrementBound(const int& value, const int& max, const int& min = 0);
 
-int decrementBound(const int& value, const int& max);
+int decrementBound(const int& value, const int& max, const int& min = 0);
