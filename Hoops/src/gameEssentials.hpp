@@ -29,6 +29,7 @@ public:
 class GAME_VARIABLES {
 public:
     bool isRunning = true;
+    bool isPaused = false;
     bool isDisplayDebug = false;
     bool isLargeWindow = true;
 

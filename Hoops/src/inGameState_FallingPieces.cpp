@@ -60,6 +60,8 @@ void INGAME_STATE_FallingPieces::doRender(SYSTEM_VARIABLES& systemVariables, GAM
     }
     if (hasUpdatedValues) return;
 
+    SDL_Log("Finished dropping pieces");
+
     auto& islands = inGameVariables.islands;
     auto& gameBoard = inGameVariables.gameBoard;
     dropColumns(gameBoard, inGameVariables.getDropColumns());

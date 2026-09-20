@@ -19,11 +19,10 @@ void INGAME_STATE_Chain::doState(SYSTEM_VARIABLES& systemVariables, GAME_VARIABL
     auto& renderTime = inGameVariables.renderTime;
     if (renderTime > 0b100000) {
         auto& gameBoard = inGameVariables.gameBoard;
-
         const std::vector<int> droppingColumns = inGameVariables.getDropColumns();
+        inGameVariables.addIslandScores();
         inGameVariables.fallingRings = getFallingRings(gameBoard, droppingColumns);
         inGameVariables.setState(std::make_unique<INGAME_STATE_FallingPieces>());
-        inGameVariables.chainBonus++;
     }
 }
 
@@ -51,4 +50,5 @@ void INGAME_STATE_Chain::doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIAB
 
 void INGAME_STATE_Chain::doInit(INGAME_VARIABLES& inGameVariables) {
     inGameVariables.renderTime = 0;
+    inGameVariables.chains++;
 }

@@ -354,5 +354,5 @@ void INGAME_STATE_DropControlPiece::doInit(INGAME_VARIABLES& inGameVariables) {
     inGameVariables.createNewPiece();
     calculateGhost(inGameVariables);
     inGameVariables.delayTime = GRAVITY[std::min(inGameVariables.chainCount / 10, 20)];
-    inGameVariables.chainBonus = 0;
+    inGameVariables.chains = 0;
 }

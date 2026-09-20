@@ -22,7 +22,7 @@ public:
     int score = 0;
     int chainCount = 0;
     int blocks = 0;
-    int chainBonus = 0;
+    int chains = 0;
     GAME_BOARD gameBoard = GAME_BOARD(BOARD_WIDTH, BOARD_HEIGHT);
     std::vector<std::vector<int>> islands{};
     FALLING_RINGS fallingRings{};
@@ -34,8 +34,12 @@ public:
     HOOPS controlPiece;
     HOOPS nextPiece;
 
+    void initialize();
+
     void clearBoard();
     void createNewPiece();
+
+    void addIslandScores();
 
     void doState(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
     void doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
