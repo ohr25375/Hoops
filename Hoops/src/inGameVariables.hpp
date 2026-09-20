@@ -44,7 +44,13 @@ public:
     void doState(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
     void doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
     void setState(std::unique_ptr<INGAME_STATES> newState);
+
+    void pauseGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
+    void doPausedState(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
+    void doPausedRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
+
     std::vector<int> getDropColumns();
 private:
     std::unique_ptr<INGAME_STATES> inGameStates;
+    int selectedMenuItem = 0;
 };

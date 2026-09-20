@@ -19,5 +19,4 @@ void INGAME_STATE_GameOver::doRender(SYSTEM_VARIABLES& systemVariables, GAME_VAR
 }
 
 void INGAME_STATE_GameOver::doInit(INGAME_VARIABLES& inGameVariables) {
-    inGameVariables.renderTime = 0;
 }

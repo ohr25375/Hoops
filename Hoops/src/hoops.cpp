@@ -87,7 +87,7 @@ void HOOPS::render(SDL_Renderer*& renderer, const VECTOR2i& offset, const std::a
             bool isHoop = (layer & (1 << (DATA_SIZE - 1 - i))) != 0;
             if (!isHoop) continue;
             auto cellOffset = VECTOR2i(i % HOOP_SIZE, i / HOOP_SIZE) * SPRITE_SIZE;
-            drawGameSprite(renderer, sprite, cellOffset + offset, palette, false);
+            drawGameSprite(renderer, sprite, cellOffset + offset, palette);
         }
     }
 }

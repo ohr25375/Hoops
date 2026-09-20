@@ -22,7 +22,11 @@ public:
     float getBGMVolume() const;
     float getSFXVolume() const;
 
+    void pauseAudio();
+    void unpauseAudio();
+    
 private:
+    bool isAudioPaused = false;
     float bgmVolume = 0.5f;
     float sfxVolume = 0.5f;
     const float GLOBAL_VOLUME = 0.5f;

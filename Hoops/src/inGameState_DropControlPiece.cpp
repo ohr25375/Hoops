@@ -253,6 +253,10 @@ void INGAME_STATE_DropControlPiece::doState(SYSTEM_VARIABLES& systemVariables, G
     auto& mouse = systemVariables.essentials.controls.mouse;
     const auto& renderTime = inGameVariables.renderTime;
 
+    if (keys[SDLK_ESCAPE].down) {
+        inGameVariables.pauseGame(systemVariables, gameVariables);
+    }
+
     if (mouse.left.down || keys[SDLK_c].down) {
         if (rotatePieceRight(inGameVariables)) {
             playSpin(systemVariables);
@@ -333,8 +337,9 @@ void INGAME_STATE_DropControlPiece::doRender(SYSTEM_VARIABLES& systemVariables, 
     auto& renderTime = inGameVariables.renderTime;
     const auto offset = VECTOR2i(2, 0) * 8;
     auto& renderer = systemVariables.essentials.screen.renderer;
+    auto& keys = systemVariables.essentials.controls.keys;
 
-    if (systemVariables.essentials.controls.keys[SDLK_DOWN].isHold) {
+    if (keys[SDLK_DOWN].isHold) {
         this->holdTime++;
     } else {
         this->holdTime = 0;

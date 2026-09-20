@@ -4,7 +4,10 @@
 
 std::vector<int16_t> AUDIO_HANDLER::getSamples(const int sampleCount) {
     SDL_LockAudioDevice(audioID);
-    auto samples = this->liveAudioHandler.getSamples(sampleCount);
+    auto samples = std::vector<int16_t>(sampleCount);
+    if (!isAudioPaused) {
+        samples = this->liveAudioHandler.getSamples(sampleCount);
+    }
     for (auto i = 0; i < sampleCount; i++) {
         if (this->queueReset) break;
         if (this->oneShotQueue.empty()) break;
@@ -88,4 +91,12 @@ float AUDIO_HANDLER::getBGMVolume() const {
 }
 float AUDIO_HANDLER::getSFXVolume() const {
     return sfxVolume;
+}
+
+void AUDIO_HANDLER::pauseAudio() {
+    isAudioPaused = true;
+}
+
+void AUDIO_HANDLER::unpauseAudio() {
+    isAudioPaused = false;
 }

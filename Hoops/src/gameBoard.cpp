@@ -107,7 +107,7 @@ void GAME_BOARD::render(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL
             for (auto s = 0; s < 3; s++) {
                 if ((cell & (1 << s)) == 0) continue;
                 auto sprite = getGameSprite((GAME_SPRITES)((int)GAME_SPRITES::HOOP_001 + s));
-                drawGameSprite(renderer, sprite, spriteOffset, palette, false);
+                drawGameSprite(renderer, sprite, spriteOffset, palette);
             }
             if ((cell & 0b111) != 0b111) continue;
             for (auto i = 0; i < 4; i++) {
@@ -116,7 +116,7 @@ void GAME_BOARD::render(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL
                 const auto neighborCell = this->getCell(neighbor.x, neighbor.y);
                 if ((neighborCell & 0b111) != 0b111) continue;
                 auto sprite = getGameSprite((GAME_SPRITES)((int)GAME_SPRITES::CONNECTOR_RIGHT + i));
-                drawGameSprite(renderer, sprite, spriteOffset, palette, false);
+                drawGameSprite(renderer, sprite, spriteOffset, palette);
             }
         }
     }

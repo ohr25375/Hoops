@@ -72,14 +72,14 @@ void drawTitleScreenTextElements(FONT::BitmapFONT& bitmapFont, const SDL_Color& 
 
 void drawTitleScreenSpriteElements(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
     for (auto i = 0; i < 10; i++) {
-        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), VECTOR2i(0, i) * 8, palette, false);
-        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), VECTOR2i(19, i) * 8, palette, false);
+        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), VECTOR2i(0, i) * 8, palette);
+        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), VECTOR2i(19, i) * 8, palette);
     }
     for (auto i = 1; i < 5; i++) {
-        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::HOOP_100), VECTOR2i(i, 9) * 8, palette, false);
+        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::HOOP_100), VECTOR2i(i, 9) * 8, palette);
     }
     for (auto i = 1; i < 4; i++) {
-        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::HOOP_100), VECTOR2i(19 - i, 9) * 8, palette, false);
+        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::HOOP_100), VECTOR2i(19 - i, 9) * 8, palette);
     }
 }
 
@@ -111,4 +111,5 @@ void GAME_STATE_FUNCTIONS_TITLE::doRender(SYSTEM_VARIABLES& systemVariables, GAM
 void GAME_STATE_FUNCTIONS_TITLE::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     systemVariables.audioHandler->clearMML();
     renderTime = 0;
+    gameVariables.isPaused = false;
 }

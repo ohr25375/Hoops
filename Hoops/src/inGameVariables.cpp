@@ -76,6 +76,7 @@ void INGAME_VARIABLES::doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLE
 void INGAME_VARIABLES::setState(std::unique_ptr<INGAME_STATES> newState) {
     this->inGameStates.reset();
     this->inGameStates = std::move(newState);
+    renderTime = 0;
     this->inGameStates->doInit(*this);
 }
 

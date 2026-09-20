@@ -7,7 +7,11 @@
 #include "bgmAssets.hpp"
 
 void GAME_STATE_FUNCTIONS_INGAME::doState(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
-    this->inGameVariables.doState(systemVariables, gameVariables);
+    if (gameVariables.isPaused) {
+        inGameVariables.doPausedState(systemVariables, gameVariables);
+    } else {
+        this->inGameVariables.doState(systemVariables, gameVariables);
+    }
 }
 
 std::string getNumberText(const int& value) {
@@ -22,8 +26,8 @@ void GAME_STATE_FUNCTIONS_INGAME::renderBackground(SYSTEM_VARIABLES& systemVaria
     auto& bitmapFont = gameVariables.bitmapFont;
     for (auto y = 0; y < this->inGameVariables.BOARD_HEIGHT; y++) {
         auto offset = VECTOR2i(1, y);
-        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), (offset) * 8, palette, false);
-        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), (offset + VECTOR2i(11,0)) * 8, palette, false);
+        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), (offset) * 8, palette);
+        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), (offset + VECTOR2i(11,0)) * 8, palette);
     }
     struct BACKGROUND_TEXTS {
         VECTOR2i position;
@@ -49,12 +53,12 @@ void GAME_STATE_FUNCTIONS_INGAME::doRender(SYSTEM_VARIABLES& systemVariables, GA
     auto& renderTime = this->inGameVariables.renderTime;
     renderBackground(systemVariables, gameVariables);
     this->inGameVariables.gameBoard.render(renderer, gameVariables.palette, offset);
-
-    if (!gameVariables.isPaused) {
-        renderTime += 1;
-    }
-
     this->inGameVariables.doRender(systemVariables, gameVariables);
+    if (gameVariables.isPaused) {
+        inGameVariables.doPausedRender(systemVariables, gameVariables);
+    } else {
+        renderTime++;
+    }
 }
 
 void GAME_STATE_FUNCTIONS_INGAME::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
