@@ -2,6 +2,10 @@
 
 #include <iostream>
 
+AUDIO_HANDLER::AUDIO_HANDLER() {
+    setBGMVolume(bgmVolume);
+}
+
 std::vector<int16_t> AUDIO_HANDLER::getSamples(const int sampleCount) {
     SDL_LockAudioDevice(audioID);
     auto samples = std::vector<int16_t>(sampleCount);

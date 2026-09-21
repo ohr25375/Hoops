@@ -7,6 +7,9 @@
 class AUDIO_HANDLER {
 public:
     MML_LiveAudio::LiveAudioHandler liveAudioHandler;
+
+    AUDIO_HANDLER();
+
     std::vector<int16_t> getSamples(const int sampleCount);
     void loadNewMML(const std::vector<std::string>& mml);
     void clearMML();

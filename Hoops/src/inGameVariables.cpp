@@ -62,6 +62,8 @@ void INGAME_VARIABLES::addIslandScores() {
         int countBonus = ((blockCount - 1) * blockCount) / 2;
         int addScore = (10 * chains) * blockCount + (countBonus * 5);
         score += addScore;
+        blocks += blockCount;
+        chainCount++;
     }
 }
 
