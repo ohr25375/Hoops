@@ -65,7 +65,7 @@ namespace MML_Internal {
         double sampleNorm = (angle / (M_PI * 2)) * 2 - 1; // 0 - 1 -> 0 - 2 -> -1 - 1
         sampleNorm = (sampleNorm < 0 ? sampleNorm * 2 + 1 : -(sampleNorm * 2 - 1));
         int clamp = sampleNorm * 15;
-        return (clamp / 15.0) * (INT16_MAX);
+        return (clamp / 15.0) * (INT16_MAX) * (int)(channelAttributes.instrumentAttributes.volume);
     }
     int16_t generateNoise(ChannelAttributes& channelAttributes) {
         return mt();
