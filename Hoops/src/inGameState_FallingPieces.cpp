@@ -49,6 +49,7 @@ void INGAME_STATE_FallingPieces::doRender(SYSTEM_VARIABLES& systemVariables, GAM
                 ring.currentHeight = std::min(ring.currentHeight + this->velocity, ring.targetHeight);
                 if (ring.currentHeight == ring.targetHeight) {
                     queueSFX = true;
+                    inGameVariables.score += 1;
                 }
             }
         }
