@@ -27,5 +27,5 @@ make: $(TARGETS) makefile
 
 # clean
 clean:
-	-rm -f $(OBJS) *.d
+	rm -f $(OBJS) *.d
 	make

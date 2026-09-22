@@ -14,14 +14,14 @@ public:
     void loadNewMML(const std::vector<std::string>& mml);
     void clearMML();
     void registerOneShot(const std::vector<std::string>& mml);
-    void registerOneShot(const std::vector<std::string>& mml, const float& volume);
+    void registerOneShot(const std::vector<std::string>& mml, const float volume);
     void clearQueue();
     void setAudioID(const SDL_AudioDeviceID id);
     void pauseAudioDevice(bool state) const;
     void close();
 
-    void setBGMVolume(const float& value);
-    void setSFXVolume(const float& value);
+    void setBGMVolume(const float value);
+    void setSFXVolume(const float value);
     float getBGMVolume() const;
     float getSFXVolume() const;
 
@@ -37,3 +37,11 @@ private:
     bool queueReset = false;
     std::queue<int16_t> oneShotQueue;
 };
+
+inline void AUDIO_HANDLER::registerOneShot(const std::vector<std::string>& mml) {
+    registerOneShot(mml, sfxVolume);
+}
+
+inline void AUDIO_HANDLER::setAudioID(const SDL_AudioDeviceID id) {
+    audioID = id;
+}

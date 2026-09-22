@@ -50,7 +50,7 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuScreenRender(SYSTEM_VARIABLES& system
         VECTOR2i(11, 2),
     };
     bitmapFont.drawText(positions[0] * 8, "MAGNIFY", palette[1]);
-    drawConfigScreenSize(bitmapFont, positions[1], systemVariables.screenSizeMultiplier, palette[1]);
+    drawConfigScreenSize(bitmapFont, positions[0], systemVariables.screenSizeMultiplier, palette[1]);
     if (selectedSubMenuItem != SUBMENU_ID::SCREEN) return;
     if (renderTime & 0b1000) {
         auto overlay = std::string(7, 0xdb);

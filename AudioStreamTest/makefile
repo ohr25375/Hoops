@@ -4,6 +4,7 @@ CC = g++
 CVERSION = -std=c++20
 # compile flags
 CFLAGS = -fdiagnostics-color=always
+CFLAGS += -O3
 CFLAGS += -g
 # object include
 COBJ = ../lib/obj/*.o
@@ -42,3 +43,4 @@ clean:
 	rm -f $(OBJS)
 	rm -f $(TARGETS)
 	rm -f main
+	make

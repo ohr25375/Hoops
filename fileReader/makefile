@@ -27,4 +27,5 @@ LIBS = -lSDL2 -lSDL2_gfx -lSDL2_ttf
 all: $(TARGETS)
 # clean
 clean:
-	-rm -f $(OBJS) *.d
+	rm -f $(OBJS) *.d
+	make

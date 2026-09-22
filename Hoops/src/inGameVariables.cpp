@@ -32,7 +32,7 @@ void INGAME_VARIABLES::initialize() {
 }
 
 void INGAME_VARIABLES::clearBoard() {
-    this->gameBoard.clear();
+    gameBoard.clear();
 }
 
 void INGAME_VARIABLES::createNewPiece() {

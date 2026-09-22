@@ -4,6 +4,7 @@ CC = g++
 CVERSION = -std=c++20
 # compile flags
 CFLAGS = -fdiagnostics-color=always
+CFLAGS += -O3
 CFLAGS += -g
 CFLAGS += -Wall
 # object include
@@ -53,6 +54,12 @@ library:
 	cd ../lib && make
 	cd ../MMLParser && make
 	cd ../fileReader && make
+
+cleanLibrary:
+	cd ../AudioStreamTest && make clean
+	cd ../lib && make clean
+	cd ../MMLParser && make clean
+	cd ../fileReader && make clean
 
 clean:
 	rm -f $(OBJS)
