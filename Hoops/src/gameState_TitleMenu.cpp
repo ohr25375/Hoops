@@ -87,25 +87,20 @@ void GAME_STATE_FUNCTIONS_TITLE::doRender(SYSTEM_VARIABLES& systemVariables, GAM
     renderTime++;
     auto& bitmapFont = gameVariables.bitmapFont;
     auto& palette = gameVariables.palette;
-    const std::vector<VECTOR2i> MENU_POSITIONS = {
-        VECTOR2i(2, 12),
-        VECTOR2i(2, 14),
-        VECTOR2i(2, 16)
-    };
-    const std::vector<std::string> HEADERS = {
-        "START",
-        "CONFIG",
-        "QUIT"
+    const MENU_ITEM MENU_ITEMS[(int)MENU_TITLE::MAX] = {
+        MENU_ITEM(VECTOR2i(2,12), "START"),
+        MENU_ITEM(VECTOR2i(2,14), "CONFIG"),
+        MENU_ITEM(VECTOR2i(2,16), "QUIT"),
     };
     auto& renderer = systemVariables.essentials.screen.renderer;
     drawTitleLogo(bitmapFont, palette[1], VECTOR2f(3, 1.75 + (std::cos(renderTime * 0.03f)) * 0.25f));
     drawTitleScreenTextElements(bitmapFont, palette[1]);
     drawTitleScreenSpriteElements(renderer, palette);
 
-    for (int i = 0; i < (int)MENU_TITLE::MAX; i++) {
-        bitmapFont.drawText(MENU_POSITIONS[i] * 8, HEADERS[i], palette[1]);
+    for (const auto& [position, text] : MENU_ITEMS) {
+        bitmapFont.drawText(position * 8, text, palette[1]);
     }
-    bitmapFont.drawText((MENU_POSITIONS[(int)selectedMenuItem] - VECTOR2i(1, 0)) * 8, std::string(1, 0x10), palette[1]);
+    bitmapFont.drawText((MENU_ITEMS[(int)selectedMenuItem].position - VECTOR2i(1, 0)) * 8, std::string(1, 0x10), palette[1]);
 }
 
 void GAME_STATE_FUNCTIONS_TITLE::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {

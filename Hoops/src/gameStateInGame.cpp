@@ -30,16 +30,18 @@ void GAME_STATE_FUNCTIONS_INGAME::renderBackground(SYSTEM_VARIABLES& systemVaria
         drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), (offset + VECTOR2i(11,0)) * 8, palette);
     }
     struct BACKGROUND_TEXTS {
-        VECTOR2i position;
-        std::string header;
-        std::string number;
+        const VECTOR2i position;
+        const std::string text;
+        const std::string number;
+        constexpr BACKGROUND_TEXTS(const VECTOR2i& position, const std::string& text, const std::string numberString)
+            : position(position), text(text), number(numberString) {}
     };
-    BACKGROUND_TEXTS backgroundTexts[] = {
-        {.position = VECTOR2i(14,2), .header = "SCORE", .number = getNumberText(inGameVariables.score)},
-        {.position = VECTOR2i(14,5), .header = "CHAIN", .number = getNumberText(inGameVariables.chainCount)},
-        {.position = VECTOR2i(14,8), .header = "BLOCK", .number = getNumberText(inGameVariables.blocks)},
+    const BACKGROUND_TEXTS backgroundTexts[] = {
+        BACKGROUND_TEXTS(VECTOR2i(14,2), "SCORE", getNumberText(inGameVariables.score)),
+        BACKGROUND_TEXTS(VECTOR2i(14,5), "CHAIN", getNumberText(inGameVariables.chainCount)),
+        BACKGROUND_TEXTS(VECTOR2i(14,8), "BLOCK", getNumberText(inGameVariables.blocks)),
     };
-    for (auto [position, header, number] : backgroundTexts) {
+    for (const auto& [position, header, number] : backgroundTexts) {
         bitmapFont.drawText(position * 8, header, palette[1]);
         bitmapFont.drawText((position + VECTOR2i(0,1)) * 8, number, palette[1]);
     }

@@ -1,8 +1,8 @@
 #include "gameState_Config.hpp"
 
-void drawVolumeSlider(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const float& volumeValue) {
+void drawVolumeSlider(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const float volumeValue) {
     std::stringstream ss;
-    int volume = volumeValue * 4;
+    const int volume = volumeValue * 4;
     auto slider = std::string(5, (char)0xc4);
     slider[volume] = (char)0xdb;
     ss << (char)0x11 << slider << (char)0x10;
@@ -28,7 +28,7 @@ void doChangeVolume(const bool& isLeft, AUDIO_HANDLER& audioHandler, const int s
 }
 
 void doChangeTrack(const bool& isLeft, AUDIO_ASSET_ID& trackID) {
-    auto bound = (int)AUDIO_ASSET_ID::AUDIO_ASSET_BGM_MAX;
+    const auto bound = (int)AUDIO_ASSET_ID::MAX;
     trackID = (AUDIO_ASSET_ID)(isLeft ? decrementBound((int)trackID, bound)  : incrementBound((int)trackID, bound));
 }
 

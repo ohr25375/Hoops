@@ -30,18 +30,6 @@ private:
     int selectedSubMenuSubItem;
     bool isSubMenuItemSelected = false;
     SUBMENU_ID selectedSubMenuItem;
-    const std::vector<VECTOR2i> MENU_POSITIONS = {
-        VECTOR2i(2, 2),
-        VECTOR2i(2, 4),
-        VECTOR2i(2, 6),
-        VECTOR2i(2, 15)
-    };
-    const std::vector<std::string> MENU_TEXTS = {
-        "SOUND",
-        "COLOR",
-        "SCREEN",
-        "BACK"
-    };
 
     void doSubMenuNone(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
     void doSubMenuColor(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);

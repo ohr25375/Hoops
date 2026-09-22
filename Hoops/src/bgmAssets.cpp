@@ -7,7 +7,7 @@ struct AUDIO_ASSET {
 };
 
 const std::vector<AUDIO_ASSET> audioAssets {
-    AUDIO_ASSET("NONE", std::vector<std::string>(1, "")),
+    AUDIO_ASSET("NONE", std::vector<std::string>(0)),
     AUDIO_ASSET("RINGS", std::vector<std::string>{
         // rings
         "T140 O4 L8 V15 I0 P120"
@@ -120,11 +120,7 @@ const std::vector<AUDIO_ASSET> audioAssets {
         "l4b-2g8.r16ga-fcl12cre"
         "l2fcgr"
     }),
-    AUDIO_ASSET("ERROR", std::vector<std::string>(1, "")),
-    AUDIO_ASSET("PLACE", std::vector<std::string> {
-        // place
-        "T180 O2 l64 P160 V11 b- V8 g O7 V6 c < V4 g d"
-    }),
+    AUDIO_ASSET("ERROR", std::vector<std::string>(0)),
 };
 
 std::vector<std::string> getMML(const AUDIO_ASSET_ID& assetID) {

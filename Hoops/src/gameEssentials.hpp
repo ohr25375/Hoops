@@ -9,13 +9,6 @@
 #include "systemEssentials.hpp"
 #include "bgmAssets.hpp"
 
-enum GAME_STATE {
-    GAME_STATE_FULLSCREEN,
-    GAME_STATE_CHOOSE_ZOOM,
-    GAME_STATE_ZOOMED4,
-    GAME_STATE_ZOOMED8
-};
-
 struct GAME_VARIABLES;
 
 class GAME_STATE_FUNCTIONS {
@@ -33,8 +26,7 @@ public:
     bool isDisplayDebug = false;
     bool isLargeWindow = true;
 
-    GAME_STATE gameState = GAME_STATE::GAME_STATE_FULLSCREEN;
-    AUDIO_ASSET_ID gameBGM = AUDIO_ASSET_ID::AUDIO_ASSET_RINGS;
+    AUDIO_ASSET_ID gameBGM = AUDIO_ASSET_ID::RINGS;
     
     SDL2Addon::SDL2A_Rect screenArea;
 
@@ -51,4 +43,10 @@ public:
     void setState(SYSTEM_VARIABLES& systemVariables, std::unique_ptr<GAME_STATE_FUNCTIONS> newState);
 private:
     std::unique_ptr<GAME_STATE_FUNCTIONS> gameStateFunctions;
+};
+
+struct MENU_ITEM {
+    const VECTOR2i position;
+    const std::string text;
+    constexpr MENU_ITEM(const VECTOR2i& position, const std::string& text) : position(position), text(text) {}
 };
