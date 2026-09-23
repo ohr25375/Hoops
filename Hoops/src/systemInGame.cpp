@@ -6,6 +6,7 @@
 #include "gameRender.hpp"
 
 #include "systemInGameInit.hpp"
+#include "systemInGameClose.hpp"
 
 #include <SDL_image.h>
 #include <ctime>
@@ -70,7 +71,8 @@ bool doGame(SYSTEM_VARIABLES& systemVariables) {
             doRender(systemVariables, gameVariables);
         }
     }
-    SDL_DestroyTexture(gameVariables.renderTarget);
+
+    closeGame(systemVariables, gameVariables);
     return true;
 }
 

@@ -8,6 +8,7 @@
 #include "src/SDL2_Addon.hpp"
 #include "systemEssentials.hpp"
 #include "bgmAssets.hpp"
+#include "saveFile_v0001.hpp"
 
 struct GAME_VARIABLES;
 
@@ -38,6 +39,10 @@ public:
         0x000000,
         0xffffff,
     };
+    int palettePreset = 0;
+
+    SAVE_FILE_V0001::SAVE save;
+
     void doState(SYSTEM_VARIABLES& systemVariables);
     void doRender(SYSTEM_VARIABLES& systemVariables);
     void setState(SYSTEM_VARIABLES& systemVariables, std::unique_ptr<GAME_STATE_FUNCTIONS> newState);

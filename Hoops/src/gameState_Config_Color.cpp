@@ -2,8 +2,6 @@
 
 #include "colorPresets.hpp"
 
-int paletteIndex = 0;
-
 int convertPaletteValueToInternal(const uint8_t& value) {
     return (value >> 4) & 0xf;
 }
@@ -21,7 +19,7 @@ void drawConfigColor(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, con
         bitmapFont.drawText((position + VECTOR2i(2, i)) * 8, getText(initials[i], rgb[i]), textColor);
     }
 }
-void drawColorPreset(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor) {
+void drawColorPreset(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const int paletteIndex) {
     auto paletteName = getColorPresetName(paletteIndex);
     auto spaces = std::string(7 - paletteName.size(), ' ');
     std::stringstream text;
@@ -38,14 +36,15 @@ void doChangeColor(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, co
     *rgb[index] = (value << 4) | value;
 }
 
-void doChangePalette(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
+void doChangePalette(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, int& paletteIndex) {
     auto bound = getPresetSize();
-    paletteIndex = isLeft ? decrementBound(paletteIndex, bound) : incrementBound(paletteIndex, bound);
+    paletteIndex = isLeft ? decrementBound(paletteIndex, bound, 1) : incrementBound(paletteIndex, bound, 1);
     palette = getColorPreset(paletteIndex);
 }
 
 void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuColor(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     auto& keys = systemVariables.essentials.controls.keys;
+    auto& paletteIndex = gameVariables.palettePreset;
     if (keys[SDLK_UP].down) {
         selectedSubMenuSubItem = decrementBound(selectedSubMenuSubItem, 7);
         systemVariables.playBlip();
@@ -62,8 +61,9 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuColor(SYSTEM_VARIABLES& systemVariabl
         if (keys[SDLK_LEFT].down || keys[SDLK_RIGHT].down) {
             if (selectedSubMenuSubItem != 6) {
                 doChangeColor(keys[SDLK_LEFT].down, gameVariables.palette, selectedSubMenuSubItem);
+                paletteIndex = 0;
             } else {
-                doChangePalette(keys[SDLK_LEFT].down, gameVariables.palette);
+                doChangePalette(keys[SDLK_LEFT].down, gameVariables.palette, paletteIndex);
             }
             systemVariables.playBlip();
         }
@@ -94,7 +94,7 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuColorRender(SYSTEM_VARIABLES& systemV
     bitmapFont.drawText(positions[1] * 8, "B", palette[1]);
     drawConfigColor(bitmapFont, positions[1], palette[1], palette[0]);
     bitmapFont.drawText(positions[2] * 8, "PRESETS", palette[1]);
-    drawColorPreset(bitmapFont, positions[2], palette[1]);
+    drawColorPreset(bitmapFont, positions[2], palette[1], gameVariables.palettePreset);
 
     if (selectedSubMenuItem != SUBMENU_ID::COLOR) return;
     if (renderTime & 0b1000) {

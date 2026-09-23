@@ -7,6 +7,7 @@ struct COLOR_PRESET {
 };
 
 const std::vector<COLOR_PRESET> COLOR_PRESETS {
+    COLOR_PRESET("USER", {0x000000, 0xffffff}),
     COLOR_PRESET("MONO", {0x000000, 0xffffff}),
     COLOR_PRESET("INVERT", {0xffffff, 0x000000}),
     COLOR_PRESET("COOL", {0x000011, 0xddeedd}),
