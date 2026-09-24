@@ -2,11 +2,13 @@
 
 #include "src/SDL2_2DSuite.hpp"
 #include "AudioHandler.hpp"
+#include <filesystem>
 
 struct SYSTEM_VARIABLES {
     SDL2_2DSuite::Essentials essentials;
     AUDIO_HANDLER* audioHandler;
     SDL_AudioCallback callback;
+    std::filesystem::path execPath;
     int SAMPLE_RATE = 48000;
     int screenSizeMultiplier = 4;
     void playPlace();

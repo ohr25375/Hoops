@@ -1,5 +1,6 @@
 #include "systemInGameClose.hpp"
 #include "src/fileManager.hpp"
+#include <filesystem>
 
 void closeGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     auto& save = gameVariables.save;
@@ -21,7 +22,8 @@ void closeGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables)
     save.config.screenSize = systemVariables.screenSizeMultiplier;
 
     auto data = SAVE_FILE_V0001::writeSave(save);
-    writeBinary("saves.data", data);
+    auto path = systemVariables.execPath / "saves.data";
+    writeBinary(path, data);
 
     SDL_DestroyTexture(gameVariables.renderTarget);
 }

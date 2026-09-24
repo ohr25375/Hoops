@@ -7,6 +7,8 @@
 #include "src/AudioHandler.hpp"
 #include <SDL_mixer.h>
 
+#include <filesystem>
+
 AUDIO_HANDLER audioHandler;
 
 void callback(void* userdata, uint8_t* stream, int len) {
@@ -20,8 +22,10 @@ void callback(void* userdata, uint8_t* stream, int len) {
     }
 }
 
-int main(void) {
+int main(int argc, char *argv[]) {
     SYSTEM_VARIABLES sysVar;
+    std::filesystem::path path = argv[0];
+    sysVar.execPath = path.parent_path();
     sysVar.audioHandler = &audioHandler;
     sysVar.callback = callback;
     if (!doPreInit(sysVar)) {

@@ -15,7 +15,7 @@
 
 bool saveScreenshot(SDL_Renderer*& renderer, SDL_Texture* renderTarget) {
     std::cout << "Taking Screenshot... ";
-    std::filesystem::path folder = "screenshots";
+    std::filesystem::path folder = std::filesystem::current_path() / "screenshots";
     SDL_SetRenderTarget(renderer, renderTarget);
     Uint32 format;
     int w, h;
