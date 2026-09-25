@@ -4,4 +4,5 @@
 #include <fstream>
 #include <iostream>
 
-std::vector<char> readBinary(const std::string path);
+bool readBinary(const std::string& path, std::vector<std::byte>& out);
+void writeBinary(const std::string& path, const std::vector<std::byte>& data);

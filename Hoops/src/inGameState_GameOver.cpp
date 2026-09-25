@@ -4,7 +4,7 @@
 
 void INGAME_STATE_GameOver::doState(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables, INGAME_VARIABLES& inGameVariables) {
     auto& keys = systemVariables.essentials.controls.keys;
-    if (keys[SDLK_ESCAPE].down || keys[SDLK_RETURN].down) {
+    if (keys[SDLK_ESCAPE].down || keys[SDLK_RETURN].down || keys[SDLK_z].down || keys[SDLK_x].down) {
         gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
     }
 }
@@ -19,5 +19,4 @@ void INGAME_STATE_GameOver::doRender(SYSTEM_VARIABLES& systemVariables, GAME_VAR
 }
 
 void INGAME_STATE_GameOver::doInit(INGAME_VARIABLES& inGameVariables) {
-    inGameVariables.renderTime = 0;
 }

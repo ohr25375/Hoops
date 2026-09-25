@@ -79,15 +79,15 @@ void HOOPS::rotateRight() {
 }
 
 void HOOPS::render(SDL_Renderer*& renderer, const VECTOR2i& offset, const std::array<SDL2Addon::SDL_COLOR, 2>& palette, const bool isGhost) const {
-    auto baseSprite = isGhost ? GAME_SPRITE_HOOP_001_GHOST : GAME_SPRITE_HOOP_001;
+    auto baseSprite = isGhost ? GAME_SPRITES::HOOP_001_GHOST : GAME_SPRITES::HOOP_001;
     for (auto s = 0; s < LAYER_COUNT; s++) {
         auto layer = this->data[s];
-        auto sprite = getGameSprite((GAME_SPRITES)(baseSprite + s));
+        auto sprite = getGameSprite((GAME_SPRITES)((int)baseSprite + s));
         for (auto i = 0; i < DATA_SIZE; i++) {
             bool isHoop = (layer & (1 << (DATA_SIZE - 1 - i))) != 0;
             if (!isHoop) continue;
             auto cellOffset = VECTOR2i(i % HOOP_SIZE, i / HOOP_SIZE) * SPRITE_SIZE;
-            drawGameSprite(renderer, sprite, cellOffset + offset, palette, false);
+            drawGameSprite(renderer, sprite, cellOffset + offset, palette);
         }
     }
 }

@@ -1,8 +1,14 @@
 #include "bgmAssets.hpp"
 
-const std::vector<std::vector<std::string>> audioAssets {
-    std::vector<std::string> {},
-    std::vector<std::string> {
+struct AUDIO_ASSET {
+    std::string name;
+    std::vector<std::string> mml;
+    AUDIO_ASSET(const std::string& name, const std::vector<std::string>& mml) : name(name), mml(mml) {}
+};
+
+const std::vector<AUDIO_ASSET> audioAssets {
+    AUDIO_ASSET("NONE", std::vector<std::string>(0)),
+    AUDIO_ASSET("RINGS", std::vector<std::string>{
         // rings
         "T140 O4 L8 V15 I0 P120"
         "f+b>c+"
@@ -59,17 +65,69 @@ const std::vector<std::vector<std::string>> audioAssets {
         "[f+>f+<]4[b>b<]2[f+>f+<]2"
         "[e>e<]4[b>b<]4"
         "[f+>f+<]4brf+4b"
-    },
-    std::vector<std::string> {
+    }),
+    AUDIO_ASSET("ALLOY", std::vector<std::string>{
         // alloy
-        ""
-    },
-    std::vector<std::string> {
-        // place
-        "T180 O2 l64 P160 V11 b- V8 g O7 V6 c < V4 g d"
-    },
+        "T180 O2 l24 P130 V15"
+        "[<fr>frfr [fr]9 frgra-r b-r>crd-r crr6<a-rr6"
+        "<fr>[fr]11 frgra-r b-r>crd-r crr6<a-rr6"
+        "<fr>frfr [fr]9 <gr>[gr]11 <a-r>[a-r]5 <er>[er]5]3"
+        "<fr>frfr [fr]9 frgra-r b-r>crd-r crr6<a-rr6"
+        "<b-r>b-rb-r [b-r]9 <fr>frfr [fr]3 frgra-ra-rgrfr"
+        "<b-r>b-rb-r [b-r]9 <fr>frfr [fr]3 frgra-ra-rgrfr"
+        "<b-r>b-rb-r [b-r]9 <fr>frfr [fr]3 frgra-ra-rgrfr"
+        "<gr>grgr [gr]9 <cr>crcr [cr]3 > cr<b-ra-rb-ra-rgr"
+        ,
+        "T180 O2 l24 P128 V15 !1"
+        "[[f12.rfr]8"
+        "[f12.rfr]8"
+        "[f12.rfr]4 <[b-12.rb-r]3 b12.rbr"
+        ">[c12.rcr]4]3"
+        "[f12.rfr]8"
+        "<[b-12.rb-r]4>[f12.rfr]4"
+        "<[b-12.rb-r]4>[f12.rfr]4"
+        "<[b-12.rb-r]4>[f12.rfr]4"
+        "[g12.rgr]4[c12.rcr]4"
+        ,
+        "T180 O4 l4 P124 V15 !2"
+        "[r1]7"
+        "r1"
+        "[l6 r3. r. c v8 c12"
+        "v15 f v8 f12 v15 g v8 g12 v15 a- v8 a-12 v15 b- v8 b-12 v15 >c v8 c12 v15 <a- v8 a-12 v15 f v8 f12 r."
+        "v15 r3. r. >c+ v8 c+12 v15 c v8 c12 v15 <a- v8 a-12 v15 f8.r16 l12frg"
+        "l3 a-.e."
+        "f.r.]2"
+        "r3. r6."
+        "l12>crf"
+        "l6d-3.<b-.b.b+3.f.>l12fre-"
+        "l6d-3.<b-.b.b+3.r.>l12frf"
+        "l6d-3.<b+.b-.b+.a-.f.l12frg"
+        "l3a-.f.b+.r."
+        ,
+        "T180 O3 l4 P124 V15 !2"
+        "[r1]7"
+        "[r1]7"
+        "r1"
+        "l4r2. a-"
+        ">cefga-fcr"
+        "r2.b-a-fc8.r16l12cre"
+        "f2c2"
+        "<a-2r2"
+        "r2."
+        "l12>grb+"
+        "l4b-2g8.r16ga-2cl12>d-rc<"
+        "l4b-2g8.r16ga-2rl12>d-rd-<"
+        "l4b-2g8.r16ga-fcl12cre"
+        "l2fcgr"
+    }),
+    AUDIO_ASSET("ERROR", std::vector<std::string>(0)),
 };
 
 std::vector<std::string> getMML(const AUDIO_ASSET_ID& assetID) {
-    return audioAssets[assetID];
+    auto id = (int)assetID;
+    return audioAssets[id].mml;
+}
+
+std::string getAudioAssetName(const AUDIO_ASSET_ID& assetID) {
+    return audioAssets[(int)assetID].name;
 }

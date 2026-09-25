@@ -6,6 +6,7 @@
 #include "gameRender.hpp"
 
 #include "systemInGameInit.hpp"
+#include "systemInGameClose.hpp"
 
 #include <SDL_image.h>
 #include <ctime>
@@ -14,7 +15,7 @@
 
 bool saveScreenshot(SDL_Renderer*& renderer, SDL_Texture* renderTarget) {
     std::cout << "Taking Screenshot... ";
-    std::filesystem::path folder = "screenshots";
+    std::filesystem::path folder = std::filesystem::current_path() / "screenshots";
     SDL_SetRenderTarget(renderer, renderTarget);
     Uint32 format;
     int w, h;
@@ -40,30 +41,6 @@ bool saveScreenshot(SDL_Renderer*& renderer, SDL_Texture* renderTarget) {
     return false;
 }
 
-VECTOR2i getScreenMousePosition(VECTOR2i mousePosition, const bool isLargeWindow) {
-    if (isLargeWindow) {
-        mousePosition /= 2;
-    }
-    return mousePosition;
-}
-
-VECTOR2i correctMousePosition(VECTOR2i mousePosition, const SDL2Addon::SDL2A_Rect& mouseCaptureArea) {
-    mousePosition.x = std::min(std::max(mousePosition.x, mouseCaptureArea.pos.x), mouseCaptureArea.pos.x + mouseCaptureArea.size.x - 1);
-    mousePosition.y = std::min(std::max(mousePosition.y, mouseCaptureArea.pos.y), mouseCaptureArea.pos.y + mouseCaptureArea.size.y - 1);
-    return mousePosition;
-}
-
-void updateMousePosition(const MOUSE& mouse, GAME_VARIABLES& gameVariables) {
-    auto previousMousePos = gameVariables.mousePosition;
-    auto screenMousePos = getScreenMousePosition(VECTOR2i(mouse.x, mouse.y), gameVariables.isLargeWindow);
-    auto previousScreenMousePos = getScreenMousePosition(VECTOR2i(mouse.x, mouse.y) - VECTOR2i(mouse.xdir, mouse.ydir), gameVariables.isLargeWindow);
-
-    auto delta = screenMousePos - previousScreenMousePos;
-    gameVariables.mousePosition += delta;
-    gameVariables.mousePosition = correctMousePosition(gameVariables.mousePosition, gameVariables.mouseCaptureArea);
-    gameVariables.mouseDelta = gameVariables.mousePosition - previousMousePos;
-}
-
 bool doGame(SYSTEM_VARIABLES& systemVariables) {
     GAME_VARIABLES gameVariables;
 
@@ -73,13 +50,10 @@ bool doGame(SYSTEM_VARIABLES& systemVariables) {
         updateInternals(systemVariables, gameVariables);
         auto& ess  = systemVariables.essentials;
         auto& keys = ess.controls.keys;
-        auto& mouse = ess.controls.mouse;
-
-        updateMousePosition(mouse, gameVariables);
         
         if (keys[SDLK_F2].down) {
             gameVariables.isLargeWindow = !gameVariables.isLargeWindow;
-            toggleWindowSize(gameVariables.isLargeWindow, ess.screen);
+            systemVariables.toggleWindowSize(gameVariables.isLargeWindow);
         }
 
         if (keys[SDLK_F4].down) {
@@ -97,7 +71,8 @@ bool doGame(SYSTEM_VARIABLES& systemVariables) {
             doRender(systemVariables, gameVariables);
         }
     }
-    SDL_DestroyTexture(gameVariables.renderTarget);
+
+    closeGame(systemVariables, gameVariables);
     return true;
 }
 

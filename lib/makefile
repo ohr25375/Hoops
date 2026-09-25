@@ -10,10 +10,10 @@ SRCS = $(wildcard src/*.cpp) $(wildcard src/**/*.cpp)
 OBJS = $(wildcard obj/*.o) $(wildcard obj/**/*.o)
 
 # includes
-INCDIR = -I/opt/homebrew/include/
+INCDIR = -I/opt/homebrew/include/SDL2/
 
 # libdir
-LIBDIR = -L/opt/homebrew/lib
+LIBDIR = -L/opt/homebrew/lib/
 # libs
 LIBS = -lSDL2 -lSDL2_gfx -lSDL2_ttf
 
@@ -27,5 +27,5 @@ make: $(TARGETS) makefile
 
 # clean
 clean:
-	-rm -f $(OBJS) *.d
+	rm -f $(OBJS) *.d
 	make

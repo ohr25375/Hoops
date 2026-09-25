@@ -7,30 +7,46 @@
 #include "bgmAssets.hpp"
 
 void GAME_STATE_FUNCTIONS_INGAME::doState(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
-    this->inGameVariables.doState(systemVariables, gameVariables);
+    if (gameVariables.isPaused) {
+        inGameVariables.doPausedState(systemVariables, gameVariables);
+    } else {
+        this->inGameVariables.doState(systemVariables, gameVariables);
+    }
+}
+
+std::string getNumberText(const int& value) {
+    std::stringstream ss;
+    ss << std::setw(5) << std::setfill(' ') << std::min(value, 99999);
+    return ss.str();
 }
 
 void GAME_STATE_FUNCTIONS_INGAME::renderBackground(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     auto& renderer = systemVariables.essentials.screen.renderer;
+    auto& palette = gameVariables.palette;
+    auto& bitmapFont = gameVariables.bitmapFont;
     for (auto y = 0; y < this->inGameVariables.BOARD_HEIGHT; y++) {
         auto offset = VECTOR2i(1, y);
-        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::GAME_SPRITE_LEFT_WALL), (offset) * 8, gameVariables.palette, false);
-        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::GAME_SPRITE_LEFT_WALL), (offset + VECTOR2i(11,0)) * 8, gameVariables.palette, false);
+        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), (offset) * 8, palette);
+        drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), (offset + VECTOR2i(11,0)) * 8, palette);
     }
-    std::stringstream scoreStream;
-    scoreStream << std::setw(5) << std::setfill(' ') << std::min(this->inGameVariables.score, 99999);
-    gameVariables.bitmapFont.drawText(VECTOR2i(14, 2) * 8, "SCORE", gameVariables.palette[1], {.a = 0});
-    gameVariables.bitmapFont.drawText(VECTOR2i(14, 3) * 8, scoreStream.str(), gameVariables.palette[1], {.a = 0});
-    std::stringstream chainStream;
-    chainStream << std::setw(5) << std::setfill(' ') << std::min(this->inGameVariables.chainCount, 99999);
-    gameVariables.bitmapFont.drawText(VECTOR2i(14, 5) * 8, "CHAIN", gameVariables.palette[1], {.a = 0});
-    gameVariables.bitmapFont.drawText(VECTOR2i(14, 6) * 8, chainStream.str(), gameVariables.palette[1], {.a = 0});
-    std::stringstream blockStream;
-    blockStream << std::setw(5) << std::setfill(' ') << std::min(this->inGameVariables.blocks, 99999);
-    gameVariables.bitmapFont.drawText(VECTOR2i(14, 8) * 8, "BLOCK", gameVariables.palette[1], {.a = 0});
-    gameVariables.bitmapFont.drawText(VECTOR2i(14, 9) * 8, blockStream.str(), gameVariables.palette[1], {.a = 0});
-    gameVariables.bitmapFont.drawText(VECTOR2i(15, 13) * 8, "NEXT", gameVariables.palette[1], {.a = 0});
-    this->inGameVariables.nextPiece.render(renderer, VECTOR2i(15, 14) * 8, gameVariables.palette);
+    struct BACKGROUND_TEXTS {
+        const VECTOR2i position;
+        const std::string text;
+        const std::string number;
+        constexpr BACKGROUND_TEXTS(const VECTOR2i& position, const std::string& text, const std::string numberString)
+            : position(position), text(text), number(numberString) {}
+    };
+    const BACKGROUND_TEXTS backgroundTexts[] = {
+        BACKGROUND_TEXTS(VECTOR2i(14,2), "SCORE", getNumberText(inGameVariables.score)),
+        BACKGROUND_TEXTS(VECTOR2i(14,5), "CHAIN", getNumberText(inGameVariables.chainCount)),
+        BACKGROUND_TEXTS(VECTOR2i(14,8), "BLOCK", getNumberText(inGameVariables.blocks)),
+    };
+    for (const auto& [position, header, number] : backgroundTexts) {
+        bitmapFont.drawText(position * 8, header, palette[1]);
+        bitmapFont.drawText((position + VECTOR2i(0,1)) * 8, number, palette[1]);
+    }
+    bitmapFont.drawText(VECTOR2i(15, 13) * 8, "NEXT", palette[1], {.a = 0});
+    this->inGameVariables.nextPiece.render(renderer, VECTOR2i(15, 14) * 8, palette);
 }
 
 void GAME_STATE_FUNCTIONS_INGAME::doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
@@ -39,20 +55,16 @@ void GAME_STATE_FUNCTIONS_INGAME::doRender(SYSTEM_VARIABLES& systemVariables, GA
     auto& renderTime = this->inGameVariables.renderTime;
     renderBackground(systemVariables, gameVariables);
     this->inGameVariables.gameBoard.render(renderer, gameVariables.palette, offset);
-
-    renderTime += 1;
-
     this->inGameVariables.doRender(systemVariables, gameVariables);
+    if (gameVariables.isPaused) {
+        inGameVariables.doPausedRender(systemVariables, gameVariables);
+    } else {
+        renderTime++;
+    }
 }
 
 void GAME_STATE_FUNCTIONS_INGAME::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
-    this->inGameVariables.clearBoard();
-    this->inGameVariables.delayTime = 60;
-    this->inGameVariables.chainCount = 0;
-    this->inGameVariables.score = 0;
-    this->inGameVariables.blocks = 0;
-    this->inGameVariables.createNewPiece();
-    this->inGameVariables.createNewPiece();
-    systemVariables.audioHandler->loadNewMML(getMML(AUDIO_ASSET_RINGS));
+    inGameVariables.initialize();
+    systemVariables.audioHandler->loadNewMML(getMML(gameVariables.gameBGM));
     inGameVariables.setState(std::make_unique<INGAME_STATE_DropControlPiece>());
 }

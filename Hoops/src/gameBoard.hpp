@@ -27,8 +27,6 @@ public:
     GAME_BOARD();
 
     void clear();
-    int getPitch() const;
-    int getHeight() const;
     char getCell(const int x, const int y) const;
     void setCell(const int x, const int y, const char state);
     void dropColumn(const int x, const int y);
@@ -40,7 +38,21 @@ public:
     std::vector<std::vector<int>> getIslands(const int threshold = 0) const;
 private:
     std::vector<char> board;
-    int pitch;
+    const int pitch;
+    const int height;
 
     size_t getIndex(const int x, const int y) const;
 };
+
+inline void GAME_BOARD::clear() {
+    board = std::vector<char>(board.size());
+}
+inline char GAME_BOARD::getCell(const int x, const int y) const {
+    return board[getIndex(x, y)];
+}
+inline void GAME_BOARD::setCell(const int x, const int y, const char state) {
+    board[getIndex(x, y)] = state;
+}
+inline size_t GAME_BOARD::getIndex(const int x, const int y) const {
+    return x + y * pitch;
+}

@@ -21,8 +21,18 @@ const std::vector<HOOPS> DEFAULT_HOOPS = {
     }, true),
 };
 
+void INGAME_VARIABLES::initialize() {
+    clearBoard();
+    delayTime = 60;
+    chainCount = 0;
+    score = 0;
+    blocks = 0;
+    createNewPiece();
+    createNewPiece();
+}
+
 void INGAME_VARIABLES::clearBoard() {
-    this->gameBoard.clear();
+    gameBoard.clear();
 }
 
 void INGAME_VARIABLES::createNewPiece() {
@@ -44,6 +54,19 @@ void INGAME_VARIABLES::createNewPiece() {
     this->nextPiece.setRandomRotaionDepth();
 }
 
+void INGAME_VARIABLES::addIslandScores() {
+    for (auto island : islands) {
+        // score of block(1) = 10 * chains
+        // score of block(n + 1) = score of block(n) + 5
+        const int blockCount = island.size();
+        int countBonus = ((blockCount - 1) * blockCount) / 2;
+        int addScore = (10 * chains) * blockCount + (countBonus * 5);
+        score += addScore;
+        blocks += blockCount;
+        chainCount++;
+    }
+}
+
 void INGAME_VARIABLES::doState(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     this->inGameStates->doState(systemVariables, gameVariables, *this);
 }
@@ -55,19 +78,13 @@ void INGAME_VARIABLES::doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLE
 void INGAME_VARIABLES::setState(std::unique_ptr<INGAME_STATES> newState) {
     this->inGameStates.reset();
     this->inGameStates = std::move(newState);
+    renderTime = 0;
     this->inGameStates->doInit(*this);
 }
 
 std::vector<int> INGAME_VARIABLES::getDropColumns() {
     std::vector<int> droppingColumns(BOARD_WIDTH, -1);
-
-
     for (auto island : islands) {
-        chainCount++;
-        const auto islandSize = island.size();
-        blocks += islandSize;
-        const auto bonusCount = (((islandSize - 1) * islandSize) / 2);
-        score += (10 + chainBonus) * islandSize + bonusCount * 5;
         for (auto cell : island) {
             const auto x = cell % BOARD_WIDTH;
             const auto y = cell / BOARD_WIDTH;

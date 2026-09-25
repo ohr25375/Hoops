@@ -7,6 +7,8 @@
 #include "src/AudioHandler.hpp"
 #include <SDL_mixer.h>
 
+#include <filesystem>
+
 AUDIO_HANDLER audioHandler;
 
 void callback(void* userdata, uint8_t* stream, int len) {
@@ -20,27 +22,28 @@ void callback(void* userdata, uint8_t* stream, int len) {
     }
 }
 
-int main(int argc, char* argv[]) {
-    try {
-        SYSTEM_VARIABLES sysVar;
-        sysVar.audioHandler = &audioHandler;
-        sysVar.callback = callback;
-        if (!doPreInit(sysVar)) {
-            throw "Error at preInit";
-        }
-        SDL_Log("PreInit Successful");
-        if (!systemInit(sysVar)) {
-            throw "Error at init";
-        }
-        SDL_Log("Init Successful");
-        if (!doGame(sysVar)) {
-            throw "Error at doGame";
-        }
-        SDL_Log("Game closed successfully");
-        sysVar.audioHandler->close();
-        SDL_Quit();
-    } catch (const char* msg) {
-        std::cout << msg << '\n';
+int main(int argc, char *argv[]) {
+    SYSTEM_VARIABLES sysVar;
+    std::filesystem::path path = argv[0];
+    sysVar.execPath = path.parent_path();
+    sysVar.audioHandler = &audioHandler;
+    sysVar.callback = callback;
+    if (!doPreInit(sysVar)) {
+        SDL_LogError(SDL_LogCategory::SDL_LOG_CATEGORY_ERROR,"Error at preInit");
+        return -1;
     }
+    SDL_Log("PreInit Successful");
+    if (!systemInit(sysVar)) {
+        SDL_LogError(SDL_LogCategory::SDL_LOG_CATEGORY_ERROR,"Error at Init");
+        return -1;
+    }
+    SDL_Log("Init Successful");
+    if (!doGame(sysVar)) {
+        SDL_LogError(SDL_LogCategory::SDL_LOG_CATEGORY_ERROR,"Error at doGame");
+        return -1;
+    }
+    SDL_Log("Game closed successfully");
+    sysVar.audioHandler->close();
+    SDL_Quit();
     return 0;
 }

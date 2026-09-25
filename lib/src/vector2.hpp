@@ -17,26 +17,11 @@ class VECTOR2 {
 public:
     T x, y;
 
-    VECTOR2() {
-        x = 0;
-        y = 0;
-    }
-
-    VECTOR2(const T& xy) {
-        x = xy;
-        y = xy;
-    }
-    
-    VECTOR2(const T& x, const T& y) {
-        this->x = x;
-        this->y = y;
-    }
-
+    constexpr VECTOR2() : VECTOR2(0) {}
+    constexpr VECTOR2(const T& xy) : VECTOR2(xy, xy) {}
+    constexpr VECTOR2(const T& x, const T& y) : x(x), y(y) {}
     template<typename T2>
-    VECTOR2(const VECTOR2<T2> xy) {
-        this->x = xy.x;
-        this->y = xy.y;
-    }
+    constexpr VECTOR2(const VECTOR2<T2> xy) : x(xy.x), y(xy.y) {}
 
     VECTOR2& operator+=(const VECTOR2& rhs) {
         x += rhs.x;
@@ -177,7 +162,7 @@ public:
         return this->dot(other) < 0;
     }
 
-    operator std::pair<T, T>() const {
+    constexpr operator std::pair<T, T>() const {
         return {x, y};
     }
 

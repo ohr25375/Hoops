@@ -174,7 +174,7 @@ std::vector<SPRITE_DATA> generate() {
 
 SPRITE_DATA getGameSprite(const GAME_SPRITES spriteID) {
     static const auto editorSprites = generate();
-    if (spriteID < editorSprites.size()) return editorSprites[(int)spriteID];
+    if ((size_t)spriteID < editorSprites.size()) return editorSprites[(int)spriteID];
     std::cout << "ERROR: Editor Sprite not found\n";
     return editorSprites[0];
 }

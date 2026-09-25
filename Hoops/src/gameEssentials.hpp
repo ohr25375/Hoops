@@ -7,13 +7,8 @@
 #include "src/vector2.hpp"
 #include "src/SDL2_Addon.hpp"
 #include "systemEssentials.hpp"
-
-enum GAME_STATE {
-    GAME_STATE_FULLSCREEN,
-    GAME_STATE_CHOOSE_ZOOM,
-    GAME_STATE_ZOOMED4,
-    GAME_STATE_ZOOMED8
-};
+#include "bgmAssets.hpp"
+#include "saveFile_v0001.hpp"
 
 struct GAME_VARIABLES;
 
@@ -28,19 +23,15 @@ public:
 class GAME_VARIABLES {
 public:
     bool isRunning = true;
+    bool isPaused = false;
     bool isDisplayDebug = false;
     bool isLargeWindow = true;
 
-    GAME_STATE gameState = GAME_STATE::GAME_STATE_FULLSCREEN;
+    AUDIO_ASSET_ID gameBGM = AUDIO_ASSET_ID::RINGS;
     
     SDL2Addon::SDL2A_Rect screenArea;
 
     FONT::BitmapFONT bitmapFont{};
-
-    
-    VECTOR2i mousePosition{};
-    VECTOR2i mouseDelta{};
-    SDL2Addon::SDL2A_Rect mouseCaptureArea;
     
     SDL_Texture* renderTarget;
     const VECTOR2i renderTargetSize = VECTOR2i(160, 144);
@@ -48,9 +39,19 @@ public:
         0x000000,
         0xffffff,
     };
+    int palettePreset = 0;
+
+    SAVE_FILE_V0001::SAVE save;
+
     void doState(SYSTEM_VARIABLES& systemVariables);
     void doRender(SYSTEM_VARIABLES& systemVariables);
     void setState(SYSTEM_VARIABLES& systemVariables, std::unique_ptr<GAME_STATE_FUNCTIONS> newState);
 private:
     std::unique_ptr<GAME_STATE_FUNCTIONS> gameStateFunctions;
+};
+
+struct MENU_ITEM {
+    const VECTOR2i position;
+    const std::string text;
+    constexpr MENU_ITEM(const VECTOR2i& position, const std::string& text) : position(position), text(text) {}
 };

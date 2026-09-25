@@ -23,6 +23,38 @@ bool doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) 
     return true;
 }
 
+std::string getBooleanSymbol(const bool& state) {
+    return std::string(1,(state ? (char)0x7 : (char)0x9));
+}
+
+void drawDebugTexts(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
+    auto& frameRate = systemVariables.essentials.frameRate;
+    auto& screen = systemVariables.essentials.screen;
+    auto& textColor = gameVariables.palette[0];
+    auto& background = gameVariables.palette[1];
+    renderOverlay(screen.renderer, gameVariables.renderTargetSize);
+    std::stringstream fps;
+    fps << "FPS: " << std::fixed << std::setprecision(2) << frameRate.getCurrentFramesPerSecond() << " / " << frameRate.FPS;
+    screen.insertDebugText(fps.str(), textColor);
+    screen.insertDebugText("UPF : " + std::to_string(frameRate.getUpdatesPerFrame()), textColor);
+    screen.insertDebugText("TPF : " + std::to_string(frameRate.getTicksPerFrame()), textColor);
+
+    auto& keys = systemVariables.essentials.controls.keys;
+    screen.insertDebugText("Inputs:", textColor);
+    screen.insertDebugText("A:" + getBooleanSymbol(keys[SDLK_z].state), textColor, false);
+    screen.insertDebugText("|B:" + getBooleanSymbol(keys[SDLK_x].state), textColor, false);
+    screen.insertDebugText("|C:" + getBooleanSymbol(keys[SDLK_c].state), textColor);
+    screen.insertDebugText("LEFT :" + getBooleanSymbol(keys[SDLK_LEFT].state), textColor, false);
+    screen.insertDebugText("|RIGHT :" + getBooleanSymbol(keys[SDLK_RIGHT].state), textColor);
+    screen.insertDebugText("UP   :" + getBooleanSymbol(keys[SDLK_UP].state), textColor, false);
+    screen.insertDebugText("|DOWN  :" + getBooleanSymbol(keys[SDLK_DOWN].state), textColor);
+    screen.insertDebugText("START:" + getBooleanSymbol(keys[SDLK_RETURN].state), textColor, false);
+    screen.insertDebugText("|SELECT:" + getBooleanSymbol(keys[SDLK_ESCAPE].state), textColor);
+
+
+    screen.drawDebugText(background);
+}
+
 bool updateGameRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     auto& ess = systemVariables.essentials;
     auto& screen = ess.screen;
@@ -33,16 +65,8 @@ bool updateGameRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVar
     gameVariables.doRender(systemVariables);
 
     if (gameVariables.isDisplayDebug) {
-        renderOverlay(screen.renderer, gameVariables.renderTargetSize);
-        screen.insertDebugText(ess.frameRate.getDebugText());
-        auto& mouse = systemVariables.essentials.controls.mouse;
-        screen.insertDebugText("raw mouse position: " + std::string(VECTOR2i(mouse.x, mouse.y)));
-        screen.insertDebugText(std::to_string((int)gameVariables.gameState));
-        screen.insertDebugText("mouseLeftState = " + std::string((ess.controls.mouse.left.state ? "true" : "false")));
-        screen.drawDebugText();
+        drawDebugTexts(systemVariables, gameVariables);
     }
-    
-    drawGameSprite(screen.renderer, getGameSprite(GAME_SPRITES::GAME_SPRITE_CURSOR), gameVariables.mousePosition, gameVariables.palette, ess.controls.mouse.left.state);
 
     SDL_SetRenderTarget(screen.renderer, NULL);
     return true;
