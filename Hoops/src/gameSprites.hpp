@@ -8,8 +8,9 @@
 #include "src/SDL2_Addon.hpp"
 
 struct SPRITE_ROW {
-    uint8_t color;
-    uint8_t alpha;
+    const uint8_t color;
+    const uint8_t alpha;
+    SPRITE_ROW(const uint8_t color = 0, const uint8_t alpha = 0) : color(color), alpha(alpha) {}
 };
 
 typedef std::array<SPRITE_ROW, 8> SPRITE;
@@ -29,6 +30,8 @@ enum struct GAME_SPRITES {
     HOOP_010_GHOST,
     HOOP_100_GHOST,
     WALL,
+    MAN,
+    MAN_HAPPY,
 };
 
 struct SPRITE_DATA {

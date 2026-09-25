@@ -19,7 +19,7 @@ class INGAME_VARIABLES {
 public:
     const int BOARD_WIDTH = 10;
     const int BOARD_HEIGHT = 18;
-    int score = 0;
+    uint32_t score = 0;
     int chainCount = 0;
     int blocks = 0;
     int chains = 0;

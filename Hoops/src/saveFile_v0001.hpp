@@ -4,13 +4,13 @@
 #include <vector>
 
 namespace SAVE_FILE_V0001 {
-// VALUE        SIZE        (64)
+// VALUE        SIZE        (72)
 // SAVE         4 char
-// _fileSize    4 uint32    (56)
+// _fileSize    4 uint32    (64)
 // RING         4 char
 // _version     2 uint16    VER.1
 // -pad         2 null
-//--CHUNKS--                (48)
+//--CHUNKS--                (56)
 //--CONFIG--                (16)
 // CONF         4 char
 // _confSize    4 uint32    (8)
@@ -20,15 +20,16 @@ namespace SAVE_FILE_V0001 {
 // _colorB      2 packed    (xxxxrrrr ggggbbbb)
 // _preset      1 uint8
 // _screenSize  1 uint8
-//--SCORES--                (32)
+//--SCORES--                (40)
 // SCOR         4 char
-// _scorSize    4 uint32    (24)
-// _score1      2 uint16
+// _scorSize    4 uint32    (32)
+// _score1      4 uint32
 // _score1Name  6 char
-// _score2      2 uint16
+// _score2      4 uint32
 // _score2Name  6 char
-// _score3      2 uint16
+// _score3      4 uint32
 // _score2Name  6 char
+// -pad         2 null
 
 struct CONFIG : public SAVE_FILE_BASE::CHUNK {
     uint8_t volume = 2 << 4 | 2;
@@ -44,13 +45,14 @@ struct CONFIG : public SAVE_FILE_BASE::CHUNK {
 };
 
 struct SCORES : public SAVE_FILE_BASE::CHUNK {
-    uint16_t score1 = 0;
-    char score1Name[6] = {' ', ' ', ' ', ' ', ' ', ' '};
-    uint16_t score2 = 0;
-    char score2Name[6] = {' ', ' ', ' ', ' ', ' ', ' '};
-    uint16_t score3 = 0;
-    char score3Name[6] = {' ', ' ', ' ', ' ', ' ', ' '};
-    SCORES(const std::array<std::byte, 24> data);
+    uint32_t score1 = 0;
+    uint32_t score2 = 0;
+    uint32_t score3 = 0;
+    char score1Name[6] = {'-', '-', '-', '-', '-', '-'};
+    char score2Name[6] = {'-', '-', '-', '-', '-', '-'};
+    char score3Name[6] = {'-', '-', '-', '-', '-', '-'};
+    uint16_t padding = 0;
+    SCORES(const std::array<std::byte, 32> data);
     SCORES();
     bool isScoresHeaderCorrect() const;
 };
