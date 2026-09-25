@@ -8,11 +8,11 @@ void initGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) 
     std::vector<std::byte> data;
     auto& save = gameVariables.save;
     auto path = systemVariables.execPath / "saves.data";
-    if (!readBinary(path, data)) {
+    if (!readBinary(path.string(), data)) {
         SDL_Log("File not found");
         SDL_Log("Creating new save file");
         data = SAVE_FILE_V0001::writeSave(save);
-        writeBinary(path, data);
+        writeBinary(path.string(), data);
     } else {
         SAVE_FILE_V0001::loadSave(data, save);
     }
