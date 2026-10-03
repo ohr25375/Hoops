@@ -1,18 +1,18 @@
 #include "gameState_Config.hpp"
 
-void drawVolumeSlider(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const float volumeValue) {
+void drawVolumeSlider(std::unique_ptr<FONT::FONT>& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const float volumeValue) {
     std::stringstream ss;
     const int volume = volumeValue * 4;
     auto slider = std::string(5, (char)0xc4);
     slider[volume] = (char)0xdb;
     ss << (char)0x11 << slider << (char)0x10;
-    bitmapFont.drawText((position + VECTOR2i(0,1)) * 8, ss.str(), textColor);
+    bitmapFont->drawText((position + VECTOR2i(0,1)) * 8, ss.str(), textColor);
 }
-void drawTrackName(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const std::string& trackName) {
+void drawTrackName(std::unique_ptr<FONT::FONT>& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const std::string& trackName) {
     auto spaces = std::string(7 - trackName.size(), ' ');
     std::stringstream ss;
     ss << (char)0x11 << trackName << spaces << (char)0x10;
-    bitmapFont.drawText((position + VECTOR2i(-1,1)) * 8, ss.str(), textColor);
+    bitmapFont->drawText((position + VECTOR2i(-1,1)) * 8, ss.str(), textColor);
 }
 
 void doChangeVolume(const bool& isLeft, AUDIO_HANDLER& audioHandler, const int selectedItem) {
@@ -81,11 +81,11 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuSoundRender(SYSTEM_VARIABLES& systemV
         VECTOR2i(11,5),
         VECTOR2i(11,8),
     };
-    bitmapFont.drawText(positions[0] * 8, "BGM", palette[1]);
+    bitmapFont->drawText(positions[0] * 8, "BGM", palette[1]);
     drawVolumeSlider(bitmapFont, positions[0], palette[1], systemVariables.audioHandler->getBGMVolume());
-    bitmapFont.drawText(positions[1] * 8, "SFX", palette[1]);
+    bitmapFont->drawText(positions[1] * 8, "SFX", palette[1]);
     drawVolumeSlider(bitmapFont, positions[1], palette[1], systemVariables.audioHandler->getSFXVolume());
-    bitmapFont.drawText(positions[2] * 8, "TRACK", palette[1]);
+    bitmapFont->drawText(positions[2] * 8, "TRACK", palette[1]);
     drawTrackName(bitmapFont, positions[2], palette[1], getAudioAssetName(gameVariables.gameBGM));
 
     if (selectedSubMenuItem != SUBMENU_ID::SOUND) return;
@@ -96,6 +96,6 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuSoundRender(SYSTEM_VARIABLES& systemV
             overlay = std::string(7, 0xdb);
             position += VECTOR2i(0, 1);
         }
-        bitmapFont.drawText(position * 8, overlay, palette[0]);
+        bitmapFont->drawText(position * 8, overlay, palette[0]);
     }
 }

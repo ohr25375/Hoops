@@ -31,7 +31,7 @@ public:
     
     SDL2Addon::SDL2A_Rect screenArea;
 
-    FONT::BitmapFONT bitmapFont{};
+    std::unique_ptr<FONT::FONT> bitmapFont{};
     
     SDL_Texture* renderTarget;
     const VECTOR2i renderTargetSize = VECTOR2i(160, 144);

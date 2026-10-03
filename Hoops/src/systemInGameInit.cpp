@@ -3,6 +3,7 @@
 #include <filesystem>
 #include "gameState_TitleMenu.hpp"
 #include "src/fileManager.hpp"
+#include "src/SDL2_BitmapFont.hpp"
 
 void initGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     std::vector<std::byte> data;
@@ -42,9 +43,8 @@ void initGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) 
 
     gameVariables.screenArea = SDL2Addon::SDL2A_Rect(systemVariables.essentials.screen.size);
 
-    gameVariables.bitmapFont = FONT::BitmapFONT();
-    gameVariables.bitmapFont.setFont("8bitFont.bmp", VECTOR2i(8), FONT::INCLUDES::Codepage437);
-    gameVariables.bitmapFont.init(systemVariables.essentials.screen.renderer);
+    gameVariables.bitmapFont = FONT::createBitmapFont(VECTOR2i(8),"8bitFont.bmp", FONT::INCLUDES::Codepage437);
+    gameVariables.bitmapFont->init(systemVariables.essentials.screen.renderer);
 
     gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
 

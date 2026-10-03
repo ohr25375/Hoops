@@ -1,9 +1,9 @@
 #include "gameState_Config.hpp"
 
-void drawConfigScreenSize(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, const int& screenSize, const SDL_Color& textColor) {
+void drawConfigScreenSize(std::unique_ptr<FONT::FONT>& bitmapFont, const VECTOR2i& position, const int& screenSize, const SDL_Color& textColor) {
     std::stringstream ss;
     ss << (char)0x11 << std::to_string(screenSize) << (char)0x10;
-    bitmapFont.drawText((position + VECTOR2i(0,1)) * 8, ss.str(), textColor);
+    bitmapFont->drawText((position + VECTOR2i(0,1)) * 8, ss.str(), textColor);
 }
 
 void doChangeScreenSize(const bool isLeft, int& screenSize) {
@@ -49,7 +49,7 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuScreenRender(SYSTEM_VARIABLES& system
     VECTOR2i positions[] = {
         VECTOR2i(11, 2),
     };
-    bitmapFont.drawText(positions[0] * 8, "MAGNIFY", palette[1]);
+    bitmapFont->drawText(positions[0] * 8, "MAGNIFY", palette[1]);
     drawConfigScreenSize(bitmapFont, positions[0], systemVariables.screenSizeMultiplier, palette[1]);
     if (selectedSubMenuItem != SUBMENU_ID::SCREEN) return;
     if (renderTime & 0b1000) {
@@ -59,6 +59,6 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuScreenRender(SYSTEM_VARIABLES& system
             auto overlay = std::string(3, 0xdb);
             position += VECTOR2i(0,1);
         }
-        bitmapFont.drawText(position * 8, overlay, palette[0]);
+        bitmapFont->drawText(position * 8, overlay, palette[0]);
     }
 }

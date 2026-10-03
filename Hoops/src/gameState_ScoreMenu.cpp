@@ -117,15 +117,15 @@ void GAME_STATE_FUNCTIONS_SCORE::doState(SYSTEM_VARIABLES& systemVariables, GAME
     }
 }
 
-void drawDivider(FONT::BitmapFONT& bitmapFont, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
-    bitmapFont.drawText(VECTOR2i(0,9) * 8, std::string(20, 0xdf), palette[1]);
-    bitmapFont.drawText(VECTOR2i(0,10) * 8, std::string(20, 0xb2), palette[1]);
-    bitmapFont.drawText(VECTOR2i(0,11) * 8, std::string(20, 0xdc), palette[1]);
+void drawDivider(std::unique_ptr<FONT::FONT>& bitmapFont, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
+    bitmapFont->drawText(VECTOR2i(0,9) * 8, std::string(20, 0xdf), palette[1]);
+    bitmapFont->drawText(VECTOR2i(0,10) * 8, std::string(20, 0xb2), palette[1]);
+    bitmapFont->drawText(VECTOR2i(0,11) * 8, std::string(20, 0xdc), palette[1]);
 }
 
-void drawWinnersPost(FONT::BitmapFONT& bitmapFont, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
-    bitmapFont.drawText(VECTOR2i(0x0c, 8) * 8, std::string(3, 0xdb), palette[1]);
-    bitmapFont.drawText(VECTOR2i(0x0d, 7) * 8, std::string({(char)0xdb, (char)0xdc}), palette[1]);
+void drawWinnersPost(std::unique_ptr<FONT::FONT>& bitmapFont, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
+    bitmapFont->drawText(VECTOR2i(0x0c, 8) * 8, std::string(3, 0xdb), palette[1]);
+    bitmapFont->drawText(VECTOR2i(0x0d, 7) * 8, std::string({(char)0xdb, (char)0xdc}), palette[1]);
 }
 
 void drawMen(SDL_Renderer* renderer, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
@@ -148,12 +148,12 @@ std::string getScoreText(const std::string& header, const int score, const char*
     return text.str();
 }
 
-void drawScores(FONT::BitmapFONT& bitmapFont, const GAME_VARIABLES& gameVariables) {
+void drawScores(std::unique_ptr<FONT::FONT>& bitmapFont, const GAME_VARIABLES& gameVariables) {
     auto& palette = gameVariables.palette;
     const auto& scores = gameVariables.save.scores;
-    bitmapFont.drawText(VECTOR2i(2, 0xd) * 8, getScoreText("1", scores.score1, scores.score1Name), palette[1]);
-    bitmapFont.drawText(VECTOR2i(2, 0xe) * 8, getScoreText("2", scores.score2, scores.score2Name), palette[1]);
-    bitmapFont.drawText(VECTOR2i(2, 0xf) * 8, getScoreText("3", scores.score3, scores.score3Name), palette[1]);
+    bitmapFont->drawText(VECTOR2i(2, 0xd) * 8, getScoreText("1", scores.score1, scores.score1Name), palette[1]);
+    bitmapFont->drawText(VECTOR2i(2, 0xe) * 8, getScoreText("2", scores.score2, scores.score2Name), palette[1]);
+    bitmapFont->drawText(VECTOR2i(2, 0xf) * 8, getScoreText("3", scores.score3, scores.score3Name), palette[1]);
 }
 
 void GAME_STATE_FUNCTIONS_SCORE::doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
@@ -173,10 +173,10 @@ void GAME_STATE_FUNCTIONS_SCORE::doRender(SYSTEM_VARIABLES& systemVariables, GAM
             const char* names[] = {scores.score1Name, scores.score2Name, scores.score3Name};
             auto foreground = palette[((renderTime & 0b1000) ? 1 : 0)];
             auto background = palette[((renderTime & 0b1000) ? 0 : 1)];
-            bitmapFont.drawText(position * 8, std::string(1, names[scoreRankNumber][selectedNameCharacter]), foreground, background);
+            bitmapFont->drawText(position * 8, std::string(1, names[scoreRankNumber][selectedNameCharacter]), foreground, background);
         }
     }
-    bitmapFont.drawText(VECTOR2i(0), "HIGH SCORES", palette[0], palette[1]);
+    bitmapFont->drawText(VECTOR2i(0), "HIGH SCORES", palette[0], palette[1]);
 }
 
 void GAME_STATE_FUNCTIONS_SCORE::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {

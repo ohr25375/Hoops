@@ -56,17 +56,17 @@ const std::vector<std::string> TITLE_GRAPH = {
     std::string({' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', (char)0xe2, (char)0xdc, (char)0xe3}),
 };
 
-void drawTitleLogo(FONT::BitmapFONT& bitmapFont, const SDL_Color& textColor, const VECTOR2f& offset) {
+void drawTitleLogo(std::unique_ptr<FONT::FONT>& bitmapFont, const SDL_Color& textColor, const VECTOR2f& offset) {
     for (auto i = 0; i < (int)TITLE_GRAPH.size(); i++) {
-        bitmapFont.drawText((offset + VECTOR2i(0,i)) * 8, TITLE_GRAPH[i], textColor);
+        bitmapFont->drawText((offset + VECTOR2i(0,i)) * 8, TITLE_GRAPH[i], textColor);
     }
 }
 
-void drawTitleScreenTextElements(FONT::BitmapFONT& bitmapFont, const SDL_Color& textColor) {
+void drawTitleScreenTextElements(std::unique_ptr<FONT::FONT>& bitmapFont, const SDL_Color& textColor) {
     auto line = std::string(5, (char)0xdb) + std::string(10,(char)0xdc) + std::string(5, (char)0xdb);
-    bitmapFont.drawText(VECTOR2i(0,10) * 8, line, textColor);
+    bitmapFont->drawText(VECTOR2i(0,10) * 8, line, textColor);
     for (auto i = 0; i < 7; i++){
-        bitmapFont.drawText(VECTOR2i(9, 11 + i) * 8, std::string(1, (char)0xde), textColor);
+        bitmapFont->drawText(VECTOR2i(9, 11 + i) * 8, std::string(1, (char)0xde), textColor);
     }
 }
 
@@ -98,9 +98,9 @@ void GAME_STATE_FUNCTIONS_TITLE::doRender(SYSTEM_VARIABLES& systemVariables, GAM
     drawTitleScreenSpriteElements(renderer, palette);
 
     for (const auto& [position, text] : MENU_ITEMS) {
-        bitmapFont.drawText(position * 8, text, palette[1]);
+        bitmapFont->drawText(position * 8, text, palette[1]);
     }
-    bitmapFont.drawText((MENU_ITEMS[(int)selectedMenuItem].position - VECTOR2i(1, 0)) * 8, std::string(1, 0x10), palette[1]);
+    bitmapFont->drawText((MENU_ITEMS[(int)selectedMenuItem].position - VECTOR2i(1, 0)) * 8, std::string(1, 0x10), palette[1]);
 }
 
 void GAME_STATE_FUNCTIONS_TITLE::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {

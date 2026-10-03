@@ -42,10 +42,10 @@ void GAME_STATE_FUNCTIONS_INGAME::renderBackground(SYSTEM_VARIABLES& systemVaria
         BACKGROUND_TEXTS(VECTOR2i(14,8), "BLOCK", getNumberText(inGameVariables.blocks)),
     };
     for (const auto& [position, header, number] : backgroundTexts) {
-        bitmapFont.drawText(position * 8, header, palette[1]);
-        bitmapFont.drawText((position + VECTOR2i(0,1)) * 8, number, palette[1]);
+        bitmapFont->drawText(position * 8, header, palette[1]);
+        bitmapFont->drawText((position + VECTOR2i(0,1)) * 8, number, palette[1]);
     }
-    bitmapFont.drawText(VECTOR2i(15, 13) * 8, "NEXT", palette[1], {.a = 0});
+    bitmapFont->drawText(VECTOR2i(15, 13) * 8, "NEXT", palette[1], {.a = 0});
     this->inGameVariables.nextPiece.render(renderer, VECTOR2i(15, 14) * 8, palette);
 }
 

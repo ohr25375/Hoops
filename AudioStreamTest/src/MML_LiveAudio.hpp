@@ -23,7 +23,7 @@ namespace MML_LiveAudio_Internal {
 namespace MML_LiveAudio {
     class LiveAudioHandler {
     public:
-        float masterVolume = 0.1;
+        float masterVolume = 0.5;
         void clearMML();
         void loadNewMML(const std::vector<std::string>& mml);
         void loadNewMML(const std::string& mml);
