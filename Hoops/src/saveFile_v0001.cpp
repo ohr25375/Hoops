@@ -65,13 +65,12 @@ bool isDataIntegral(const std::vector<std::byte>& data) {
     if (!testData->scores.isScoresHeaderCorrect()) return false;
     return true;
 }
-void loadSave(const std::vector<std::byte>& data, SAVE_FILE_V0001::SAVE& save) {
+void loadSaveFromData(const std::vector<std::byte>& data, SAVE_FILE_V0001::SAVE& save) {
     if (!SAVE_FILE_V0001::isDataIntegral(data)) {
         std::cout << "is corrupt\n";
     } else {
         std::cout << "correct data\n";
-        auto loadedSave = reinterpret_cast<const SAVE_FILE_V0001::SAVE*>(data.data());
-        save = *loadedSave;
+        save = *reinterpret_cast<const SAVE_FILE_V0001::SAVE*>(data.data());
     }
 }
 std::vector<std::byte> writeSave(const SAVE_FILE_V0001::SAVE& save) {

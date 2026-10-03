@@ -2,8 +2,8 @@
 #include <iostream>
 #include <array>
 
+#include "src/SDL2Util_ColorWrapper.hpp"
 #include "src/SDL2_Addon.hpp"
-// #include "canvasManipulation.hpp"
 
 const std::vector<SPRITE> gameSprites {
     { // none
@@ -198,7 +198,7 @@ SPRITE_DATA getGameSprite(const GAME_SPRITES spriteID) {
     std::cout << "ERROR: Editor Sprite not found\n";
     return editorSprites[0];
 }
-void drawGameSprite(SDL_Renderer*& renderer, const SPRITE_DATA& sprite, const VECTOR2i& offset, const std::array<SDL2Addon::SDL_COLOR, 2>& palette, const bool invert) {
+void drawGameSprite(SDL_Renderer*& renderer, const SPRITE_DATA& sprite, const VECTOR2i& offset, const std::array<SDL2Util::Color, 2>& palette, const bool invert) {
     auto offsetSprite = sprite;
     for (auto& point : offsetSprite.whites) {
         point = VECTOR2i(point.x, point.y) + offset;

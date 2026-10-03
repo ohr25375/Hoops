@@ -8,7 +8,7 @@
 
 void renderOverlay(SDL_Renderer*& renderer, const VECTOR2i& rendererSize) {
     auto rect = SDL2Addon::SDL2A_Rect(rendererSize);
-    SDL2Addon::DrawFilledRect(renderer, rect, SDL2Addon::SDL_COLOR(0,128));
+    SDL2Addon::DrawFilledRect(renderer, rect, SDL2Util::Color(0,128));
 }
 
 bool doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {

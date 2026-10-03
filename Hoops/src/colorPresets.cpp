@@ -1,9 +1,10 @@
 #include "colorPresets.hpp"
+#include <vector>
 
 struct COLOR_PRESET {
     std::string name;
-    std::array<SDL2Addon::SDL_COLOR, 2> palette;
-    COLOR_PRESET(const std::string name, const std::array<SDL2Addon::SDL_COLOR, 2> colors) : name(name), palette(colors) {}
+    std::array<SDL2Util::Color, 2> palette;
+    COLOR_PRESET(const std::string name, const std::array<SDL2Util::Color, 2> colors) : name(name), palette(colors) {}
 };
 
 const std::vector<COLOR_PRESET> COLOR_PRESETS {
@@ -23,7 +24,7 @@ const std::vector<COLOR_PRESET> COLOR_PRESETS {
 };
 
 
-std::array<SDL2Addon::SDL_COLOR, 2> getColorPreset(const int& index) {
+std::array<SDL2Util::Color, 2> getColorPreset(const int& index) {
     return COLOR_PRESETS[index % COLOR_PRESETS.size()].palette;
 }
 

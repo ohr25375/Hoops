@@ -117,25 +117,25 @@ void GAME_STATE_FUNCTIONS_SCORE::doState(SYSTEM_VARIABLES& systemVariables, GAME
     }
 }
 
-void drawDivider(std::unique_ptr<FONT::FONT>& bitmapFont, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
+void drawDivider(std::unique_ptr<FONT::FONT>& bitmapFont, const std::array<SDL2Util::Color, 2>& palette) {
     bitmapFont->drawText(VECTOR2i(0,9) * 8, std::string(20, 0xdf), palette[1]);
     bitmapFont->drawText(VECTOR2i(0,10) * 8, std::string(20, 0xb2), palette[1]);
     bitmapFont->drawText(VECTOR2i(0,11) * 8, std::string(20, 0xdc), palette[1]);
 }
 
-void drawWinnersPost(std::unique_ptr<FONT::FONT>& bitmapFont, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
+void drawWinnersPost(std::unique_ptr<FONT::FONT>& bitmapFont, const std::array<SDL2Util::Color, 2>& palette) {
     bitmapFont->drawText(VECTOR2i(0x0c, 8) * 8, std::string(3, 0xdb), palette[1]);
     bitmapFont->drawText(VECTOR2i(0x0d, 7) * 8, std::string({(char)0xdb, (char)0xdc}), palette[1]);
 }
 
-void drawMen(SDL_Renderer* renderer, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
+void drawMen(SDL_Renderer* renderer, const std::array<SDL2Util::Color, 2>& palette) {
     VECTOR2f positions[] = {VECTOR2i(0x0d, 6), VECTOR2f(0x0e, 6.5), VECTOR2i(0x0c, 7)};
     for (auto position : positions) {
         drawGameSprite(renderer, getGameSprite(GAME_SPRITES::MAN), position * 8, palette);
     }
 }
 
-void drawJumpingMen(SDL_Renderer* renderer, const std::array<SDL2Addon::SDL_COLOR, 2>& palette, const int scoreRankNumber, const int renderTime) {
+void drawJumpingMen(SDL_Renderer* renderer, const std::array<SDL2Util::Color, 2>& palette, const int scoreRankNumber, const int renderTime) {
     VECTOR2f positions[] = {VECTOR2i(0x0d, 6), VECTOR2f(0x0e, 6.5), VECTOR2i(0x0c, 7)};
     drawGameSprite(renderer, getGameSprite(GAME_SPRITES::BLANK), positions[scoreRankNumber] * 8, palette);
     auto sprite = renderTime & 0b100000 ? getGameSprite(GAME_SPRITES::MAN) : getGameSprite(GAME_SPRITES::MAN_HAPPY);

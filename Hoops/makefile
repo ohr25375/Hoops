@@ -9,7 +9,6 @@ CFLAGS += -g
 CFLAGS += -Wall
 # object include
 COBJ = ../lib/obj/*.o
-COBJ += ../lib/obj/**/*.o
 COBJ += ../MMLParser/obj/*.o
 COBJ += ../AudioStreamTest/obj/*.o
 

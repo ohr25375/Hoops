@@ -8,7 +8,6 @@ CFLAGS += -O3
 CFLAGS += -g
 # object include
 COBJ = ../lib/obj/*.o
-COBJ += ../lib/obj/**/*.o
 COBJ += ../MMLParser/obj/*.o
 
 TARGETS = $(patsubst src/%.cpp, obj/%.o, $(wildcard src/*.cpp) $(wildcard src/**/*.cpp))

@@ -1,47 +1,6 @@
 #include "SDL2_Addon.hpp"
 
 namespace SDL2Addon {
-    SDL_COLOR::SDL_COLOR(const Uint8& r, const Uint8& g, const Uint8& b, const Uint8& a) {
-        this->r = r;
-        this->g = g;
-        this->b = b;
-        this->a = a;
-        rgb     = (r << 16) + (g << 8) + b;
-        rgba    = (r << 24) + (g << 16) + (b << 8) + a;
-    }
-
-    SDL_COLOR::SDL_COLOR(const unsigned int& color, const Uint8& a) {
-        this->r = (color & 0xff0000) >> 16;
-        this->g = (color & 0x00ff00) >> 8;
-        this->b = (color & 0x0000ff);
-        this->a = a;
-        rgb     = color;
-        rgba    = (r << 24) + (g << 16) + (b << 8) + a;
-    }
-
-    SDL_COLOR::SDL_COLOR() {
-        r    = 0;
-        g    = 0;
-        b    = 0;
-        a    = 255;
-        rgb  = 0;
-        rgba = 255;
-    }
-
-    SDL_COLOR SDL_COLOR::darken(double percentage) {
-        SDL_COLOR res  = *this;
-        res.r         *= percentage;
-        res.g         *= percentage;
-        res.b         *= percentage;
-        res.rgb        = (res.r << 16) + (res.g << 8) + res.b;
-        res.rgba       = (r << 24) + (g << 16) + (b << 8) + a;
-        return res;
-    }
-
-    SDL_COLOR::operator SDL_Color() const {
-        return {r, g, b, a};
-    }
-
     SDL2A_FRect::SDL2A_FRect(const SDL_FRect& rect) {
         pos  = VECTOR2f(rect.x, rect.y);
         size = VECTOR2f(rect.w, rect.h);
@@ -78,7 +37,7 @@ namespace SDL2Addon {
         return true;
     }
 
-    int32_t SetRenderDrawColor(SDL_Renderer*& renderer, const SDL_COLOR& color) {
+    int32_t SetRenderDrawColor(SDL_Renderer*& renderer, const SDL_Color color) {
         return SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
     }
     int32_t doDelay(const double FPS_INC) {
@@ -111,60 +70,60 @@ namespace SDL2Addon {
         return delay;
     }
 
-    void DrawFilledRectF(SDL_Renderer*& renderer, const SDL_FRect& rect, const SDL_COLOR& color) {
+    void DrawFilledRectF(SDL_Renderer*& renderer, const SDL_FRect& rect, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderFillRectF(renderer, &rect);
     }
 
-    void DrawFilledRect(SDL_Renderer*& renderer, const SDL_Rect& rect, const SDL_COLOR& color) {
+    void DrawFilledRect(SDL_Renderer*& renderer, const SDL_Rect& rect, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderFillRect(renderer, &rect);
     }
 
-    void DrawRect(SDL_Renderer*& renderer, const SDL_Rect& rect, const SDL_COLOR& color) {
+    void DrawRect(SDL_Renderer*& renderer, const SDL_Rect& rect, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderDrawRect(renderer, &rect);
     }
 
-    void DrawFilledRectsF(SDL_Renderer*& renderer, const std::vector<SDL_FRect> rects, const SDL_COLOR& color) {
+    void DrawFilledRectsF(SDL_Renderer*& renderer, const std::vector<SDL_FRect> rects, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderFillRectsF(renderer, rects.data(), rects.size());
     }
 
-    void DrawFilledRects(SDL_Renderer*& renderer, const std::vector<SDL_Rect> rects, const SDL_COLOR& color) {
+    void DrawFilledRects(SDL_Renderer*& renderer, const std::vector<SDL_Rect> rects, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderFillRects(renderer, rects.data(), rects.size());
     }
 
-    void DrawRects(SDL_Renderer*& renderer, const std::vector<SDL_Rect> rects, const SDL_COLOR& color) {
+    void DrawRects(SDL_Renderer*& renderer, const std::vector<SDL_Rect> rects, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderDrawRects(renderer, rects.data(), rects.size());
     }
 
-    void DrawPoint(SDL_Renderer*& renderer, const SDL_Point point, const SDL_COLOR& color) {
+    void DrawPoint(SDL_Renderer*& renderer, const SDL_Point point, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderDrawPoint(renderer, point.x, point.y);
     }
 
-    void DrawPointF(SDL_Renderer*& renderer, const SDL_FPoint point, const SDL_COLOR& color) {
+    void DrawPointF(SDL_Renderer*& renderer, const SDL_FPoint point, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderDrawPointF(renderer, point.x, point.y);
     }
 
-    void DrawPoints(SDL_Renderer*& renderer, const std::vector<SDL_Point> points, const SDL_COLOR& color) {
+    void DrawPoints(SDL_Renderer*& renderer, const std::vector<SDL_Point> points, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderDrawPoints(renderer, points.data(), points.size());
     }
 
-    void DrawPointsF(SDL_Renderer*& renderer, const std::vector<SDL_FPoint> points, const SDL_COLOR& color) {
+    void DrawPointsF(SDL_Renderer*& renderer, const std::vector<SDL_FPoint> points, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderDrawPointsF(renderer, points.data(), points.size());
     }
-    void DrawLineF(SDL_Renderer*& renderer, const SDL_FPoint from, const SDL_FPoint to, const SDL_Color& color) {
+    void DrawLineF(SDL_Renderer*& renderer, const SDL_FPoint from, const SDL_FPoint to, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         SDL_RenderDrawLineF(renderer, from.x, from.y, to.x, to.y);
     }
-    void DrawCircle(SDL_Renderer*& renderer, const VECTOR2f pos, double radius, int indices, const SDL_COLOR& color) {
+    void DrawCircle(SDL_Renderer*& renderer, const VECTOR2f pos, double radius, int indices, const SDL_Color color) {
         SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
         VECTOR2f center = pos;
         auto v1         = VECTOR2f(radius, 0);

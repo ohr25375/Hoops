@@ -2,6 +2,7 @@
 #include "inGameState_GameOver.hpp"
 #include "inGameState_Chain.hpp"
 #include "bgmAssets.hpp"
+#include "sfxAssets.hpp"
 
 const std::vector<int> GRAVITY = {
     60,50,45,40,35,
@@ -118,15 +119,15 @@ const std::vector<std::vector<VECTOR2i>> KICK_OFFSET_I_ANTICLOCKWISE = {
 };
 
 void playSpin(SYSTEM_VARIABLES& systemVariables) {
-    systemVariables.audioHandler->registerOneShot({"T240 O5 l32 V6 P160 g b-> d"});
+    systemVariables.audioHandler->registerOneShot(getMML(SFX_ASSET_ID::SPIN));
 }
 
 void playMove(SYSTEM_VARIABLES& systemVariables) {
-    systemVariables.audioHandler->registerOneShot({"T180 O6 l32 V6 P160 f"});
+    systemVariables.audioHandler->registerOneShot(getMML(SFX_ASSET_ID::MOVE));
 }
 
 void playHardDrop(SYSTEM_VARIABLES& systemVariables) {
-    systemVariables.audioHandler->registerOneShot({"T180 O7 l64 P160 V11 b- V8 f < V5 b"});
+    systemVariables.audioHandler->registerOneShot(getMML(SFX_ASSET_ID::HARD_DROP));
 }
 
 

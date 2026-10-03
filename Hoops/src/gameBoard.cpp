@@ -56,7 +56,7 @@ FALLING_COLUMN GAME_BOARD::getDropHeights(const int x, const int heightThreshold
     return dropHeights;
 }
 
-void GAME_BOARD::render(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL_COLOR, 2>& palette, const VECTOR2i& offset) const {
+void GAME_BOARD::render(SDL_Renderer*& renderer, const std::array<SDL2Util::Color, 2>& palette, const VECTOR2i& offset) const {
     const VECTOR2i DIR[4] = { VECTOR2i(1, 0), VECTOR2i(0, 1), VECTOR2i(-1, 0), VECTOR2i(0, -1) };
     for (auto y = 0; y < height; y++) {
         for (auto x = 0; x < pitch; x++) {

@@ -64,6 +64,6 @@ struct SAVE : public SAVE_FILE_BASE::SAVE {
 };
 
 bool isDataIntegral(const std::vector<std::byte>& data);
-void loadSave(const std::vector<std::byte>& data, SAVE_FILE_V0001::SAVE& save);
+void loadSaveFromData(const std::vector<std::byte>& data, SAVE_FILE_V0001::SAVE& save);
 std::vector<std::byte> writeSave(const SAVE_FILE_V0001::SAVE& save);
 }  // namespace SAVE_FILE_V0001

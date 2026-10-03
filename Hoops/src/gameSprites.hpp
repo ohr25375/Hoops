@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <array>
 #include "src/vector2.hpp"
-#include "src/SDL2_Addon.hpp"
+#include "src/SDL2Util_ColorWrapper.hpp"
 
 struct SPRITE_ROW {
     const uint8_t color;
@@ -40,4 +40,4 @@ struct SPRITE_DATA {
 };
 
 SPRITE_DATA getGameSprite(const GAME_SPRITES spriteID);
-void drawGameSprite(SDL_Renderer*& renderer, const SPRITE_DATA& sprite, const VECTOR2i& offset, const std::array<SDL2Addon::SDL_COLOR, 2>& palette, const bool isPressed = false);
+void drawGameSprite(SDL_Renderer*& renderer, const SPRITE_DATA& sprite, const VECTOR2i& offset, const std::array<SDL2Util::Color, 2>& palette, const bool isPressed = false);

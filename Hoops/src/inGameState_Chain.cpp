@@ -3,6 +3,7 @@
 #include "gameSprites.hpp"
 #include "inGameState_DropControlPiece.hpp"
 #include "inGameState_FallingPieces.hpp"
+#include "sfxAssets.hpp"
 
 FALLING_RINGS getFallingRings(GAME_BOARD& gameBoard, const std::vector<int>& droppingColumns) {
     FALLING_RINGS fallingRings;
@@ -33,7 +34,7 @@ void INGAME_STATE_Chain::doState(SYSTEM_VARIABLES& systemVariables, GAME_VARIABL
     }
 }
 
-void drawBlankIslands(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL_COLOR, 2>& palette, INGAME_VARIABLES& inGameVariables) {
+void drawBlankIslands(SDL_Renderer*& renderer, const std::array<SDL2Util::Color, 2>& palette, INGAME_VARIABLES& inGameVariables) {
     const auto offset = VECTOR2i(2, 0) * 8;
     const auto& islands = inGameVariables.islands;
     const auto pitch = inGameVariables.BOARD_WIDTH;
@@ -51,7 +52,7 @@ void INGAME_STATE_Chain::doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIAB
         drawBlankIslands(systemVariables.essentials.screen.renderer, gameVariables.palette, inGameVariables);
     }
     if (renderTime == 1) {
-        systemVariables.audioHandler->registerOneShot({"T180 O6 V8 l32 [b- > f<]5"});
+        systemVariables.audioHandler->registerOneShot(getMML(SFX_ASSET_ID::CHAIN));
     }
 }
 

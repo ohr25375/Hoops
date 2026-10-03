@@ -70,7 +70,7 @@ void drawTitleScreenTextElements(std::unique_ptr<FONT::FONT>& bitmapFont, const 
     }
 }
 
-void drawTitleScreenSpriteElements(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
+void drawTitleScreenSpriteElements(SDL_Renderer*& renderer, const std::array<SDL2Util::Color, 2>& palette) {
     for (auto i = 0; i < 10; i++) {
         drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), VECTOR2i(0, i) * 8, palette);
         drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), VECTOR2i(19, i) * 8, palette);

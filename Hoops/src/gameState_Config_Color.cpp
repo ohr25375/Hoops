@@ -27,7 +27,7 @@ void drawColorPreset(std::unique_ptr<FONT::FONT>& bitmapFont, const VECTOR2i& po
     bitmapFont->drawText((position + VECTOR2i(-1, 1)) * 8, text.str(), textColor);
 }
 
-void doChangeColor(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, const int& selectedItem) {
+void doChangeColor(bool isLeft, std::array<SDL2Util::Color, 2>& palette, const int& selectedItem) {
     auto& color = palette[-(selectedItem / 3) + 1];
     auto rgb    = std::array<uint8_t*, 3>{ &color.r, &color.g, &color.b };
     auto index  = selectedItem % 3;
@@ -36,7 +36,7 @@ void doChangeColor(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, co
     *rgb[index] = (value << 4) | value;
 }
 
-void doChangePalette(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, int& paletteIndex) {
+void doChangePalette(bool isLeft, std::array<SDL2Util::Color, 2>& palette, int& paletteIndex) {
     auto bound = getPresetSize();
     paletteIndex = isLeft ? decrementBound(paletteIndex, bound, 1) : incrementBound(paletteIndex, bound, 1);
     palette = getColorPreset(paletteIndex);
