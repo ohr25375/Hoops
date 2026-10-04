@@ -67,7 +67,6 @@ void GAME_STATE_FUNCTIONS_CONFIG::doRender(SYSTEM_VARIABLES& systemVariables, GA
 }
 
 void GAME_STATE_FUNCTIONS_CONFIG::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
-    systemVariables.audioHandler->clearMML();
     selectedMenuItem = (int)CONFIG_ID::SOUND;
     selectedSubMenuItem = SUBMENU_ID::NONE;
 }

@@ -1,7 +1,7 @@
 #include "systemInGameInit.hpp"
 
 #include <filesystem>
-#include "gameState_TitleMenu.hpp"
+#include "gameState_SplashScreen.hpp"
 #include "src/fileManager.hpp"
 #include "src/SDL2_BitmapFont.hpp"
 
@@ -40,7 +40,7 @@ void initGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) 
     gameVariables.bitmapFont = FONT::createBitmapFont(VECTOR2i(8),"8bitFont.bmp", FONT::INCLUDES::Codepage437);
     gameVariables.bitmapFont->init(systemVariables.essentials.screen.renderer);
 
-    gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+    gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_SPLASHSCREEN>());
 
     SDL_Log("systemInGameInit: done");
 }

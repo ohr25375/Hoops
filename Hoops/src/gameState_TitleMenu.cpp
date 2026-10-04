@@ -104,7 +104,13 @@ void GAME_STATE_FUNCTIONS_TITLE::doRender(SYSTEM_VARIABLES& systemVariables, GAM
 }
 
 void GAME_STATE_FUNCTIONS_TITLE::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
-    systemVariables.audioHandler->clearMML();
     renderTime = 0;
     gameVariables.isPaused = false;
+}
+
+void setStateToTitle(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables, const bool resetBGM) {
+    gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+    if (!resetBGM) return;
+    systemVariables.audioHandler->clearMML();
+    systemVariables.audioHandler->loadNewMML(getMML(AUDIO_ASSET_ID::HOOPS));
 }

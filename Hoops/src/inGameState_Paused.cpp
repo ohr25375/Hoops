@@ -25,7 +25,7 @@ void INGAME_VARIABLES::doPausedState(SYSTEM_VARIABLES& systemVariables, GAME_VAR
             selectedMenuItem = 1;
             systemVariables.playBlip();
         } else {
-            gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+            setStateToTitle(systemVariables, gameVariables);
             systemVariables.audioHandler->unpauseAudio();
             systemVariables.playSelect();         
         }
@@ -35,7 +35,7 @@ void INGAME_VARIABLES::doPausedState(SYSTEM_VARIABLES& systemVariables, GAME_VAR
             gameVariables.isPaused = false;
             systemVariables.audioHandler->unpauseAudio();
         } else {
-            gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+            setStateToTitle(systemVariables, gameVariables);
             systemVariables.audioHandler->unpauseAudio();
         }
         systemVariables.playSelect();

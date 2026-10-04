@@ -51,7 +51,7 @@ void GAME_STATE_FUNCTIONS_SCORE::doState(SYSTEM_VARIABLES& systemVariables, GAME
 
     if (!isScoreUpdated) {
         if (keys[SDLK_ESCAPE].down || keys[SDLK_RETURN].down || keys[SDLK_z].down || keys[SDLK_x].down) {
-            gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+            setStateToTitle(systemVariables, gameVariables);
             systemVariables.playSelect();
             return;
         }
@@ -96,7 +96,7 @@ void GAME_STATE_FUNCTIONS_SCORE::doState(SYSTEM_VARIABLES& systemVariables, GAME
             if (!isNameConfirmed) {
                 isNameConfirmed = true;
             } else {
-                gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+                setStateToTitle(systemVariables, gameVariables);
             }
             systemVariables.playSelect();
             return;
@@ -109,7 +109,7 @@ void GAME_STATE_FUNCTIONS_SCORE::doState(SYSTEM_VARIABLES& systemVariables, GAME
         }
         if (keys[SDLK_ESCAPE].down) {
             if (isNameConfirmed) {
-                gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+                setStateToTitle(systemVariables, gameVariables);
                 systemVariables.playSelect();
                 return;
             }
@@ -181,6 +181,7 @@ void GAME_STATE_FUNCTIONS_SCORE::doRender(SYSTEM_VARIABLES& systemVariables, GAM
 
 void GAME_STATE_FUNCTIONS_SCORE::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     systemVariables.audioHandler->clearMML();
+    systemVariables.audioHandler->loadNewMML(getMML(AUDIO_ASSET_ID::ODE));
     renderTime = 0;
     gameVariables.isPaused = false;
 }

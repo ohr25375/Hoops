@@ -121,6 +121,90 @@ const std::vector<AUDIO_ASSET> audioAssets {
         "l2fcgr"
     }),
     AUDIO_ASSET("ERROR", std::vector<std::string>(0)),
+    AUDIO_ASSET("ODE", std::vector<std::string>{
+        "T160 O5 l16 V15 !2"
+        "ar8. ar8. b-r8. b+r8. b+r8. b-r8. ar8. gr8."
+        "fr8. fr8. gr8. ar8. ar8. gr8. gr8. r4"
+        "ar8. ar8. b-r8. b+r8. b+r8. b-r8. ar8. gr8."
+        "fr8. fr8. gr8. ar8. gr8. fr8. fr8. r4",
+        "T160 O5 l16 V15 !2 P123"
+        "[r8cf]4 [r8ce]4"
+        "[r8cf]4 [r8ce]3 erce"
+        "[r8cf]4 [r8ce]4"
+        "[r8cf]4 r8ce r8cf r8cf frcf",
+        "T160 O3 l16 V15 P120"
+        "f4frfr fr8.fr8. c4crcr crcrdrer"
+        "f8.rcrfr frcrfrfr c8.rcrcr crcrdrer"
+        "f4frfr fr8.fr8. c4crcr crcrdrer"
+        "f8.rcrfr frcrfrfr crcrdrer frcrf8.r",
+        "T160 O5 l64 V15 I2"
+        "[cr16.rcr32.cr32.]32"
+    }),
+    AUDIO_ASSET("HOOPS", std::vector<std::string>{
+        "T120 O5 l16 V15 !2"
+        "fe-de-"
+        "frfrgrgr c4dre-r de-d<b->crcr d8.rfe-de-"
+        "frfrgrgr c4dre-r de-d<b->crcr <b-8.r>"
+
+        "frb-r"
+        "ararb-rb-r b+4frb-r ararb-rb+r f8.rgrar"
+        "b-8argrdr f8e-rcrdr"
+
+        "l8 O4"
+        "b-4fb- b+4f>c e-dc<b-> d4c4"
+        "<b-4>b-a gfd16c16<b-> e-de-fd4c4<"
+        "b-4fb- b+4f>c e-dc<b-> d4c4"
+        "<b-4>b-a gfd16c16<b-> e-de-fd4c4"
+
+        "l32<"
+        "b-4r8b-rb-r> c+4r8c+rc+r e-4r8e-re-r g+4",
+
+        "T120 O5 l16 V15 !1"
+        "r4"
+        "drdre-re-r <a4b-rb+r b-8agarar b-8frdrb-8>"
+        "drdre-re-r <a4b-rb+r b-8agarar b-fdc<b-4>>"
+        "crcrdrdr e-8cr<ar>dr crcrdre-r <a8frb-r>cr"
+        "d8cr<b-rfr a8gre-rfr<"
+
+        "l8"
+        "b-f>d<f b+f>e-<f gd>d<d f>d16c16<b-a"
+        "gdb-d fdad e-<b->g<b-> dfab+"
+        "gdb-d adb+d b-e-ge- f>d16c16<b-a"
+        "gdb-d fdad e-<b->g<b-> dfab+"
+
+        "l32"
+        ">[d16r16drdr]2 [f+16r16f+rf+r]2"
+        "[g+16r16g+rg+r]2> c+4",
+
+        "T120 O2 l16 V15 !2"
+        "r4"
+        "b-8.rb-rb-r f8.rfrfr e-8.rfrfr b-8.rb-rb-r"
+        "b-8.rb-rb-r f8.rfrfr e-8.rfrfr b-4<b-4>"
+        "[f8.rfrfr]4"
+        "e-8.re-re-r c8.rfrfr"
+
+        "l2"
+        "<b->fgb-4a4"
+        "gde-f4<f4>"
+        "gde-b-4a4"
+        "gde-f"
+
+        "l32"
+        "b-16r16b-rb-rb-4"
+        "[r8b-rb-rb-4]2"
+        "f4",
+
+        "T120 l64 V15 I2"
+        "r4"
+        "[crr16.cr32.cr32. crr16.crr16.]7 crr16.cr32.cr32.crr16.r8"
+        "[crr16.cr32.cr32. crr16.crr16.]6"
+
+        "crr16.crr16.[r8crr16.]5 r8cr32.cr32.crr16.crr16."
+        "[[r8crr16.]6 r8cr32.cr32.crr16.crr16.]2"
+        "[r8crr16.]6 r8cr32.cr32.cr32.cr32.crr16."
+        
+        "[r8cr32.cr32.crr16.r8]3 r8cr32.cr32."
+    }),
 };
 
 std::vector<std::string> getMML(const AUDIO_ASSET_ID& assetID) {

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-AUDIO_HANDLER::AUDIO_HANDLER() {
+AUDIO_HANDLER::AUDIO_HANDLER() : GLOBAL_VOLUME(0.3f) {
     setBGMVolume(bgmVolume);
 }
 
