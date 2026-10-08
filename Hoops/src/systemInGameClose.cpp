@@ -15,7 +15,7 @@ void saveGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) 
 
     auto data = SAVE_FILE_V0001::writeSave(save);
     auto path = systemVariables.execPath / "saves.data";
-    writeBinary(path, data);
+    writeBinary(path.string(), data);
 }
 
 void closeGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {

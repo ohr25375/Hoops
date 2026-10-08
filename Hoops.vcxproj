@@ -167,6 +167,8 @@
     <ClCompile Include="Hoops\src\gameState_Config_None.cpp" />
     <ClCompile Include="Hoops\src\gameState_Config_Screen.cpp" />
     <ClCompile Include="Hoops\src\gameState_Config_Sound.cpp" />
+    <ClCompile Include="Hoops\src\gameState_ScoreMenu.cpp" />
+    <ClCompile Include="Hoops\src\gameState_SplashScreen.cpp" />
     <ClCompile Include="Hoops\src\gameState_TitleMenu.cpp" />
     <ClCompile Include="Hoops\src\hoops.cpp" />
     <ClCompile Include="Hoops\src\inGameState_Chain.cpp" />
@@ -184,12 +186,13 @@
     <ClCompile Include="Hoops\src\systemInGameInit.cpp" />
     <ClCompile Include="Hoops\src\systemInit.cpp" />
     <ClCompile Include="Hoops\src\systemPreInit.cpp" />
-    <ClCompile Include="lib\src\dataManipulation\binaryParser.cpp" />
     <ClCompile Include="lib\src\fileManager.cpp" />
     <ClCompile Include="lib\src\keypress.cpp" />
     <ClCompile Include="lib\src\screen.cpp" />
+    <ClCompile Include="lib\src\SDL2Util_ColorWrapper.cpp" />
     <ClCompile Include="lib\src\SDL2_2DSuite.cpp" />
     <ClCompile Include="lib\src\SDL2_Addon.cpp" />
+    <ClCompile Include="lib\src\SDL2_BitmapFont.cpp" />
     <ClCompile Include="lib\src\SDL2_Font.cpp" />
     <ClCompile Include="MMLParser\src\MML.cpp" />
   </ItemGroup>
@@ -206,6 +209,8 @@
     <ClInclude Include="Hoops\src\gameSprites.hpp" />
     <ClInclude Include="Hoops\src\gameStateInGame.hpp" />
     <ClInclude Include="Hoops\src\gameState_Config.hpp" />
+    <ClInclude Include="Hoops\src\gameState_ScoreMenu.hpp" />
+    <ClInclude Include="Hoops\src\gameState_SplashScreen.hpp" />
     <ClInclude Include="Hoops\src\gameState_TitleMenu.hpp" />
     <ClInclude Include="Hoops\src\hoops.hpp" />
     <ClInclude Include="Hoops\src\inGameState_Chain.hpp" />
@@ -222,14 +227,15 @@
     <ClInclude Include="Hoops\src\systemInGameInit.hpp" />
     <ClInclude Include="Hoops\src\systemInit.hpp" />
     <ClInclude Include="Hoops\src\systemPreInit.hpp" />
-    <ClInclude Include="lib\src\dataManipulation\binaryParser.hpp" />
     <ClInclude Include="lib\src\dataManipulation\dataTypes.hpp" />
     <ClInclude Include="lib\src\dataManipulation\hexConverter.hpp" />
     <ClInclude Include="lib\src\fileManager.hpp" />
     <ClInclude Include="lib\src\keypress.hpp" />
     <ClInclude Include="lib\src\screen.hpp" />
+    <ClInclude Include="lib\src\SDL2Util_ColorWrapper.hpp" />
     <ClInclude Include="lib\src\SDL2_2DSuite.hpp" />
     <ClInclude Include="lib\src\SDL2_Addon.hpp" />
+    <ClInclude Include="lib\src\SDL2_BitmapFont.hpp" />
     <ClInclude Include="lib\src\SDL2_Font.hpp" />
     <ClInclude Include="lib\src\vector2.hpp" />
     <ClInclude Include="MMLParser\src\MML.hpp" />

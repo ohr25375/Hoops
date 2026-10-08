@@ -1,11 +1,12 @@
+#define _USE_MATH_DEFINES
 #include "MML.hpp"
 
 #include <iostream>
 #include <format>
-#define _USE_MATH_DEFINES
 #include <cmath>
 #include <stack>
 #include <map>
+#include <algorithm>
 
 #include <src/hexManipulator.hpp>
 #include <bitset>
