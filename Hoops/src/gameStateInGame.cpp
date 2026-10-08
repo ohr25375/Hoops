@@ -14,9 +14,9 @@ void GAME_STATE_FUNCTIONS_INGAME::doState(SYSTEM_VARIABLES& systemVariables, GAM
     }
 }
 
-std::string getNumberText(const int& value) {
+std::string getNumberText(const int value, const int width = 5) {
     std::stringstream ss;
-    ss << std::setw(5) << std::setfill(' ') << std::min(value, 99999);
+    ss << std::setw(width) << std::setfill(' ') << std::min(value, 99999);
     return ss.str();
 }
 
@@ -37,15 +37,15 @@ void GAME_STATE_FUNCTIONS_INGAME::renderBackground(SYSTEM_VARIABLES& systemVaria
             : position(position), text(text), number(numberString) {}
     };
     const BACKGROUND_TEXTS backgroundTexts[] = {
-        BACKGROUND_TEXTS(VECTOR2i(14,2), "SCORE", getNumberText(inGameVariables.score)),
+        BACKGROUND_TEXTS(VECTOR2i(13,2), " SCORE", getNumberText(inGameVariables.score, 6)),
         BACKGROUND_TEXTS(VECTOR2i(14,5), "CHAIN", getNumberText(inGameVariables.chainCount)),
         BACKGROUND_TEXTS(VECTOR2i(14,8), "BLOCK", getNumberText(inGameVariables.blocks)),
     };
     for (const auto& [position, header, number] : backgroundTexts) {
-        bitmapFont.drawText(position * 8, header, palette[1]);
-        bitmapFont.drawText((position + VECTOR2i(0,1)) * 8, number, palette[1]);
+        bitmapFont->drawText(position * 8, header, palette[1]);
+        bitmapFont->drawText((position + VECTOR2i(0,1)) * 8, number, palette[1]);
     }
-    bitmapFont.drawText(VECTOR2i(15, 13) * 8, "NEXT", palette[1], {.a = 0});
+    bitmapFont->drawText(VECTOR2i(15, 13) * 8, "NEXT", palette[1], {.a = 0});
     this->inGameVariables.nextPiece.render(renderer, VECTOR2i(15, 14) * 8, palette);
 }
 

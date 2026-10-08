@@ -25,7 +25,7 @@ void INGAME_VARIABLES::doPausedState(SYSTEM_VARIABLES& systemVariables, GAME_VAR
             selectedMenuItem = 1;
             systemVariables.playBlip();
         } else {
-            gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+            setStateToTitle(systemVariables, gameVariables);
             systemVariables.audioHandler->unpauseAudio();
             systemVariables.playSelect();         
         }
@@ -35,14 +35,12 @@ void INGAME_VARIABLES::doPausedState(SYSTEM_VARIABLES& systemVariables, GAME_VAR
             gameVariables.isPaused = false;
             systemVariables.audioHandler->unpauseAudio();
         } else {
-            gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+            setStateToTitle(systemVariables, gameVariables);
             systemVariables.audioHandler->unpauseAudio();
         }
         systemVariables.playSelect();
     }
 }
-
-
 
 void INGAME_VARIABLES::doPausedRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     auto& bitmapFont = gameVariables.bitmapFont;
@@ -54,8 +52,8 @@ void INGAME_VARIABLES::doPausedRender(SYSTEM_VARIABLES& systemVariables, GAME_VA
             drawGameSprite(renderer, getGameSprite(GAME_SPRITES::BLANK), position * 8, palette);
         }
     }
-    bitmapFont.drawText(VECTOR2i(4,5) * 8, "PAUSED", palette[1], palette[0]);
-    bitmapFont.drawText(VECTOR2i(4,7) * 8, "RESUME", palette[1], palette[0]);
-    bitmapFont.drawText(VECTOR2i(4,9) * 8, "TITLE", palette[1], palette[0]);
-    bitmapFont.drawText(VECTOR2i(3,7 + selectedMenuItem * 2) * 8, std::string(1, 0x10), palette[1]);
+    bitmapFont->drawText(VECTOR2i(4,5) * 8, "PAUSED", palette[1], palette[0]);
+    bitmapFont->drawText(VECTOR2i(4,7) * 8, "RESUME", palette[1], palette[0]);
+    bitmapFont->drawText(VECTOR2i(4,9) * 8, "TITLE", palette[1], palette[0]);
+    bitmapFont->drawText(VECTOR2i(3,7 + selectedMenuItem * 2) * 8, std::string(1, 0x10), palette[1]);
 }

@@ -78,7 +78,7 @@ void HOOPS::rotateRight() {
     this->orientation = (this->orientation + 1) & 3;
 }
 
-void HOOPS::render(SDL_Renderer*& renderer, const VECTOR2i& offset, const std::array<SDL2Addon::SDL_COLOR, 2>& palette, const bool isGhost) const {
+void HOOPS::render(SDL_Renderer*& renderer, const VECTOR2i& offset, const std::array<SDL2Util::Color, 2>& palette, const bool isGhost) const {
     auto baseSprite = isGhost ? GAME_SPRITES::HOOP_001_GHOST : GAME_SPRITES::HOOP_001;
     for (auto s = 0; s < LAYER_COUNT; s++) {
         auto layer = this->data[s];

@@ -2,24 +2,10 @@
 #ifndef SDL2_addon_hpp
 #define SDL2_addon_hpp
 #include <SDL.h>
-
 #include <vector>
-
 #include "vector2.hpp"
 
 namespace SDL2Addon {
-    struct SDL_COLOR {
-        Uint8 r, g, b, a;
-        unsigned int rgb;
-        unsigned int rgba;
-        SDL_COLOR(const Uint8& r, const Uint8& g, const Uint8& b, const Uint8& a = 255);
-        SDL_COLOR(const unsigned int& color, const Uint8& a = 255);
-        SDL_COLOR();
-
-        SDL_COLOR darken(double percentage);
-        operator SDL_Color() const;
-    };
-
     template<typename T>
     requires std::integral<T> || std::floating_point<T>
     struct SDL2A_TRect {
@@ -73,23 +59,23 @@ namespace SDL2Addon {
 
     bool IsFunctionSuccessful(int32_t functionResult);
 
-    int32_t SetRenderDrawColor(SDL_Renderer*& renderer, const SDL_COLOR& color);
+    int32_t SetRenderDrawColor(SDL_Renderer*& renderer, const SDL_Color color);
     int32_t doDelay(const double FPS_INC);
 
-    void DrawFilledRectF(SDL_Renderer*& renderer, const SDL_FRect& rect, const SDL_COLOR& color);
-    void DrawFilledRect(SDL_Renderer*& renderer, const SDL_Rect& rect, const SDL_COLOR& color);
-    void DrawRect(SDL_Renderer*& renderer, const SDL_Rect& rect, const SDL_COLOR& color);
-    void DrawFilledRectsF(SDL_Renderer*& renderer, const std::vector<SDL_FRect> rects, const SDL_COLOR& color);
-    void DrawFilledRects(SDL_Renderer*& renderer, const std::vector<SDL_Rect> rects, const SDL_COLOR& color);
-    void DrawRects(SDL_Renderer*& renderer, const std::vector<SDL_Rect> rects, const SDL_COLOR& color);
-    void DrawPoint(SDL_Renderer*& renderer, const SDL_Point point, const SDL_COLOR& color);
-    void DrawPointF(SDL_Renderer*& renderer, const SDL_FPoint point, const SDL_COLOR& color = SDL_COLOR(0xffffff));
-    void DrawPoints(SDL_Renderer*& renderer, const std::vector<SDL_Point> points, const SDL_COLOR& color);
-    void DrawPointsF(SDL_Renderer*& renderer, const std::vector<SDL_FPoint> points, const SDL_COLOR& color);
+    void DrawFilledRectF(SDL_Renderer*& renderer, const SDL_FRect& rect, const SDL_Color color);
+    void DrawFilledRect(SDL_Renderer*& renderer, const SDL_Rect& rect, const SDL_Color color);
+    void DrawRect(SDL_Renderer*& renderer, const SDL_Rect& rect, const SDL_Color color);
+    void DrawFilledRectsF(SDL_Renderer*& renderer, const std::vector<SDL_FRect> rects, const SDL_Color color);
+    void DrawFilledRects(SDL_Renderer*& renderer, const std::vector<SDL_Rect> rects, const SDL_Color color);
+    void DrawRects(SDL_Renderer*& renderer, const std::vector<SDL_Rect> rects, const SDL_Color color);
+    void DrawPoint(SDL_Renderer*& renderer, const SDL_Point point, const SDL_Color color);
+    void DrawPointF(SDL_Renderer*& renderer, const SDL_FPoint point, const SDL_Color color = SDL_Color{.r = 0xff, .g = 0xff, .b = 0xff, .a = 0xff});
+    void DrawPoints(SDL_Renderer*& renderer, const std::vector<SDL_Point> points, const SDL_Color color);
+    void DrawPointsF(SDL_Renderer*& renderer, const std::vector<SDL_FPoint> points, const SDL_Color color);
 
-    void DrawLineF(SDL_Renderer*& renderer, const SDL_FPoint from, const SDL_FPoint to, const SDL_Color& color = SDL_COLOR(0xffffff));
+    void DrawLineF(SDL_Renderer*& renderer, const SDL_FPoint from, const SDL_FPoint to, const SDL_Color& color = SDL_Color{.r = 0xff, .g = 0xff, .b = 0xff, .a = 0xff});
 
-    void DrawCircle(SDL_Renderer*& renderer, const VECTOR2f pos, double radius, int indices, const SDL_COLOR& color);
+    void DrawCircle(SDL_Renderer*& renderer, const VECTOR2f pos, double radius, int indices, const SDL_Color color);
 }  // namespace SDL2Addon
 
 #endif

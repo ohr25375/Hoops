@@ -9,7 +9,6 @@ CFLAGS += -g
 CFLAGS += -Wall
 # object include
 COBJ = ../lib/obj/*.o
-COBJ += ../lib/obj/**/*.o
 COBJ += ../MMLParser/obj/*.o
 COBJ += ../AudioStreamTest/obj/*.o
 
@@ -50,16 +49,16 @@ leaks:
 	leaks --atExit -- ./main
 
 library:
-	cd ../AudioStreamTest && make
-	cd ../lib && make
 	cd ../MMLParser && make
+	cd ../lib && make
 	cd ../fileReader && make
+	cd ../AudioStreamTest && make
 
 cleanLibrary:
-	cd ../AudioStreamTest && make clean
-	cd ../lib && make clean
 	cd ../MMLParser && make clean
+	cd ../lib && make clean
 	cd ../fileReader && make clean
+	cd ../AudioStreamTest && make clean
 
 clean:
 	rm -f $(OBJS)

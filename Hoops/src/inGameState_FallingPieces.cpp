@@ -20,13 +20,13 @@ void dropColumns(GAME_BOARD& gameBoard, const std::vector<int>& droppingColumns)
     }
 }
 
-void drawMask(SDL_Renderer*& renderer, const VECTOR2i& offset, const std::array<SDL2Addon::SDL_COLOR,2>& palette, std::vector<VECTOR2i>& mask) {
+void drawMask(SDL_Renderer*& renderer, const VECTOR2i& offset, const std::array<SDL2Util::Color,2>& palette, std::vector<VECTOR2i>& mask) {
     for (auto position : mask) {
         drawGameSprite(renderer, getGameSprite(GAME_SPRITES::BLANK), offset + position * 8, palette);
     }
 }
 
-void drawFallingPieces(SDL_Renderer*& renderer, const VECTOR2i& offset, const std::array<SDL2Addon::SDL_COLOR, 2>& palette, const FALLING_RINGS& fallingRings) {
+void drawFallingPieces(SDL_Renderer*& renderer, const VECTOR2i& offset, const std::array<SDL2Util::Color, 2>& palette, const FALLING_RINGS& fallingRings) {
     for (auto x = 0; x < (int)fallingRings.fallingColumns.size(); x++) {
         for (const auto& ring : fallingRings.fallingColumns[x].fallingRings) {
             for (auto i = 0; i < 3; i++) {

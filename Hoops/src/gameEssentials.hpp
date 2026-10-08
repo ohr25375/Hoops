@@ -5,7 +5,7 @@
 #include <array>
 #include <memory>
 #include "src/vector2.hpp"
-#include "src/SDL2_Addon.hpp"
+#include "src/SDL2Util_ColorWrapper.hpp"
 #include "systemEssentials.hpp"
 #include "bgmAssets.hpp"
 #include "saveFile_v0001.hpp"
@@ -31,11 +31,11 @@ public:
     
     SDL2Addon::SDL2A_Rect screenArea;
 
-    FONT::BitmapFONT bitmapFont{};
+    std::unique_ptr<FONT::FONT> bitmapFont{};
     
     SDL_Texture* renderTarget;
     const VECTOR2i renderTargetSize = VECTOR2i(160, 144);
-    std::array<SDL2Addon::SDL_COLOR, 2> palette = {
+    std::array<SDL2Util::Color, 2> palette = {
         0x000000,
         0xffffff,
     };

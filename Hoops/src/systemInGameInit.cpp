@@ -1,10 +1,11 @@
 #include "systemInGameInit.hpp"
 
 #include <filesystem>
-#include "gameState_TitleMenu.hpp"
+#include "gameState_SplashScreen.hpp"
 #include "src/fileManager.hpp"
+#include "src/SDL2_BitmapFont.hpp"
 
-void initGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
+void loadSave(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
     std::vector<std::byte> data;
     auto& save = gameVariables.save;
     auto path = systemVariables.execPath / "saves.data";
@@ -14,26 +15,20 @@ void initGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) 
         data = SAVE_FILE_V0001::writeSave(save);
         writeBinary(path.string(), data);
     } else {
-        SAVE_FILE_V0001::loadSave(data, save);
+        SAVE_FILE_V0001::loadSaveFromData(data, save);
     }
 
-    systemVariables.audioHandler->setBGMVolume(0.25 * (save.config.volume >> 4 & 0xf));
+    systemVariables.audioHandler->setBGMVolume(0.25 * ((save.config.volume >> 4) & 0xf));
     systemVariables.audioHandler->setSFXVolume(0.25 * (save.config.volume & 0xf));
     gameVariables.gameBGM = (AUDIO_ASSET_ID)save.config.track;
-    gameVariables.palette[1] = SDL2Addon::SDL_COLOR(
-        ((save.config.colorA >> 8 & 0xf) << 4) | (save.config.colorA >> 8 & 0xf),
-        ((save.config.colorA >> 4 & 0xf) << 4) | (save.config.colorA >> 4 & 0xf),
-        ((save.config.colorA >> 0 & 0xf) << 4) | (save.config.colorA >> 0 & 0xf)
-    );
-    gameVariables.palette[0] = SDL2Addon::SDL_COLOR(
-        ((save.config.colorB >> 8 & 0xf) << 4) | (save.config.colorB >> 8 & 0xf),
-        ((save.config.colorB >> 4 & 0xf) << 4) | (save.config.colorB >> 4 & 0xf),
-        ((save.config.colorB >> 0 & 0xf) << 4) | (save.config.colorB >> 0 & 0xf)
-    );
+    gameVariables.palette[1] = SDL2Util::createColorFromRGB444(save.config.colorA);
+    gameVariables.palette[0] = SDL2Util::createColorFromRGB444(save.config.colorB);
     gameVariables.palettePreset = save.config.preset;
     systemVariables.screenSizeMultiplier = save.config.screenSize;
-    
+}
 
+void initGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
+    loadSave(systemVariables, gameVariables);
     systemVariables.toggleWindowSize(gameVariables.isLargeWindow);
 
     VECTOR2i textureSize       = systemVariables.essentials.screen.size;
@@ -42,11 +37,10 @@ void initGame(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) 
 
     gameVariables.screenArea = SDL2Addon::SDL2A_Rect(systemVariables.essentials.screen.size);
 
-    gameVariables.bitmapFont = FONT::BitmapFONT();
-    gameVariables.bitmapFont.setFont("8bitFont.bmp", VECTOR2i(8), FONT::INCLUDES::Codepage437);
-    gameVariables.bitmapFont.init(systemVariables.essentials.screen.renderer);
+    gameVariables.bitmapFont = FONT::createBitmapFont(VECTOR2i(8),"8bitFont.bmp", FONT::INCLUDES::Codepage437);
+    gameVariables.bitmapFont->init(systemVariables.essentials.screen.renderer);
 
-    gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+    gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_SPLASHSCREEN>());
 
     SDL_Log("systemInGameInit: done");
 }

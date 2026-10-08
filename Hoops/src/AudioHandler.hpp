@@ -32,7 +32,7 @@ private:
     bool isAudioPaused = false;
     float bgmVolume = 0.5f;
     float sfxVolume = 0.5f;
-    const float GLOBAL_VOLUME = 0.5f;
+    const float GLOBAL_VOLUME = 0.3f;
     SDL_AudioDeviceID audioID;
     bool queueReset = false;
     std::queue<int16_t> oneShotQueue;

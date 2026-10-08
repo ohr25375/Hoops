@@ -8,12 +8,7 @@
 #include <map>
 
 #include <src/hexManipulator.hpp>
-
-#include <random>
-#define M_PI 3.14159265358979323846
-
-std::random_device rd;
-std::mt19937 mt = std::mt19937(rd());
+#include <bitset>
 
 namespace MML_Internal {
     int32_t getNumber(std::string::const_iterator &it, std::string::const_iterator& end, uint32_t maxValue, uint32_t& value, bool required, uint32_t defaultValue) {
@@ -73,7 +68,12 @@ namespace MML_Internal {
         return (clamp / 15.0) * (INT16_MAX) * (int)(channelAttributes.instrumentAttributes.volume);
     }
     int16_t generateNoise(ChannelAttributes& channelAttributes) {
-        return mt();
+        static std::bitset<15> pseudoRandom(1);
+        bool newBit = pseudoRandom[0] ^ pseudoRandom[1];
+        pseudoRandom >>= 1;
+        pseudoRandom[14] = newBit;
+        int16_t value = (pseudoRandom.to_ulong() - ((UINT16_MAX + 1) >> 2)) * 2;
+        return value * channelAttributes.instrumentAttributes.volume;
     }
 }  // namespace MML_Internal
 

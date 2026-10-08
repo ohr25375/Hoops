@@ -3,6 +3,7 @@
 #include <exception>
 #include <stdexcept>
 #include <iostream>
+#include "SDL2_BitmapFont.hpp"
 
 namespace SDL_SCREEN {
     void SCREEN::setSize(VECTOR2i windowSize, double fieldScale) {

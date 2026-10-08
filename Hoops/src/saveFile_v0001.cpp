@@ -33,26 +33,27 @@ bool CONFIG::isConfigValuesCorrect() const {
         screenSize == 0 || screenSize >= SCREEN_SIZE_MAX
     );
 }
-SCORES::SCORES(const std::array<std::byte, 24> data)
+SCORES::SCORES(const std::array<std::byte, 32> data)
     : CHUNK({ 'S', 'C', 'O', 'R' }, data.size()),
-      score1(std::to_integer<uint16_t>(data[0])),
-      score2(std::to_integer<uint16_t>(data[8])),
-      score3(std::to_integer<uint16_t>(data[16])) {
+      score1(std::to_integer<uint32_t>(data[0])),
+      score2(std::to_integer<uint32_t>(data[4])),
+      score3(std::to_integer<uint32_t>(data[8])) {
     for (auto i = 0; i < 6; i++) {
-        score1Name[i] = std::to_integer<char>(data[1 + i]);
-        score2Name[i] = std::to_integer<char>(data[9 + i]);
-        score3Name[i] = std::to_integer<char>(data[9 + i]);
+        score1Name[i] = std::to_integer<char>(data[12 + i]);
+        score2Name[i] = std::to_integer<char>(data[18 + i]);
+        score3Name[i] = std::to_integer<char>(data[24 + i]);
     }
 }
 SCORES::SCORES()
-    : CHUNK({ 'S', 'C', 'O', 'R' }, 24) {}
+    : CHUNK({ 'S', 'C', 'O', 'R' }, 32) {}
+
 bool SCORES::isScoresHeaderCorrect() const {
-    return isChunkCorrect(SAVE_FILE_BASE::FOURCC({ 'S', 'C', 'O', 'R' }), 24);
+    return isChunkCorrect(SAVE_FILE_BASE::FOURCC({ 'S', 'C', 'O', 'R' }), 32);
 }
 SAVE::SAVE()
-    : SAVE_FILE_BASE::SAVE(56, 1) {}
+    : SAVE_FILE_BASE::SAVE(64, 1) {}
 bool checkSize(const size_t size) {
-    return size == 64;
+    return size == 72;
 }
 bool isDataIntegral(const std::vector<std::byte>& data) {
     if (!SAVE_FILE_BASE::isHeaderCorrect(data, 1)) return false;
@@ -64,13 +65,12 @@ bool isDataIntegral(const std::vector<std::byte>& data) {
     if (!testData->scores.isScoresHeaderCorrect()) return false;
     return true;
 }
-void loadSave(const std::vector<std::byte>& data, SAVE_FILE_V0001::SAVE& save) {
+void loadSaveFromData(const std::vector<std::byte>& data, SAVE_FILE_V0001::SAVE& save) {
     if (!SAVE_FILE_V0001::isDataIntegral(data)) {
         std::cout << "is corrupt\n";
     } else {
         std::cout << "correct data\n";
-        auto loadedSave = reinterpret_cast<const SAVE_FILE_V0001::SAVE*>(data.data());
-        save = *loadedSave;
+        save = *reinterpret_cast<const SAVE_FILE_V0001::SAVE*>(data.data());
     }
 }
 std::vector<std::byte> writeSave(const SAVE_FILE_V0001::SAVE& save) {

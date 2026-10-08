@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <array>
-#include "src/SDL2_Addon.hpp"
+#include "src/SDL2Util_ColorWrapper.hpp"
 #include "src/vector2.hpp"
 #include <SDL.h>
 #include "hoops.hpp"
@@ -31,7 +31,7 @@ public:
     void setCell(const int x, const int y, const char state);
     void dropColumn(const int x, const int y);
     FALLING_COLUMN getDropHeights(const int x, const int heightThreshold) const;
-    void render(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL_COLOR, 2>& palette, const VECTOR2i& offset) const;
+    void render(SDL_Renderer*& renderer, const std::array<SDL2Util::Color, 2>& palette, const VECTOR2i& offset) const;
     bool isColliding(const int x, const int y, const HOOPS& hoops) const;
     bool addHoops(const int x, const int y, const HOOPS& hoops);
 

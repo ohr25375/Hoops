@@ -8,6 +8,8 @@ enum struct AUDIO_ASSET_ID {
     RINGS,
     ALLOY,
     MAX,
+    ODE,
+    HOOPS,
 };
 
 std::vector<std::string> getMML(const AUDIO_ASSET_ID& assetID);

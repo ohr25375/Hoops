@@ -2,21 +2,16 @@
 
 #include "gameEssentials.hpp"
 
-enum struct MENU_TITLE {
-    START,
-    CONFIG,
-    QUIT,
-    MAX
-};
-
-class GAME_STATE_FUNCTIONS_TITLE : public GAME_STATE_FUNCTIONS {
+class GAME_STATE_FUNCTIONS_SCORE : public GAME_STATE_FUNCTIONS {
 public:
     virtual void doState(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
     virtual void doRender(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
     virtual void doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables);
+    GAME_STATE_FUNCTIONS_SCORE(const bool isScoreUpdated, const int scoreRankNumber = -1);
 private:
-    MENU_TITLE selectedMenuItem = MENU_TITLE::START;
     int renderTime = 0;
+    const bool isScoreUpdated;
+    const int scoreRankNumber;
+    int selectedNameCharacter = 0;
+    bool isNameConfirmed = false;
 };
-
-void setStateToTitle(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables, const bool resetBGM = true);

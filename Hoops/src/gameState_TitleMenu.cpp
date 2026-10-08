@@ -56,21 +56,21 @@ const std::vector<std::string> TITLE_GRAPH = {
     std::string({' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', (char)0xe2, (char)0xdc, (char)0xe3}),
 };
 
-void drawTitleLogo(FONT::BitmapFONT& bitmapFont, const SDL_Color& textColor, const VECTOR2f& offset) {
+void drawTitleLogo(std::unique_ptr<FONT::FONT>& bitmapFont, const SDL_Color& textColor, const VECTOR2f& offset) {
     for (auto i = 0; i < (int)TITLE_GRAPH.size(); i++) {
-        bitmapFont.drawText((offset + VECTOR2i(0,i)) * 8, TITLE_GRAPH[i], textColor);
+        bitmapFont->drawText((offset + VECTOR2i(0,i)) * 8, TITLE_GRAPH[i], textColor);
     }
 }
 
-void drawTitleScreenTextElements(FONT::BitmapFONT& bitmapFont, const SDL_Color& textColor) {
+void drawTitleScreenTextElements(std::unique_ptr<FONT::FONT>& bitmapFont, const SDL_Color& textColor) {
     auto line = std::string(5, (char)0xdb) + std::string(10,(char)0xdc) + std::string(5, (char)0xdb);
-    bitmapFont.drawText(VECTOR2i(0,10) * 8, line, textColor);
+    bitmapFont->drawText(VECTOR2i(0,10) * 8, line, textColor);
     for (auto i = 0; i < 7; i++){
-        bitmapFont.drawText(VECTOR2i(9, 11 + i) * 8, std::string(1, (char)0xde), textColor);
+        bitmapFont->drawText(VECTOR2i(9, 11 + i) * 8, std::string(1, (char)0xde), textColor);
     }
 }
 
-void drawTitleScreenSpriteElements(SDL_Renderer*& renderer, const std::array<SDL2Addon::SDL_COLOR, 2>& palette) {
+void drawTitleScreenSpriteElements(SDL_Renderer*& renderer, const std::array<SDL2Util::Color, 2>& palette) {
     for (auto i = 0; i < 10; i++) {
         drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), VECTOR2i(0, i) * 8, palette);
         drawGameSprite(renderer, getGameSprite(GAME_SPRITES::WALL), VECTOR2i(19, i) * 8, palette);
@@ -98,13 +98,19 @@ void GAME_STATE_FUNCTIONS_TITLE::doRender(SYSTEM_VARIABLES& systemVariables, GAM
     drawTitleScreenSpriteElements(renderer, palette);
 
     for (const auto& [position, text] : MENU_ITEMS) {
-        bitmapFont.drawText(position * 8, text, palette[1]);
+        bitmapFont->drawText(position * 8, text, palette[1]);
     }
-    bitmapFont.drawText((MENU_ITEMS[(int)selectedMenuItem].position - VECTOR2i(1, 0)) * 8, std::string(1, 0x10), palette[1]);
+    bitmapFont->drawText((MENU_ITEMS[(int)selectedMenuItem].position - VECTOR2i(1, 0)) * 8, std::string(1, 0x10), palette[1]);
 }
 
 void GAME_STATE_FUNCTIONS_TITLE::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
-    systemVariables.audioHandler->clearMML();
     renderTime = 0;
     gameVariables.isPaused = false;
+}
+
+void setStateToTitle(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables, const bool resetBGM) {
+    gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+    if (!resetBGM) return;
+    systemVariables.audioHandler->clearMML();
+    systemVariables.audioHandler->loadNewMML(getMML(AUDIO_ASSET_ID::HOOPS));
 }

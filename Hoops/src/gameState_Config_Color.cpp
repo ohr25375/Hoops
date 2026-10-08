@@ -12,22 +12,22 @@ std::string getText(const char initial, const uint8_t& value) {
     return text.str();
 }
 
-void drawConfigColor(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const SDL_Color& color) {
+void drawConfigColor(std::unique_ptr<FONT::FONT>& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const SDL_Color& color) {
     char initials[] = { 'R', 'G', 'B' };
     uint8_t rgb[]   = { color.r, color.g, color.b };
     for (int i = 0; i < 3; i++) {
-        bitmapFont.drawText((position + VECTOR2i(2, i)) * 8, getText(initials[i], rgb[i]), textColor);
+        bitmapFont->drawText((position + VECTOR2i(2, i)) * 8, getText(initials[i], rgb[i]), textColor);
     }
 }
-void drawColorPreset(FONT::BitmapFONT& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const int paletteIndex) {
+void drawColorPreset(std::unique_ptr<FONT::FONT>& bitmapFont, const VECTOR2i& position, const SDL_Color& textColor, const int paletteIndex) {
     auto paletteName = getColorPresetName(paletteIndex);
     auto spaces = std::string(7 - paletteName.size(), ' ');
     std::stringstream text;
     text << (char)0x11 << paletteName << spaces << (char)0x10;
-    bitmapFont.drawText((position + VECTOR2i(-1, 1)) * 8, text.str(), textColor);
+    bitmapFont->drawText((position + VECTOR2i(-1, 1)) * 8, text.str(), textColor);
 }
 
-void doChangeColor(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, const int& selectedItem) {
+void doChangeColor(bool isLeft, std::array<SDL2Util::Color, 2>& palette, const int& selectedItem) {
     auto& color = palette[-(selectedItem / 3) + 1];
     auto rgb    = std::array<uint8_t*, 3>{ &color.r, &color.g, &color.b };
     auto index  = selectedItem % 3;
@@ -36,7 +36,7 @@ void doChangeColor(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, co
     *rgb[index] = (value << 4) | value;
 }
 
-void doChangePalette(bool isLeft, std::array<SDL2Addon::SDL_COLOR, 2>& palette, int& paletteIndex) {
+void doChangePalette(bool isLeft, std::array<SDL2Util::Color, 2>& palette, int& paletteIndex) {
     auto bound = getPresetSize();
     paletteIndex = isLeft ? decrementBound(paletteIndex, bound, 1) : incrementBound(paletteIndex, bound, 1);
     palette = getColorPreset(paletteIndex);
@@ -89,11 +89,11 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuColorRender(SYSTEM_VARIABLES& systemV
         VECTOR2i(11, 6),
         VECTOR2i(11, 11),
     };
-    bitmapFont.drawText(positions[0] * 8, "A", palette[1]);
+    bitmapFont->drawText(positions[0] * 8, "A", palette[1]);
     drawConfigColor(bitmapFont, positions[0], palette[1], palette[1]);
-    bitmapFont.drawText(positions[1] * 8, "B", palette[1]);
+    bitmapFont->drawText(positions[1] * 8, "B", palette[1]);
     drawConfigColor(bitmapFont, positions[1], palette[1], palette[0]);
-    bitmapFont.drawText(positions[2] * 8, "PRESETS", palette[1]);
+    bitmapFont->drawText(positions[2] * 8, "PRESETS", palette[1]);
     drawColorPreset(bitmapFont, positions[2], palette[1], gameVariables.palettePreset);
 
     if (selectedSubMenuItem != SUBMENU_ID::COLOR) return;
@@ -115,6 +115,6 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuColorRender(SYSTEM_VARIABLES& systemV
                 menuOffset += VECTOR2i(1, 0);
             }
         }
-        bitmapFont.drawText(menuOffset * 8, overlay, palette[0]);
+        bitmapFont->drawText(menuOffset * 8, overlay, palette[0]);
     }
 }

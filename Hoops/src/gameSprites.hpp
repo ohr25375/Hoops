@@ -5,11 +5,12 @@
 #include <cstdint>
 #include <array>
 #include "src/vector2.hpp"
-#include "src/SDL2_Addon.hpp"
+#include "src/SDL2Util_ColorWrapper.hpp"
 
 struct SPRITE_ROW {
-    uint8_t color;
-    uint8_t alpha;
+    const uint8_t color;
+    const uint8_t alpha;
+    SPRITE_ROW(const uint8_t color = 0, const uint8_t alpha = 0) : color(color), alpha(alpha) {}
 };
 
 typedef std::array<SPRITE_ROW, 8> SPRITE;
@@ -29,6 +30,8 @@ enum struct GAME_SPRITES {
     HOOP_010_GHOST,
     HOOP_100_GHOST,
     WALL,
+    MAN,
+    MAN_HAPPY,
 };
 
 struct SPRITE_DATA {
@@ -37,4 +40,4 @@ struct SPRITE_DATA {
 };
 
 SPRITE_DATA getGameSprite(const GAME_SPRITES spriteID);
-void drawGameSprite(SDL_Renderer*& renderer, const SPRITE_DATA& sprite, const VECTOR2i& offset, const std::array<SDL2Addon::SDL_COLOR, 2>& palette, const bool isPressed = false);
+void drawGameSprite(SDL_Renderer*& renderer, const SPRITE_DATA& sprite, const VECTOR2i& offset, const std::array<SDL2Util::Color, 2>& palette, const bool isPressed = false);

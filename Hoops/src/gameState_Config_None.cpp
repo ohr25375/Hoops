@@ -16,7 +16,7 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuNone(SYSTEM_VARIABLES& systemVariable
     if (keys[SDLK_RETURN].down || keys[SDLK_RIGHT].down || keys[SDLK_z].down) {
         switch ((CONFIG_ID)selectedMenuItem) {
             case CONFIG_ID::BACK: {
-                gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+                setStateToTitle(systemVariables, gameVariables, false);
                 systemVariables.playSelect();
                 break;
             }
@@ -34,7 +34,7 @@ void GAME_STATE_FUNCTIONS_CONFIG::doSubMenuNone(SYSTEM_VARIABLES& systemVariable
             systemVariables.playBlip();
             return;
         } else {
-            gameVariables.setState(systemVariables, std::make_unique<GAME_STATE_FUNCTIONS_TITLE>());
+            setStateToTitle(systemVariables, gameVariables, false);
             systemVariables.playSelect();
         }
     }

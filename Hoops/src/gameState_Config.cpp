@@ -22,9 +22,9 @@ void GAME_STATE_FUNCTIONS_CONFIG::doState(SYSTEM_VARIABLES& systemVariables, GAM
     }
 }
 
-void drawCenterLine(FONT::BitmapFONT& bitmapFont, const SDL_Color& color) {
+void drawCenterLine(std::unique_ptr<FONT::FONT>& bitmapFont, const SDL_Color& color) {
     for (auto i = 0; i < 18; i++) {
-        bitmapFont.drawText(VECTOR2i(8, i) * 8, std::string(1, 0xba), color);
+        bitmapFont->drawText(VECTOR2i(8, i) * 8, std::string(1, 0xba), color);
     }
 }
 
@@ -46,7 +46,7 @@ void GAME_STATE_FUNCTIONS_CONFIG::doRender(SYSTEM_VARIABLES& systemVariables, GA
             foreground = palette[0];
             background = palette[1];
         }
-        bitmapFont.drawText(MENU_ITEMS[i].position * 8, MENU_ITEMS[i].text, foreground, background);
+        bitmapFont->drawText(MENU_ITEMS[i].position * 8, MENU_ITEMS[i].text, foreground, background);
     }
     switch ((CONFIG_ID)selectedMenuItem) {
         case CONFIG_ID::SOUND: {
@@ -63,11 +63,10 @@ void GAME_STATE_FUNCTIONS_CONFIG::doRender(SYSTEM_VARIABLES& systemVariables, GA
         }
         default: break;
     }
-    bitmapFont.drawText((MENU_ITEMS[(int)selectedMenuItem].position - VECTOR2i(1, 0)) * 8, std::string(1, 0x10), palette[1]);
+    bitmapFont->drawText((MENU_ITEMS[(int)selectedMenuItem].position - VECTOR2i(1, 0)) * 8, std::string(1, 0x10), palette[1]);
 }
 
 void GAME_STATE_FUNCTIONS_CONFIG::doInit(SYSTEM_VARIABLES& systemVariables, GAME_VARIABLES& gameVariables) {
-    systemVariables.audioHandler->clearMML();
     selectedMenuItem = (int)CONFIG_ID::SOUND;
     selectedSubMenuItem = SUBMENU_ID::NONE;
 }
