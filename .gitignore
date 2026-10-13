@@ -1,4 +1,8 @@
 main
 *.dSYM
 */screenshots
+screenshots
 *.data
+.vs
+x64
+*.dll
